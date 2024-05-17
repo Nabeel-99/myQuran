@@ -8,7 +8,21 @@
 }
 @font-face {
   font-family: 'arabicCaligraphy';
-  src: url('./assets/fonts/ArabQuranIslamic140-K7n4W.ttf') format(truetype);
+  src: url('./assets/fonts/ArabQuranIslamic140-K7n4W.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'uthmanic';
+  src: url('./assets/fonts/uthmanic_hafs_ver12.otf') format('opentype');
+}
+@font-face {
+  font-family: 'quran-common';
+  src: url('./assets/fonts/quran_common.ttf') format('opentype');
+}
+.quran-common{
+  font-family: 'quran-common';
+}
+.uthmani{
+  font-family: 'uthmanic';
 }
 .arabicText{
   font-family: 'arabicCaligraphy';
@@ -21,9 +35,9 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  /* color-scheme: light dark; */
+  /* color: rgba(255, 255, 255, 0.87); */
+  /* background-color: #242424; */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -60,12 +74,12 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a; */
-  cursor: pointer;
-  transition: border-color 0.25s;
+  /* cursor: pointer;
+  transition: border-color 0.25s; */
 }
 button:hover {
   border-color: #646cff;
-} */
+} 
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -73,18 +87,18 @@ button:focus-visible {
 
 .uthmani-script {
   font-family: 'Scheherazade', serif;
-  font-size: 40px;
+  /* font-size: 40px; */
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
   a:hover {
     color: #747bff;
-  }
+  } */
   /* button {
     background-color: #f9f9f9;
   } */
-}
+
