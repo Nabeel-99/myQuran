@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 interface ChapterCardsProps{
     surahList: any[],
@@ -8,7 +9,7 @@ const ChapterCards: React.FC<ChapterCardsProps> = ({surahList, formattedSurahNam
   return (
     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 pb-12'>
         {surahList.map((sura, index) => (
-            <button className='border rounded-xl border-green-800 shadow-md  px-4' key={index}>
+            <Link to={`/surah/${sura.number}`} className='border text-black rounded-xl border-green-800 shadow-md  px-4' key={index}>
             <div className='flex justify-between items-center px-1'>
                 <div className='flex items-center gap-6'>
                     <div className='border border-black w-8  h-8 transform rotate-45 flex items-center justify-center'>
@@ -30,7 +31,7 @@ const ChapterCards: React.FC<ChapterCardsProps> = ({surahList, formattedSurahNam
                     <p className='arabicText text-xl md:text-4xl'>{sura.revelationType === "Meccan" ? `135` : `136` }</p>
                 </div>
             </div>
-        </button>
+        </Link>
         ))} 
       </div>
   )

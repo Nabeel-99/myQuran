@@ -4,7 +4,7 @@ import { FaPerson } from 'react-icons/fa6'
 
 const Navbar = () => {
   return (
-    <div className='flex bg-white fixed w-full justify-between md:px-16 py-4 md:py-3.5 items-center border-b '>
+    <div className='flex z-10 bg-white fixed w-full justify-between md:px-16 py-4 md:py-3.5 items-center border-b '>
         <div className='hidden md:flex gap-2 items-center justify-center'>
             <button title='menu' className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200'><FaBars/></button>
             <h2 className='text-lg'>My Quran</h2>

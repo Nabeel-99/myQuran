@@ -1,32 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { FaCaretRight, FaReadme } from 'react-icons/fa'
 import { PiCaretLeftLight, PiCaretRightLight } from "react-icons/pi";
 import { CgReadme } from "react-icons/cg";
 import { RxReader } from "react-icons/rx";
-import { fetchPages, getSurahLists, fetchAllJuz, getSurahAyat } from '../apis/quranApi';
+import { fetchPages, getSurahLists, fetchAllJuz,fetchAyat } from '../apis/quranApi';
+import Sidemenu from '../components/Sidemenu';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const Surah = () => {
+
     const [surahPage, setSurahPage] = useState<any[]>([])
     const [surahList, setSurahList] = useState<any[]>([])
     const [juzList, setJuzList] = useState<any[]>([])
-    const [isSurah, setIsSurah] = useState<boolean>(true)
-    const [isJuz, setIsJuz] = useState<boolean>(false)
-    const showSurah = () => {
-        setIsSurah(true)
-        setIsJuz(false)
-    }
-    const showJuz = () => {
-        setIsJuz(true)
-        setIsSurah(false)
-    }
+    const currentSection = useRef(null)
+   
+
+    const [selectedSurah, setSelectedSurah] = useState<any[]>([])
+    const {id} = useParams()
+    
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const openSideMenu = () => {
         setIsOpen(!isOpen)
     }
-    const renderSurah = (id: any) => {
-
-    }
-    const formattedSurahName = (surahNumber: number) => {
+  
+    const formattedStyleName = (surahNumber: number) => {
         if(surahNumber > 99){
             return `${surahNumber}`
         }else if (surahNumber > 9){
@@ -51,29 +49,33 @@ const Surah = () => {
             console.log(error)
         }
     }
-    const fetchAllPages = async() => {
+   
+
+    const fetchSurahAyat = async(id: number) => {
         try {
-            const pageData = await fetchPages()
-            setSurahPage(pageData)
+            const surahAyat = await fetchAyat(id)
+            setSelectedSurah(surahAyat)
         } catch (error) {
-            console.log('error')
+            console.log(error)
         }
     }
-
-    const fetch = async() => {
-        try {
-            const pageData = await getSurahAyat()
- 
-        } catch (error) {
-            console.log('error')
-        }
+    const renderSurahAyat = async(id: number) => {
+         try {
+             await fetchSurahAyat(id)
+         } catch (error) {
+            console.log(error)
+         }
     }
    useEffect(() => {
-        fetch()
+        window.scrollTo({top: 0})
+        if(id){
+            renderSurahAyat(parseInt(id))
+        }
+    
         fetchJuz()
         fetchAllSurahs()
-        fetchAllPages()
-   }, []) 
+        // fetchAllPages()
+   }, [id]) 
   return (
     <div className='flex h-full w-full'>
         {/* side navigation */}
@@ -84,50 +86,10 @@ const Surah = () => {
             </button>
         </div>
         {isOpen && (
-            <div className='flex flex-col gap-4 w-full h-full pb-20 px-4 pt-2'>
-                <p>Chapter and Juz Lists</p>
-                <div className='flex gap-8 text-sm'>
-                    <button onClick={showSurah} className='border px-2 py-1 rounded-full w-full'>Chapter (114)</button>
-                    <button onClick={showJuz} className='border px-2 py-1 rounded-full w-full'>Juz (30)</button>
-                </div>
-                <div className='text-sm flex flex-col gap-2'>
-                    <p>Navigate with Text</p>
-                    <input className='border px-3 rounded-full py-1' placeholder='e.g Al-fatihah, pg 49 ...'/>
-                </div>
-                {/* surah List */}
-                {isJuz ? (
-                    <div className='grid grid-flow-row gap-4 h-screen overflow-scroll pb-20'>
-                    {juzList.map((juz, index) => (
-                        <button className='bg-white hover:bg-gray-100 border rounded-lg border-transparent px-4 flex w-full  justify-between' key={index}>
-                        <div className='flex gap-2 items-center'>
-                            <p className=''>Juz {juz.text.juz}</p>
-                            <p className='text-sm pl-2'>{juz.text.surah.englishName}</p> 
-                        </div>
-                        <div className='flex flex-col'>
-                        <p className='arabicFont text-xl'>
-                           {formattedSurahName(juz.text.surah.number)}
-                       </p>
-                         </div>
-                        </button>
-               ))}
-               </div>
-                ) : 
-                <div className='grid grid-flow-row gap-4 h-screen overflow-scroll pb-20'>
-                    {surahList.map((sura, index) => (
-                    <button onClick={() => renderSurah(sura.number)} className='bg-white hover:bg-gray-100 border rounded-lg border-transparent px-4 flex w-full justify-between' key={index}>
-                    <div className='flex gap-2'>
-                        <p className=''>{sura.number}</p> 
-                        <p className='pl-2'>{sura.englishName}</p>
-                        </div>
-                    <div className='flex flex-col'>
-                        <p className='arabicFont text-xl'>{formattedSurahName(sura.number)}</p>
-                     </div>
-                    </button>
-                    ))}
-                </div>
-                }
-                
-            </div>
+            <Sidemenu
+                juzList={juzList}
+                surahList={surahList}
+            />
         )}
       </div>
       {/* main content */}
@@ -141,21 +103,36 @@ const Surah = () => {
                </div>
             </div>
         {/* Surah Name */}
-        <h1 className='arabicText'>1</h1>
-        <div className='text-right flex flex-col h-screen xl:px-96'> 
-         {surahPage.map((page, index) => (
-                <div key={index} className='flex gap-2 text-right items-center'>
-                    <p className='quran-common text-4xl'>
-                        {page.verseNumber > 99 
-                            ? `${page.verseNumber}`
-                            : page.verseNumber > 9 
-                            ? `0${page.verseNumber}`
-                            : `00${page.verseNumber}`
-                        }
-                    </p>
-                    <p>{page.verseText}</p>
+        <div className='text-right flex flex-col pb-28  xl:px-96'> 
+        {selectedSurah.length > 0 && (
+          <div className="flex flex-col items-center gap-4">
+            <h1 className="arabicText text-center">
+              {selectedSurah[0].numberOfSurah }
+              <p className='bismillah py-6'>{
+                selectedSurah[0].numberOfSurah === 1 || selectedSurah[0].numberOfSurah === 9 
+                    ? `` 
+                    : `﷽`
+                    }
+             </p>
+            </h1>
+            {selectedSurah.map((aya, index) => (
+              <div className="flex flex-col text-right  gap-2" key={index}>
+                <div className="flex gap-2 text-right  items-center  ">
+                  <p className="quran-common text-4xl ">
+                    {formattedStyleName(aya.verseNumber)}
+                  </p>
+                  <p  className=''>
+                    { aya.numberOfSurah === 1 
+                    ? aya.verseText
+                    : aya.numberOfSurah === 27 && aya.verseNumber == 30 
+                        ? aya.verseText
+                        : aya.verseText.replace('بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ', '')
+                    }</p>
                 </div>
+              </div>
             ))}
+          </div>
+        )}
         </div>
       </div>
     </div>
@@ -163,3 +140,4 @@ const Surah = () => {
 }
 
 export default Surah
+

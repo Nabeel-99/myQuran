@@ -11,6 +11,7 @@ const LandingPage = () => {
     const [surahJuz, setSurahJuz] = useState<any[]>([])
     const [isSurah, setIsSurah] = useState<boolean>(true)
     const [isJuz, setIsJuz] = useState<boolean>(false)
+    const longAyat = [14, 15, 17, 18, 26, 28, 29, 30]
     const showSurah = () => {
         setIsSurah(true)
         setIsJuz(false)
@@ -37,12 +38,11 @@ const LandingPage = () => {
             console.log(error)
         }
     }
-    const longAyat = [14, 15, 17, 18, 26, 28, 29, 30]
+
     const fetchSurahJuz = async() => {
         try{
             const juzData = await fetchAllJuz()
             setSurahJuz(juzData)
-            console.log(`juzData: `, juzData)
         }catch(error){
             console.log("error", error)
         }
