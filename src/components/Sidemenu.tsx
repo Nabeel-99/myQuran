@@ -44,28 +44,21 @@ const Sidemenu: React.FC<SideMenuProps> = ({juzList, surahList}) => {
                     <div className='grid grid-flow-row gap-4 h-screen overflow-scroll pb-20'>
                     {juzList.map((juz, index) => (
                         <button className='bg-white hover:bg-gray-100 border rounded-lg border-transparent px-4 flex w-full  justify-between' key={index}>
-                        <div className='flex gap-2 items-center'>
-                            <p className=''>Juz {juz.text.juz}</p>
-                            <p className='text-sm pl-2'>{juz.text.surah.englishName}</p> 
-                        </div>
-                        <div className='flex flex-col'>
-                        <p className='arabicFont text-xl'>
-                           {formattedSurahName(juz.text.surah.number)}
-                       </p>
-                         </div>
+                            <p className=''>Juz {juz.juzNum}</p>
+                            <p className='text-md  arabicText'>{juz.text.verse_key.split(":")[0]}</p> 
                         </button>
                ))}
                </div>
                 ) : 
                 <div className='grid grid-flow-row gap-4 h-screen overflow-scroll pb-20'>
                     {surahList.map((sura, index) => (
-                    <Link to={`/surah/${sura.number}`}  className='bg-white hover:bg-gray-100 border rounded-lg border-transparent px-4 flex w-full justify-between' key={index}>
+                    <Link to={`/surah/${sura.sura_number}`}  className='bg-white hover:bg-gray-100 border rounded-lg border-transparent px-4 flex w-full justify-between' key={index}>
                     <div className='flex gap-2'>
-                        <p className=''>{sura.number}</p> 
-                        <p className='pl-2'>{sura.englishName}</p>
+                        <p className=''>{sura.sura_number}</p> 
+                        <p className='pl-2'>{sura.name_simple}</p>
                         </div>
                     <div className='flex flex-col'>
-                        <p className='arabicFont text-xl'>{formattedSurahName(sura.number)}</p>
+                        <p className='arabicFont text-xl'>{formattedSurahName(sura.sura_number)}</p>
                      </div>
                     </Link>
                     ))}

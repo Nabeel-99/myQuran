@@ -7,6 +7,7 @@ import { fetchPages, getSurahLists, fetchAllJuz,fetchAyat } from '../apis/quranA
 import Sidemenu from '../components/Sidemenu';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import Page from '../components/Page';
 
 const Surah = () => {
 
@@ -103,34 +104,26 @@ const Surah = () => {
                </div>
             </div>
         {/* Surah Name */}
-        <div className='text-right flex flex-col pb-28  xl:px-96'> 
+        <div className='text-right flex flex-col pb-28 px-44 '> 
         {selectedSurah.length > 0 && (
           <div className="flex flex-col items-center gap-4">
             <h1 className="arabicText text-center">
-              {selectedSurah[0].numberOfSurah }
+               {selectedSurah[0].verseNumber.split(":")[0]}
               <p className='bismillah py-6'>{
-                selectedSurah[0].numberOfSurah === 1 || selectedSurah[0].numberOfSurah === 9 
+                selectedSurah[0].verseNumber.split(":")[0] === "1" || selectedSurah[0].verseNumber.split(":")[0] === "9" 
                     ? `` 
                     : `﷽`
                     }
              </p>
             </h1>
+            <Page/>
+            <div className='verseText text-xl ] text-center border'>
             {selectedSurah.map((aya, index) => (
-              <div className="flex flex-col text-right  gap-2" key={index}>
-                <div className="flex gap-2 text-right  items-center  ">
-                  <p className="quran-common text-4xl ">
-                    {formattedStyleName(aya.verseNumber)}
-                  </p>
-                  <p  className=''>
-                    { aya.numberOfSurah === 1 
-                    ? aya.verseText
-                    : aya.numberOfSurah === 27 && aya.verseNumber == 30 
-                        ? aya.verseText
-                        : aya.verseText.replace('بِسۡمِ ٱللَّهِ ٱلرَّحۡمَـٰنِ ٱلرَّحِیمِ', '')
-                    }</p>
-                </div>
-              </div>
+                <p className="textUthmani text-center  " key={index}>
+                   {aya.text} <span className='quran-common text-2xl'>{formattedStyleName(aya.verseNumber.split(":")[1])}</span>
+                </p>
             ))}
+            </div>
           </div>
         )}
         </div>

@@ -108,6 +108,7 @@ const LandingPage = () => {
        <JuzCards
        surahJuz={surahJuz}
        longAyat={longAyat}
+       formattedSurahName={formattedSurahName}
      />
     }
      

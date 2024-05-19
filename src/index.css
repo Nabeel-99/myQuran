@@ -38,9 +38,19 @@
   font-family: 'saleem';
   src: url('./assets/fonts/_PDMS_Saleem_QuranFont\ Regular.ttf') format("truetype");
 }
+
 .aya{
   font-family: 'saleem', 'Arial', sans-serif;
  
+}
+.verseText{
+  direction: rtl;
+  
+}
+
+.text{
+  display: inline-block;
+  width: 100%;
 }
 .ayat{
   font-family: 'uthmani-font';
