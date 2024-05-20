@@ -10,7 +10,7 @@ const Footer = () => {
                 <p className='font-bold'>My Quran</p>
                 <p>This website is provided as a Sadaqah Jariyah, an ongoing charity, in hopes of making it easy for everyone to read and understand.</p>
                 <span className='font-bold'>Hadith:</span> <p className='italic'>"The one who recites the Quran and struggles with it, due to its difficulty, will receive double the reward." (Sahih al-Bukhari 1437, Sahih Muslim 798)</p>
-                <p>This Website uses the Quran Cloud API for accessing Quranic text and translations.</p>
+                <p>This Website uses the Quran.com API for accessing Quranic text and translations.</p>
             </div>
             <div className='flex flex-col gap-2'>
                 Frequently Read Surahs:

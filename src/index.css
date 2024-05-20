@@ -11,10 +11,6 @@
   src: url('./assets/fonts/ArabQuranIslamic140-K7n4W.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'uthmanic';
-  src: url('./assets/fonts/uthmanic_hafs_ver12.otf') format('opentype');
-}
-@font-face {
   font-family: 'quran-common';
   src: url('./assets/fonts/quran_common.ttf') format('opentype');
 }
@@ -23,53 +19,49 @@
   src: url('./assets/fonts/bismillah.ttf') format('truetype');
 }
 @font-face {
-  font-family: 'uthmanic-script';
-  src: url('./assets/fonts/KfgqpcHafsUthmanicScriptRegular-nARZ1.ttf') format('truetype');
-}
-@font-face {
   font-family: 'naskh';
   src: url('./assets/fonts/UthmanTN_v2-0.ttf') format('truetype');
 }
 @font-face{
   font-family: 'uthmani-font';
-  src: url('./assets/fonts/UthmanicHafs1Ver18.ttf') format('truetype');
+  src: url('./assets/fonts/UthmanicHafs1-Ver17.ttf') format('truetype'),
+  url('./assets/fonts/UthmanicHafs1-Ver17.woff2') format('woff2');
 }
 @font-face{
   font-family: 'saleem';
-  src: url('./assets/fonts/_PDMS_Saleem_QuranFont\ Regular.ttf') format("truetype");
+  src: url('./assets/fonts/pdms-saleem-quranfont.ttf') format("truetype");
+}
+@font-face {
+  font-family: 'me-quran';
+  src: url('./assets/fonts/QCF2002.ttf') format('truetype');
 }
 
-.aya{
-  font-family: 'saleem', 'Arial', sans-serif;
- 
+.me-quran{
+  font-family: 'me-quran';
+}
+.saleem{
+  font-family: 'saleem';
 }
 .verseText{
   direction: rtl;
   
 }
-
 .text{
   display: inline-block;
   width: 100%;
 }
-.ayat{
-  font-family: 'uthmani-font';
-  unicode-bidi: isolate;
-}
-.textNaskh{
+.text-naskh{
   font-family: 'naskh';
 }
-.textUthmani{
-  font-family: 'uthmanic-script';
+.text-uthmani{
+  font-family: 'uthmani-font';
+
 }
 .bismillah{
   font-family: 'bismillah';
 }
 .quran-common{
   font-family: 'quran-common';
-}
-.uthmani{
-  font-family: 'uthmanic';
 }
 .arabicText{
   font-family: 'arabicCaligraphy';

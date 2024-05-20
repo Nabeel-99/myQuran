@@ -10,7 +10,8 @@ export const getSurahLists = async() => {
             name_simple: chapter.name_simple,
             sura_number: chapter.id,
             verses_count: chapter.verses_count,
-            english_name: chapter.translated_name.name
+            english_name: chapter.translated_name.name,
+            pages: chapter.pages
 
         }))
         return dataRes
@@ -61,35 +62,56 @@ export const fetchAyat = async(surahNum: number) => {
         console.log(error)
     }
 }
-
-
-// export const getSurahAyat = async() => {
-//     const allSurahAyat = []
-//     for(let i = 1; i <= 114; i++){
-//         const ayat = await fetchAyat(i)
-//         if(ayat){
-//             allSurahAyat.push({
-//                 verses: ayat,
-//                 surah: i
-//             })
-//         }
-//     }
-//     return allSurahAyat
-   
-// }
-// get page
-export const fetchPages = async() => {
+const fetchPages = async(startingIndex: number) => {
     try {
-        const response = await axios.get(`${BASE_URL}/page/1`)
-        const pageData = response.data.data.ayahs.map((aya:any) => ({
-            verseNumber: aya.numberInSurah,
-            verseText: aya.text
+        const response = await axios.get(`${BASE_URL}/quran/verses/uthmani?page_number=${startingIndex}`)
+        const pageData = response.data.verses.map((verse:any) => ({
+            aya: verse.text_uthmani,
+            ayaNumber: verse.verse_key,
         }))
-        console.log(`fatiha: ${pageData.map((page: any) => {
-            console.log(`${page.verseNumber}: ${page.verseText}`)
-        }).join('')}`)
         return pageData
     } catch (error) {
         console.log
     }
 }
+export const renderPages = async(surahNumber: number) => {
+    try {
+        const surahList = await getSurahLists()
+        const selectedSurah = surahList.find((surah: any) => surah.sura_number === surahNumber) 
+        if(!selectedSurah){
+            throw new Error(`surah number not found`)
+        }
+        const surahVersesByPage = []
+        const [firstPage, lastPage] = selectedSurah.pages
+        const suraNumber = selectedSurah.sura_number
+        for(let pageNumber = firstPage; pageNumber <= lastPage; pageNumber++){
+            const pageData = await fetchPages(pageNumber)
+
+            const filteredPageData = pageData.filter((verse: any) => {
+                const [surah, aya] = verse.ayaNumber.split(":").map(Number)
+                return surah === surahNumber
+            })
+            if(filteredPageData.length > 0){
+                surahVersesByPage.push({
+                    pageData: filteredPageData, 
+                    pageNumber, 
+                    suraNumber,
+                    isNewSurah: filteredPageData.some((verse: any) => verse.ayaNumber.split(":")[1] === "1"),
+                })
+                console.log(`Rendering page number: ${pageNumber}`);
+                filteredPageData.forEach((verse: any) => {
+                    console.log(`${verse.ayaNumber} ${verse.aya}`);
+                });
+            }
+            
+           
+        }
+        console.log(surahVersesByPage)
+        return surahVersesByPage
+    } catch (error) {
+        console.log(error)
+        return []
+    }
+}
+
+

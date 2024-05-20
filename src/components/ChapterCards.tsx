@@ -13,19 +13,18 @@ const ChapterCards: React.FC<ChapterCardsProps> = ({surahList, formattedSurahNam
             <div className='flex justify-between items-center px-1'>
                 <div className='flex items-center gap-6'>
                     <div className='border border-black w-8  h-8 transform rotate-45 flex items-center justify-center'>
-                        <div className="transform -rotate-45 flex items-center justify-center text-md">
+                        <div className="transform -rotate-45 flex items-center justify-center text-[0.8rem] xl:text-md">
                             {sura.sura_number}
                         </div>
                     </div>
-                    <div className='flex flex-col items-start text-left py-1 text-sm'>
-                        <p className='font-bold text-sm'>{sura.name_simple}</p>
-                        <span className='italic text-sm'>({sura.english_name})</span>
+                    <div className='flex flex-col items-start text-left py-1 text-[0.8rem] lg:text-sm'>
+                        <p className='font-bold '>{sura.name_simple}</p>
+                        <span className='italic '>{sura.english_name}</span>
                         <p>{sura.verses_count} Verses</p>
-                        <p>{sura.revelationPlace}</p>
                     </div>
                 </div>
                 <div className='flex flex-col items-end'>
-                    <p className='arabicFont text-4xl'>
+                    <p className='arabicFont text-2xl lg:text-4xl'>
                         {formattedSurahName(sura.sura_number)}
                     </p>
                     <p className='arabicText text-xl md:text-4xl'>{sura.revelationPlace === "makkah" ? `135` : `136` }</p>

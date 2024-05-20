@@ -53,7 +53,7 @@ const LandingPage = () => {
     }, [])
 
   return (
-    <div className='flex flex-col w-full pt-24 px-8 md:px-24 gap-8 '>
+    <div className='flex flex-col w-full pt-24 px-4 xl:px-24 gap-8 '>
         {/* SEARCH BAR */}
         <div className='flex border border-black mx-auto items-center justify-center pl-4  rounded-full w-full md:w-3/6'>
             <label htmlFor='search' title='search' className='border-r border-r-black h-full  flex items-center pr-3'><FaSearch/></label>

@@ -3,7 +3,7 @@ import { FaCaretRight, FaReadme } from 'react-icons/fa'
 import { PiCaretLeftLight, PiCaretRightLight } from "react-icons/pi";
 import { CgReadme } from "react-icons/cg";
 import { RxReader } from "react-icons/rx";
-import { fetchPages, getSurahLists, fetchAllJuz,fetchAyat } from '../apis/quranApi';
+import {  getSurahLists, fetchAllJuz,fetchAyat } from '../apis/quranApi';
 import Sidemenu from '../components/Sidemenu';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -117,13 +117,6 @@ const Surah = () => {
              </p>
             </h1>
             <Page/>
-            <div className='verseText text-xl ] text-center border'>
-            {selectedSurah.map((aya, index) => (
-                <p className="textUthmani text-center  " key={index}>
-                   {aya.text} <span className='quran-common text-2xl'>{formattedStyleName(aya.verseNumber.split(":")[1])}</span>
-                </p>
-            ))}
-            </div>
           </div>
         )}
         </div>
@@ -134,3 +127,10 @@ const Surah = () => {
 
 export default Surah
 
+ {/* <div className='verseText text-xl ] text-center'>
+            {selectedSurah.map((aya, index) => (
+                <p className="textNaskh text-center  " key={index}>
+                   {aya.text} <span className='quran-common text-2xl'>{formattedStyleName(aya.verseNumber.split(":")[1])}</span>
+                </p>
+            ))}
+            </div> */}
