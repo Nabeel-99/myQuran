@@ -1,13 +1,28 @@
-import React from 'react'
-import { FaBars, FaGlobe, FaMoon, FaSearch, FaUser } from 'react-icons/fa'
-import { FaPerson } from 'react-icons/fa6'
+import React, { useState } from 'react'
+import { FaBars, FaBook, FaBookOpen, FaGlobe, FaHandHoldingWater, FaHome, FaMoon, FaSearch, FaUser } from 'react-icons/fa'
+import { FaGear, FaHand, FaM, FaPerson, FaRadio, FaXmark } from 'react-icons/fa6'
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
+    const [isBurgerMenu, setIsBurgerMenu] = useState<boolean>(false)
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
+    const [isSearchBtn, setIsSearchBtn] = useState<boolean>(false)
+
+    const toggleBurgerMenu = () => {
+        setIsBurgerMenu(!isBurgerMenu)
+    }
+    const toggleSearch = () => {
+        setIsSearchBtn(!isSearchBtn)
+    }
+    const closeMenu = () => {
+        setIsBurgerMenu(false)
+    }
   return (
-    <div className='flex z-10 bg-white fixed w-full justify-between md:px-16 py-4 md:py-3.5 items-center border-b '>
+    <>
+    <div className='flex z-10 bg-white fixed w-full justify-between md:px-16 py-3 md:py-3 items-center border-b '>
         <div className='hidden md:flex gap-2 items-center justify-center'>
-            <button title='menu' className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200'><FaBars/></button>
-            <h2 className='text-lg'>My Quran</h2>
+            {/* <button title='menu' className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200'><FaBars/></button> */}
+            <Link to={"/"} className='text-4xl text-slate-950 arabicText'>121</Link>
         </div>
         <div className='hidden md:flex'>
             <ul className='flex gap-3 items-center'>
@@ -18,17 +33,64 @@ const Navbar = () => {
         </div>
         {/* mobile */}
         <div className='flex md:hidden gap-2 px-8 items-center'>
-            <button title='menu' className='border px-3 rounded-md text-sm py-2 hover:bg-gray-200'><FaBars/></button>
-            <h2 className='text-md'>My Quran</h2>
+            {/* <button title='menu' className='border px-3 rounded-md text-sm py-2 hover:bg-gray-200'><FaBars/></button> */}
+            <Link to={"/"} className='text-4xl text-slate-950 arabicText'>121</Link>
         </div>
-        <div className='md:hidden'>
-            <ul className='flex gap-3 px-4 items-center'>
-                <li><button className='border px-3 rounded-md text-sm py-2 hover:bg-gray-200' title='moon'><FaMoon/></button></li>
-                <li><button className='border px-3 rounded-md text-sm py-2 hover:bg-gray-200' title='globe'><FaGlobe/></button></li>
-                <li><button className='border px-3 rounded-md text-sm py-2 hover:bg-gray-200' title='search'><FaUser/></button></li>
-            </ul>
+        <div className='md:hidden flex items-center justify-center'>
+        <button title='menu' className='px-3 m py-2 rounded-lg '><FaMoon className='text-xl'/></button>
+            <button onClick={toggleSearch} title='menu' className='px-3 mr-2 py-2 rounded-lg '><FaSearch className='text-xl'/></button>
+            <button onClick={toggleBurgerMenu} title='menu' className='px-3 mr-4 py-2 rounded-lg border '><FaBars className='text-xl'/></button>
         </div>
+        {isBurgerMenu && (
+            <div className='top-0 left-0  h-screen z-40 w-screen fixed bg-white right-0'>
+                <div className='flex flex-col mt-2 w-screen'>
+                    <div className='flex justify-between items-center mt-1'>
+                        <p className='arabicText text-4xl ml-8'>121</p>
+                        <button onClick={toggleBurgerMenu} title='menu' className='mr-5'><FaXmark className='text-4xl'/></button>
+                    </div>
+                    <div className='mt-10  flex flex-col gap-4 px-8'>
+                        <div className='flex flex-col gap-2 border p-4 rounded-lg bg-gray-100'>
+                            <button className='py-2 bg-white border-black border rounded-md w-44 font-bold'>Start Your Journey</button>
+                            <p>Experience a world of benefits by creating an account:</p>
+                            <ul className='list-disc ml-6'>
+                                <li>Bookmarking Verses</li>
+                                <li>Personal Notes</li>
+                                <li>Developing Quizzes</li>
+                                <li>Verse Sharing</li>
+                            </ul>
+                        </div>
+                        <p className='text-sm font-bold'>MENU</p>
+                        <ul>
+                            <li className='border-b-2  py-3 border-t-2'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaHome/>Home</Link></li>
+                            <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaRadio/>Reciters</Link></li>
+                            <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBook/>Seerah</Link></li>
+                            <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBookOpen/>Duas and Supplications</Link></li>
+                            <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaGear/>Settings</Link></li>
+                        </ul>
+             
+                    </div>
+                </div>
+            </div>
+        )}
+        {isSearchBtn && (
+           <>
+           <div className='fixed top-0 right-0 left-0 bottom-0 bg-black opacity-50 z-10'></div>
+           <div className='absolute top-64 right-0 left-0 bottom-0  flex justify-center items-center z-20'>
+               <div className='flex flex-col bg-white shadow-md rounded-lg h-80 w-96 p-5'>
+                   <div className='flex justify-between items-center'>
+                       <div className='flex gap-2 items-center py-1'>
+                           <label htmlFor='search'><FaSearch/></label>
+                           <input className='w-72 border-b' placeholder='Navigate with text e.g al-fatihah, pg24...' id='search'/>
+                       </div>
+                       <button onClick={toggleSearch} className='' title='close'><FaXmark className='text-2xl'/></button>
+                   </div>
+               </div>
+           </div>
+       </>
+        )}
     </div>
+   
+    </>
   )
 }
 

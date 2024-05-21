@@ -15,11 +15,11 @@ const Footer = () => {
             <div className='flex flex-col gap-2'>
                 Frequently Read Surahs:
                 <ul className='list-disc flex flex-col gap-2 px-4'>
-                    <li><Link to={''}>Surah Al-Kahf:</Link> Recited on Fridays for blessings and protection.</li>
-                    <li><Link to={''}>Surah Al-Mulk:</Link> Recited before sleep as protection from the punishment of the grave.</li>
-                    <li><Link to={''}>Surah Al-Fatihah:</Link> Known as Ummul Kitab (the Mother of the Book), it is essential in daily prayers.</li>
-                    <li><Link to={''}>Surah Yaseen:</Link> Known as the heart of the Quran, often recited for various needs and supplications.</li>
-                    <li><Link to={''}>Surah Ar-Rahman:</Link> Recited for its profound messages of mercy and blessings.</li>
+                    <li><Link to={''} className='text-blue-500'>Surah Al-Kahf:</Link> Recited on Fridays for blessings and protection.</li>
+                    <li><Link to={''} className='text-blue-500'>Surah Al-Mulk:</Link> Recited before sleep as protection from the punishment of the grave.</li>
+                    <li><Link to={''} className='text-blue-500'>Surah Al-Fatihah:</Link> Known as Ummul Kitab (the Mother of the Book), it is essential in daily prayers.</li>
+                    <li><Link to={''} className='text-blue-500'>Surah Yaseen:</Link> Known as the heart of the Quran, often recited for various needs and supplications.</li>
+                    <li><Link to={''} className='text-blue-500'>Surah Ar-Rahman:</Link> Recited for its profound messages of mercy and blessings.</li>
                 </ul>
             </div>
         </div>  

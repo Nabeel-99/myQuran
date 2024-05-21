@@ -11,14 +11,10 @@ import Page from '../components/Page';
 
 const Surah = () => {
 
-    const [surahPage, setSurahPage] = useState<any[]>([])
     const [surahList, setSurahList] = useState<any[]>([])
     const [juzList, setJuzList] = useState<any[]>([])
-    const currentSection = useRef(null)
-   
-
     const [selectedSurah, setSelectedSurah] = useState<any[]>([])
-    const {id} = useParams()
+    const { id } = useParams<{id: string | undefined}>()
     
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const openSideMenu = () => {
@@ -50,7 +46,6 @@ const Surah = () => {
             console.log(error)
         }
     }
-   
 
     const fetchSurahAyat = async(id: number) => {
         try {
@@ -59,6 +54,9 @@ const Surah = () => {
         } catch (error) {
             console.log(error)
         }
+    }
+    const closeSideMenu = () => {
+        setIsOpen(false)
     }
     const renderSurahAyat = async(id: number) => {
          try {
@@ -72,7 +70,6 @@ const Surah = () => {
         if(id){
             renderSurahAyat(parseInt(id))
         }
-    
         fetchJuz()
         fetchAllSurahs()
         // fetchAllPages()
@@ -90,11 +87,12 @@ const Surah = () => {
             <Sidemenu
                 juzList={juzList}
                 surahList={surahList}
+                closeSideMenu={closeSideMenu}
             />
         )}
       </div>
       {/* main content */}
-      <div className='flex flex-col gap-10 items-center w-full pt-28'>
+      <div className='flex flex-col gap-10 items-center w-screen mx-auto pt-28'>
         {/* toggle page layout */}
             <div className='shadow-sm border border-gray-100 p-1 rounded-full flex flex-col gap-3 items-center justify-between w-96 bg-gray-50'>
                 <p className='text-sm'>Page Layout</p>
@@ -104,7 +102,7 @@ const Surah = () => {
                </div>
             </div>
         {/* Surah Name */}
-        <div className='text-right flex flex-col pb-28 px-44 '> 
+        <div className='text-right flex flex-col w-full pb-28 px-8 xl:px-44 '> 
         {selectedSurah.length > 0 && (
           <div className="flex flex-col items-center gap-4">
             <h1 className="arabicText text-center">

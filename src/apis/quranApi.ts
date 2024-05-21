@@ -98,15 +98,9 @@ export const renderPages = async(surahNumber: number) => {
                     suraNumber,
                     isNewSurah: filteredPageData.some((verse: any) => verse.ayaNumber.split(":")[1] === "1"),
                 })
-                console.log(`Rendering page number: ${pageNumber}`);
-                filteredPageData.forEach((verse: any) => {
-                    console.log(`${verse.ayaNumber} ${verse.aya}`);
-                });
             }
             
-           
         }
-        console.log(surahVersesByPage)
         return surahVersesByPage
     } catch (error) {
         console.log(error)
@@ -114,4 +108,17 @@ export const renderPages = async(surahNumber: number) => {
     }
 }
 
-
+export const fetchSurahTranslation = async(surahNum: number) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/quran/translations/131?chapter_number=${surahNum}`)
+        const translations = response.data.translations.map((translation: any) => ({
+            verseTranslation: translation.text
+        }))
+      translations.forEach((tr:any) => {
+            console.log("transaltion: ", tr.verseTranslation)
+        })
+        return translations
+    } catch (error) {
+        console.log(error)
+    }
+}
