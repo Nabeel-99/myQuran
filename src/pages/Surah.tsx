@@ -3,7 +3,7 @@ import { FaCaretRight, FaReadme } from 'react-icons/fa'
 import { PiCaretLeftLight, PiCaretRightLight } from "react-icons/pi";
 import { CgReadme } from "react-icons/cg";
 import { RxReader } from "react-icons/rx";
-import {  getSurahLists, fetchAllJuz,fetchAyat } from '../apis/quranApi';
+import {  getSurahLists, fetchAllJuz,fetchAyat, fetchSurahTranslation } from '../apis/quranApi';
 import Sidemenu from '../components/Sidemenu';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -15,7 +15,9 @@ const Surah = () => {
     const [juzList, setJuzList] = useState<any[]>([])
     const [selectedSurah, setSelectedSurah] = useState<any[]>([])
     const { id } = useParams<{id: string | undefined}>()
-    
+
+
+  
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const openSideMenu = () => {
         setIsOpen(!isOpen)

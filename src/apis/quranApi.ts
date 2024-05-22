@@ -115,7 +115,7 @@ export const fetchSurahTranslation = async(surahNum: number) => {
             verseTranslation: translation.text
         }))
       translations.forEach((tr:any) => {
-            console.log("transaltion: ", tr.verseTranslation)
+            console.log("translation: ", tr.verseTranslation)
         })
         return translations
     } catch (error) {
