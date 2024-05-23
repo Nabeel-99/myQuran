@@ -74,51 +74,64 @@ const fetchPages = async(startingIndex: number) => {
         console.log
     }
 }
-export const renderPages = async(surahNumber: number) => {
-    try {
-        const surahList = await getSurahLists()
-        const selectedSurah = surahList.find((surah: any) => surah.sura_number === surahNumber) 
-        if(!selectedSurah){
-            throw new Error(`surah number not found`)
-        }
-        const surahVersesByPage = []
-        const [firstPage, lastPage] = selectedSurah.pages
-        const suraNumber = selectedSurah.sura_number
-        for(let pageNumber = firstPage; pageNumber <= lastPage; pageNumber++){
-            const pageData = await fetchPages(pageNumber)
-
-            const filteredPageData = pageData.filter((verse: any) => {
-                const [surah, aya] = verse.ayaNumber.split(":").map(Number)
-                return surah === surahNumber
-            })
-            if(filteredPageData.length > 0){
-                surahVersesByPage.push({
-                    pageData: filteredPageData, 
-                    pageNumber, 
-                    suraNumber,
-                    isNewSurah: filteredPageData.some((verse: any) => verse.ayaNumber.split(":")[1] === "1"),
-                })
-            }
-            
-        }
-        return surahVersesByPage
-    } catch (error) {
-        console.log(error)
-        return []
-    }
-}
 
 export const fetchSurahTranslation = async(surahNum: number) => {
     try {
         const response = await axios.get(`${BASE_URL}/quran/translations/131?chapter_number=${surahNum}`)
-        const translations = response.data.translations.map((translation: any) => ({
-            verseTranslation: translation.text
+        const translations = response.data.translations.map((translation: any, index: number) => ({
+            verseTranslation: translation.text,
+            aya: index + 1
         }))
-      translations.forEach((tr:any) => {
-            console.log("translation: ", tr.verseTranslation)
-        })
+     
         return translations
     } catch (error) {
         console.log(error)
     }
 }
+export const renderPages = async (surahNumber: any) => {
+    try {
+        const surahList = await getSurahLists();
+        const selectedSurah = surahList.find((surah: any) => surah.sura_number === surahNumber);
+        if (!selectedSurah) {
+            throw new Error(`Surah number not found`);
+        }
+
+        const surahVersesByPage = [];
+        const [firstPage, lastPage] = selectedSurah.pages;
+        const translationData = await fetchSurahTranslation(surahNumber);
+
+        for (let pageNumber = firstPage; pageNumber <= lastPage; pageNumber++) {
+            const pageData = await fetchPages(pageNumber);
+
+            const filteredPageData = pageData.filter((verse: any) => {
+                const [surah] = verse.ayaNumber.split(":").map(Number);
+                return surah === surahNumber;
+            });
+
+            const pageDataWithTranslations = filteredPageData.map((verse: any) => {
+                const [, aya] = verse.ayaNumber.split(":").map(Number);
+                const translation = translationData.find((tr: any) => tr.aya === aya);
+                return {
+                    ...verse,
+                    translation: translation ? translation.verseTranslation : '',
+                };
+            });
+
+            if (pageDataWithTranslations.length > 0) {
+                surahVersesByPage.push({
+                    pageData: pageDataWithTranslations,
+                    pageNumber,
+                    suraNumber: surahNumber,
+                });
+            }
+        }
+
+        return surahVersesByPage;
+    } catch (error) {
+        console.log(error);
+        return [];
+    }
+};
+
+
+

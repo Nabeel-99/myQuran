@@ -15,9 +15,18 @@ const Surah = () => {
     const [juzList, setJuzList] = useState<any[]>([])
     const [selectedSurah, setSelectedSurah] = useState<any[]>([])
     const { id } = useParams<{id: string | undefined}>()
+    const [isReadingView, setIsReadingView] = useState<boolean>(true)
+    const [isTranslationView, setIsTranslationView] = useState<boolean>(false)
 
+    const toggleTranslationView = () => {
+        setIsTranslationView(true)
+        setIsReadingView(false)
+    }
+    const toggleReadingView = () => {
+        setIsReadingView(true)
+        setIsTranslationView(false)
+    }
 
-  
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const openSideMenu = () => {
         setIsOpen(!isOpen)
@@ -99,8 +108,8 @@ const Surah = () => {
             <div className='shadow-sm border border-gray-100 p-1 rounded-full flex flex-col gap-3 items-center justify-between w-96 bg-gray-50'>
                 <p className='text-sm'>Page Layout</p>
                <div className='flex justify-between w-full px-14'>
-                    <button className='flex items-center gap-2 border px-6 py-1 bg-white rounded-full'><CgReadme /> Reading</button>
-                    <button className='flex items-center gap-2 px-6 py-1 hover:border rounded-full'><RxReader />Translation</button>
+                    <button onClick={toggleReadingView} className='flex items-center gap-2 border px-6 py-1 bg-white rounded-full'><CgReadme /> Reading</button>
+                    <button onClick={toggleTranslationView} className='flex items-center gap-2 px-6 py-1 hover:border rounded-full'><RxReader />Translation</button>
                </div>
             </div>
         {/* Surah Name */}
@@ -116,7 +125,10 @@ const Surah = () => {
                     }
              </p>
             </h1>
-            <Page/>
+            <Page
+                isReadingView={isReadingView}
+                isTranslationView={isTranslationView}
+            />
           </div>
         )}
         </div>

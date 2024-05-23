@@ -35,6 +35,13 @@
   font-family: 'me-quran';
   src: url('./assets/fonts/QCF2002.ttf') format('truetype');
 }
+@font-face{
+  font-family: 'p-236';
+  src: url('./assets/fonts/p236\ \(1\).ttf');
+}
+.p-236{
+  font-family: 'p-236';
+}
 .spin{
   animation: spin 1s infinite linear;
 }

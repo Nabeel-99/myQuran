@@ -2,9 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { fetchSurahTranslation, renderPages } from '../apis/quranApi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FaSpinner } from 'react-icons/fa'
+import TranslationView from './TranslationView'
+import ReadingView from './ReadingView'
 
-
-const Page = () => {
+interface PageProps{
+  isReadingView: boolean,
+  isTranslationView: boolean
+}
+const Page:React.FC<PageProps> = ({isReadingView, isTranslationView}) => {
   const [pages, setPages] = useState<any[]>([])
   const { id: idParam } = useParams<{id: string | undefined}>()
   const id = idParam || ''
@@ -22,18 +27,13 @@ const Page = () => {
     }
 }
 
-const fetchTranslations = async(id: any) => {
-  try {
-      const response = await fetchSurahTranslation(id)
-      setTranslations(response)
-  } catch (error) {
-      console.log(error)
-  }
+
+const formattedVerse = (verse: any) => {
+  verse = verse.replace(/\u{06DF}/gu, "\u{0652}");
+  verse = verse.replace(/\u{06EB}/gu, "\u{06EC}"); 
+  return verse;
 }
 
-  const formattedVerse = (verse: any) => {
-    return verse.replace(/\u{06DF}/gu, "\u{0652}");
-  }
 
   const formattedTranslation = (translation: any) => {
     return translation.replace(/<sup foot_note=\d+>(\d+)<\/sup>?/g, "")
@@ -43,6 +43,7 @@ const fetchTranslations = async(id: any) => {
       setisLoading(true)
       const response = await renderPages(id)
       setPages(response)
+      setTranslations(response)
     } catch (error) {
       console.log(error)
     } finally{
@@ -67,79 +68,40 @@ const fetchTranslations = async(id: any) => {
     const surahNumber = parseInt(id, 10)
     renderByPage(surahNumber)
     setCurrentSurah(surahNumber)
-    fetchTranslations(surahNumber)
-    
+    // fetchTranslations(surahNumber)
   }, [id])
   return (
-    <div className='flex flex-col w-full   md:  '>
+    <div className='flex flex-col items-center w-full   md:  '>
       {isLoading ? (
-          <div><FaSpinner className='spin'/></div>
+          <div className='flex items-center justify-center'><FaSpinner className='spin'/></div>
       ) : (
         <>
         {pages.map((page, pageIndex) => (
-          <div key={pageIndex} className=' border-gray-300 mb-8 flex flex-col  '>
+          <div key={pageIndex} className={`border-gray-300 mb-8 flex flex-col w-full $ `}>
               {page.pageData.map((verse: any, verseIndex: number) => (
-                  page.suraNumber === 1 
-                  ? <div key={verseIndex} className=' border-b py-4  text-uthmani flex  gap-4   leading-relaxed '>
-                      <div className='flex flex-col gap-4'>
-                          <button>1</button>
-                          <button>2</button>
-                          <button>3</button>
-                          <button>4</button>
-                      </div>
-                      <div className='flex flex-col gap-4 w-full justify-center'>
-                        <div className='flex items-end start verseText text-[5.9vw] md:text-[4vh]'>
-                          {formattedVerse(verse.aya)}   
-                          <span className='quran-common hover:text-blue-700'>{formattedStyleName(verse.ayaNumber.split(":")[1])}</span>
-                        </div>
-                        <div className='text-2xl flex ml-10 py-4 '>
-                          {translations.length > 0 && 
-                          <p>{formattedTranslation(translations[verseIndex]?.verseTranslation)}</p>
-                          }
-                        </div>
-                      </div>
-                    </div>
-                  : page.suraNumber === 2 && page.pageNumber === 2
-                  ? <div key={verseIndex} className=' border-b py-4  text-uthmani flex  gap-4   leading-relaxed '>
-                  <div className='flex flex-col gap-4'>
-                      <button>1</button>
-                      <button>2</button>
-                      <button>3</button>
-                      <button>4</button>
-                  </div>
-                  <div className='flex flex-col gap-4 w-full justify-center'>
-                    <div className='flex items-end start verseText text-[5.9vw] md:text-[4vh]'>
-                      {formattedVerse(verse.aya)}   
-                      <span className='quran-common hover:text-blue-700'>{formattedStyleName(verse.ayaNumber.split(":")[1])}</span>
-                    </div>
-                    <div className='text-2xl flex text-left ml-10 py-4 '>
-                      {translations.length > 0 && 
-                      <p>{formattedTranslation(translations[verseIndex]?.verseTranslation)}</p>
-                      }
-                    </div>
-                  </div>
-                </div>
-                  : <div key={verseIndex} className=' border-b py-4  text-uthmani flex  gap-4   leading-relaxed '>
-                  <div className='flex flex-col gap-4'>
-                      <button>1</button>
-                      <button>2</button>
-                      <button>3</button>
-                      <button>4</button>
-                  </div>
-                  <div className='flex flex-col gap-4 w-full justify-center'>
-                    <div className='flex items-end start verseText text-[5.9vw] md:text-[4vh]'>
-                      {formattedVerse(verse.aya)}   
-                      <span className='quran-common hover:text-blue-700'>{formattedStyleName(verse.ayaNumber.split(":")[1])}</span>
-                    </div>
-                    <div className='text-2xl flex ml-10 py-4 '>
-                      {translations.length > 0 && 
-                      <p>{formattedTranslation(translations[verseIndex].verseTranslation)}<sup>{verseIndex}</sup></p>
-                      }
-                    </div>
-                  </div>
-                </div>
-  
+               <div key={verseIndex}>
+                  {isTranslationView && (
+                     <TranslationView
+                     verse={verse}
+                     verseIndex={verseIndex}
+                     formattedVerse={formattedVerse}
+                     formattedStyleName={formattedStyleName}
+                     formattedTranslation={formattedTranslation}
+                   />
+                  )}
+               </div>
+               
               ))}
+              <div key={pageIndex} className='flex items-center w-full justify-center'>
+                {isReadingView && (
+                    <ReadingView
+                      pageIndex={pageIndex}
+                      page={page}
+                      formattedVerse={formattedVerse}
+                      formattedStyleName={formattedStyleName}
+                    />
+                )}
+              </div>
           </div>
         ))}
         <div className='flex items-center justify-center gap-4'>
@@ -147,12 +109,11 @@ const fetchTranslations = async(id: any) => {
              <button onClick={prevSurah} className='bg-gray-200 border px-3 py-1 rounded-md'>Previous Surah</button>
           )}
            {currentSurah === 114 ? '' : (
-                  <button onClick={nextSurah} className='bg-gray-200 border px-3 py-1 rounded-md'>Next Surah</button>
+              <button onClick={nextSurah} className='bg-gray-200 border px-3 py-1 rounded-md'>Next Surah</button>
            )}
         </div>
         </>
       )}
-     
     </div>
   )
 }
