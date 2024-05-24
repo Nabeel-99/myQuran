@@ -4,17 +4,49 @@ import { fetchAllJuz, getSurahLists } from '../apis/quranApi'
 import ChapterCards from '../components/ChapterCards'
 import JuzCards from '../components/JuzCards'
 import { FaBarsStaggered, FaSort } from 'react-icons/fa6'
+import SeerahImage from "../assets/images/seerah.png"
+import DuaImage from "../assets/images/dua.png"
+import QuizImage from "../assets/images/quiz.png"
 
 const LandingPage = () => {
 
     const [surahList, setSurahList] = useState<any[]>([])
     const [surahJuz, setSurahJuz] = useState<any[]>([])
+    const [filteredSurahList, setFilteredSurahList] = useState<any[]>([])
+    const [filteredJuzList, setFilteredJuzList] = useState<any[]>([])
     const [isSurah, setIsSurah] = useState<boolean>(true)
     const [isJuz, setIsJuz] = useState<boolean>(false)
-    const longAyat = [14, 15, 17, 18, 26, 28, 29, 30]
+    const [isSearchBtn, setIsSearchBtn] = useState<boolean>(false)
+    const [searchValue, setSearchValue] = useState<string>('')
+    
     const showSurah = () => {
         setIsSurah(true)
         setIsJuz(false)
+    }
+
+    const searchSurah = (searchValue: string) => {
+        const filteredList = surahList.filter((surah: any) => 
+            surah.name_simple.toLowerCase().replace(/[^a-z0-9]/g, '').includes(searchValue.replace(/[^a-z0-9]/g, '').toLowerCase())
+        )
+        setFilteredSurahList(filteredList)
+    }
+
+    const searchJuz = (searchValue: any) => {
+        const filteredList = surahJuz.filter((juz: any) => 
+            juz.juzNum.toString().includes(searchValue.toString())
+        )
+         setFilteredJuzList(filteredList)
+     }
+
+    const toggleSearch = () => {
+        setIsSearchBtn(!isSearchBtn)
+    }
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value
+        setSearchValue(value)
+        searchSurah(value)
+        searchJuz(value)
     }
     const showJuz = () => {
         setIsJuz(true)
@@ -34,6 +66,7 @@ const LandingPage = () => {
         try {
             const surahData = await getSurahLists()
             setSurahList(surahData)
+            setFilteredSurahList(surahData)
         } catch (error) {
             console.log(error)
         }
@@ -43,6 +76,7 @@ const LandingPage = () => {
         try{
             const juzData = await fetchAllJuz()
             setSurahJuz(juzData)
+            setFilteredJuzList(juzData)
         }catch(error){
             console.log("error", error)
         }
@@ -53,11 +87,38 @@ const LandingPage = () => {
     }, [])
 
   return (
-    <div className='flex flex-col w-full pt-24 px-4 xl:px-24 gap-8 '>
+    <div className='flex flex-col w-full  pt-24 px-4 xl:px-24 gap-8 '>
+        {/*  */}
+        <div className='flex items-center w-full justify-center'>
+            <h3 className='arabicText text-[5rem] lg:text-[10rem] ' >126</h3>
+        </div>
+        <div className='flex flex-col justify-center border w-full px-20  p-3 rounded-lg xl:h-96'>
+            <div className='flex flex-col md:grid md:grid-cols-3  gap-10'>
+                <div className='border flex flex-col items-center justify-center rounded-xl h-36 md:h-auto md:w-72'>
+                    <img src={SeerahImage} alt='seerah image' className='object-cover   h-54 rounded-xl'/>
+                    <h3 className='text-xl'>Seerah</h3>
+                </div>
+                <div className='border flex flex-col items-center justify-center rounded-xl h-36 md:h-auto md:w-72'>
+                    <img src={DuaImage} alt='dua image' className='object-cover w-24 h-24 md:h-44 '/>
+                    <h3 className='text-xl'>Duas & Supplications</h3>
+                </div>
+                <div className='border flex flex-col items-center justify-center rounded-xl h-36 md:h-auto md:w-72'>
+                    <img src={QuizImage} alt='quiz image' className='object-cover w-full h-24 xl:h-44'/>
+                    <h3 className='text-xl'>Quiz</h3>
+                </div>
+            </div>
+        </div>
         {/* SEARCH BAR */}
         <div className='flex border border-black mx-auto items-center justify-center pl-4  rounded-full w-full md:w-3/6'>
             <label htmlFor='search' title='search' className='border-r border-r-black h-full  flex items-center pr-3'><FaSearch/></label>
-            <input type='text' id='search' placeholder='Search Surah e.g Surah Al-fatihah' className='w-full py-3 px-2 rounded-r-full'/>
+            <input 
+                type='text' 
+                id='search' 
+                placeholder='Search Surah e.g Surah Al-fatihah' 
+                className='w-full py-3 px-2 rounded-r-full'
+                value={searchValue}
+                onChange={handleSearchChange}
+                />
         </div>
         {/* RECENTLY READ */}
        <div className='flex flex-col gap-2'>
@@ -102,17 +163,22 @@ const LandingPage = () => {
       {/* SURAH LIST */}
      {isSurah ? 
          <ChapterCards
+         toggleSearch={toggleSearch}
+         filteredSurahList={filteredSurahList}
          surahList={surahList}
          formattedSurahName={formattedSurahName}
        /> : 
        <JuzCards
        surahJuz={surahJuz}
-       longAyat={longAyat}
-       formattedSurahName={formattedSurahName}
+       filteredJuzList={filteredJuzList}
      />
     }
      
-     
+     {filteredSurahList.length === 0 && (
+            <div className='flex justify-center pb-10 mb-4'>
+                No search Found
+            </div>
+        )}
     </div>
   )
 }

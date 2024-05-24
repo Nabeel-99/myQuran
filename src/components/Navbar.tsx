@@ -1,13 +1,33 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaBars, FaBook, FaBookOpen, FaGlobe, FaHandHoldingWater, FaHome, FaMoon, FaSearch, FaUser } from 'react-icons/fa'
 import { FaGear, FaHand, FaM, FaPerson, FaRadio, FaXmark } from 'react-icons/fa6'
+import { IoHomeOutline, IoMoon, IoMoonOutline, IoPersonOutline } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
+import { getSurahLists } from '../apis/quranApi'
+import ChapterCards from './ChapterCards'
 
 const Navbar = () => {
     const [isBurgerMenu, setIsBurgerMenu] = useState<boolean>(false)
     const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
     const [isSearchBtn, setIsSearchBtn] = useState<boolean>(false)
+    const [filteredSurahList, setFilteredSurahList] = useState<any[]>([])
+    const [surahList, setSurahList] = useState<any[]>([])
+    const [searchValue, setSearchValue] = useState<string>('')
+    const [isSearching, setIsSearching] = useState<boolean>(false)
 
+    const searchSurah = (searchValue: string) => {
+        const filteredList = surahList.filter((surah: any) => 
+            surah.name_simple.toLowerCase().replace(/[^a-z0-9]/g, '').includes(searchValue.replace(/[^a-z0-9]/g, '').toLowerCase())
+        )
+        setIsSearching(true)
+        setFilteredSurahList(filteredList)
+    }
+
+    const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value
+        setSearchValue(value)
+        searchSurah(value)
+    }
     const toggleBurgerMenu = () => {
         setIsBurgerMenu(!isBurgerMenu)
     }
@@ -17,6 +37,27 @@ const Navbar = () => {
     const closeMenu = () => {
         setIsBurgerMenu(false)
     }
+    const formattedSurahName = (surahNumber: number) => {
+        if(surahNumber > 99){
+            return `${surahNumber}`
+        }else if (surahNumber > 9){
+            return `0${surahNumber}`
+        }else{
+            return `00${surahNumber}`
+        }
+    }
+    useEffect(() => {
+        const fetchSurahList = async() => {
+            try {
+                const surahData = await getSurahLists()
+                setSurahList(surahData)
+                setFilteredSurahList(surahData)
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        fetchSurahList()
+    }, [])
   return (
     <>
     <div className='flex z-10 bg-white fixed w-full justify-between md:px-16 py-3 md:py-3 items-center border-b '>
@@ -24,11 +65,15 @@ const Navbar = () => {
             {/* <button title='menu' className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200'><FaBars/></button> */}
             <Link to={"/"} className='text-4xl text-slate-950 arabicText'>121</Link>
         </div>
-        <div className='hidden md:flex'>
-            <ul className='flex gap-3 items-center'>
-                <li><button className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200' title='moon'><FaMoon/></button></li>
-                <li><button className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200' title='globe'><FaGlobe/></button></li>
-                <li><button className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200' title='search'><FaUser/></button></li>
+        <div className='hidden md:flex gap-5 '>
+            <ul className='flex gap-2 items-center'>
+                <li><Link to={"/"}>Home</Link></li>
+                <li><Link to={"/"}>Settings</Link></li>
+            </ul>
+            <div className='border border-black opacity-35'></div>
+            <ul className='flex gap-2 items-center text-lg'>
+                <li><button title='darkmode' className='flex'><IoMoonOutline/></button></li>
+                <li><Link to={"/"}><IoPersonOutline/></Link></li>
             </ul>
         </div>
         {/* mobile */}
@@ -80,11 +125,28 @@ const Navbar = () => {
                    <div className='flex justify-between items-center'>
                        <div className='flex gap-2 items-center py-1'>
                            <label htmlFor='search'><FaSearch/></label>
-                           <input className='w-72 border-b' placeholder='Navigate with text e.g al-fatihah, pg24...' id='search'/>
+                           <input 
+                                value={searchValue}
+                                onChange={handleSearchChange}
+                                className='w-72 border-b px-3' 
+                                placeholder='Navigate with text e.g al-fatihah, pg24...' 
+                                id='search'/>
                        </div>
                        <button onClick={toggleSearch} className='' title='close'><FaXmark className='text-2xl'/></button>
                    </div>
+                   <div className='overflow-y-scroll pt-5'>
+                    {isSearching && (
+                         <ChapterCards
+                         filteredSurahList={filteredSurahList}
+                         surahList={surahList}
+                         formattedSurahName={formattedSurahName}
+                         toggleSearch={toggleSearch}
+                         />
+                    )}
+                    </div>
                </div>
+              
+             
            </div>
        </>
         )}

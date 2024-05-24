@@ -17,6 +17,7 @@ function App() {
      <Routes>
         <Route path='/' element={<LandingPage/>}></Route>
         <Route path='/surah/:id' element={<Surah/>}></Route>
+        <Route path='/juz/:id' element={<Surah/>}></Route>
       </Routes>
         <Footer/>
      </div>

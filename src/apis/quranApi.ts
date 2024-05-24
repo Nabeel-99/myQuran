@@ -1,10 +1,29 @@
 import axios from "axios";
 
 const BASE_URL = 'https://api.quran.com/api/v4';
+interface Chapter{
+    revelation_place: string;
+    name_simple: string
+    sura_number: number
+    verses_count: number
+    english_name: {name: string}
+    pages: any[]
+}
 
+interface Verse {
+    verseId: any;
+    verseNumber: any;
+    verseImlaei: any;
+    text: any;
+}
+
+
+interface Translation{
+    text: string
+}
 export const getSurahLists = async() => {
     try {
-        const response = await axios.get(`${BASE_URL}/chapters`)
+        const response = await axios.get<{chapters: Chapter[]}>(`${BASE_URL}/chapters`)
         const dataRes = response.data.chapters.map((chapter:any) => ({
             revelationPlace: chapter.revelation_place,
             name_simple: chapter.name_simple,
@@ -22,12 +41,13 @@ export const getSurahLists = async() => {
 }
 const getSurahJuz = async(juzNum:number) => {
     try {
-        const response = await axios.get(`${BASE_URL}/quran/verses/uthmani_simple?juz_number=${juzNum}`)
+        const response = await axios.get(`${BASE_URL}/quran/verses/uthmani?juz_number=${juzNum}`)
         const dataRes = response.data.verses[0]
-
+        console.log(dataRes)
         return dataRes
     } catch (error) {
         console.log(`error fetching juz`, error)
+        return null
     }
 }
 export const fetchAllJuz = async() => {
@@ -39,32 +59,32 @@ export const fetchAllJuz = async() => {
             allJuzData.push({
                 juzNum: i,
                 text: juzData,
-                sura: surahName.english_name
+                sura: surahName.map((surah => surah.english_name))
             })
         }
     }
 
     return allJuzData
 }
-export const fetchAyat = async(surahNum: number) => {
+export const fetchAyat = async(surahNum: number): Promise<Verse[]> => {
     try {
-        const response = await axios.get(`${BASE_URL}/quran/verses/uthmani?chapter_number=${surahNum}}`)
+        const response = await axios.get<{ verses: any[] }>(`${BASE_URL}/quran/verses/uthmani?chapter_number=${surahNum}`)
         const ayat = response.data.verses.map((aya: any) => ({
             verseId: aya.id,
-            verseText: aya.text_uthmani_simple,
             verseNumber: aya.verse_key,
             verseImlaei: aya.text_imlaei,
-            text: aya.text_uthmani
-            
+            text: aya.text_uthmani 
         }))
         return ayat
     } catch (error) {
         console.log(error)
+        return []
     }
 }
+
 const fetchPages = async(startingIndex: number) => {
     try {
-        const response = await axios.get(`${BASE_URL}/quran/verses/uthmani?page_number=${startingIndex}`)
+        const response = await axios.get<{verses: Verse[]}>(`${BASE_URL}/quran/verses/uthmani?page_number=${startingIndex}`)
         const pageData = response.data.verses.map((verse:any) => ({
             aya: verse.text_uthmani,
             ayaNumber: verse.verse_key,
@@ -77,7 +97,7 @@ const fetchPages = async(startingIndex: number) => {
 
 export const fetchSurahTranslation = async(surahNum: number) => {
     try {
-        const response = await axios.get(`${BASE_URL}/quran/translations/131?chapter_number=${surahNum}`)
+        const response = await axios.get<{translations: Translation[]}>(`${BASE_URL}/quran/translations/131?chapter_number=${surahNum}`)
         const translations = response.data.translations.map((translation: any, index: number) => ({
             verseTranslation: translation.text,
             aya: index + 1
@@ -98,10 +118,10 @@ export const renderPages = async (surahNumber: any) => {
 
         const surahVersesByPage = [];
         const [firstPage, lastPage] = selectedSurah.pages;
-        const translationData = await fetchSurahTranslation(surahNumber);
+        const translationData = await fetchSurahTranslation(surahNumber) ?? [];
 
         for (let pageNumber = firstPage; pageNumber <= lastPage; pageNumber++) {
-            const pageData = await fetchPages(pageNumber);
+            const pageData = await fetchPages(pageNumber) ?? [];
 
             const filteredPageData = pageData.filter((verse: any) => {
                 const [surah] = verse.ayaNumber.split(":").map(Number);

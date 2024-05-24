@@ -4,12 +4,16 @@ import { Link } from 'react-router-dom'
 interface ChapterCardsProps{
     surahList: any[],
     formattedSurahName:(number: number) => string
+    filteredSurahList: any[]
+    toggleSearch:() => void
 }
-const ChapterCards: React.FC<ChapterCardsProps> = ({surahList, formattedSurahName}) => {
+const ChapterCards: React.FC<ChapterCardsProps> = ({surahList, formattedSurahName, filteredSurahList, toggleSearch}) => {
+
+
   return (
     <div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 pb-12'>
-        {surahList.map((sura, index) => (
-            <Link to={`/surah/${sura.sura_number}`} className='border text-black rounded-xl border-green-800 shadow-md  px-4' key={index}>
+        {filteredSurahList.map((sura, index) => (
+            <Link to={`/surah/${sura.sura_number}`} onClick={toggleSearch} className='border text-black rounded-xl border-green-800 shadow-md  px-4' key={index}>
             <div className='flex justify-between items-center px-1'>
                 <div className='flex items-center gap-6'>
                     <div className='border border-black w-8  h-8 transform rotate-45 flex items-center justify-center'>
@@ -31,7 +35,8 @@ const ChapterCards: React.FC<ChapterCardsProps> = ({surahList, formattedSurahNam
                 </div>
             </div>
         </Link>
-        ))} 
+        ))}
+        
       </div>
   )
 }

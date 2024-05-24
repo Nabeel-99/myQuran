@@ -8,6 +8,9 @@ import Sidemenu from '../components/Sidemenu';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Page from '../components/Page';
+import { BsThreeDots } from 'react-icons/bs';
+import { FaXmark } from 'react-icons/fa6';
+import SidePanel from '../components/SidePanel';
 
 const Surah = () => {
 
@@ -15,8 +18,11 @@ const Surah = () => {
     const [juzList, setJuzList] = useState<any[]>([])
     const [selectedSurah, setSelectedSurah] = useState<any[]>([])
     const { id } = useParams<{id: string | undefined}>()
+    const { juzId } = useParams<{juzId: string | undefined}>()
     const [isReadingView, setIsReadingView] = useState<boolean>(true)
     const [isTranslationView, setIsTranslationView] = useState<boolean>(false)
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isSidePanel, setIsSidePanel] = useState<boolean>(false)
 
     const toggleTranslationView = () => {
         setIsTranslationView(true)
@@ -27,11 +33,19 @@ const Surah = () => {
         setIsTranslationView(false)
     }
 
-    const [isOpen, setIsOpen] = useState<boolean>(false)
     const openSideMenu = () => {
         setIsOpen(!isOpen)
     }
-  
+
+    const closeSideMenu = () => {
+        setIsOpen(false)
+    }
+    const openSidePanel = () => {
+        setIsSidePanel(!isSidePanel)
+    }
+    const closeSidePanel = () => {
+        setIsSidePanel(false)
+    }
     const formattedStyleName = (surahNumber: number) => {
         if(surahNumber > 99){
             return `${surahNumber}`
@@ -66,9 +80,7 @@ const Surah = () => {
             console.log(error)
         }
     }
-    const closeSideMenu = () => {
-        setIsOpen(false)
-    }
+    
     const renderSurahAyat = async(id: number) => {
          try {
              await fetchSurahAyat(id)
@@ -76,15 +88,34 @@ const Surah = () => {
             console.log(error)
          }
     }
+
+    const fetchJuzData = async(juzId: number) => {
+        try {
+            const response = await fetchAllJuz()
+            const juzData = response.find((juz) => juz.juzNum === juzId)
+            if(juzData){
+                const surahId = parseInt(juzData.text.verse_key.split(":")[0])
+                const ayahId = parseInt(juzData.text.verse_key.split(":")[1])
+                await renderSurahAyat(surahId)
+
+              
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
    useEffect(() => {
         window.scrollTo({top: 0})
         if(id){
             renderSurahAyat(parseInt(id))
         }
+        if(juzId){
+            fetchJuzData(parseInt(juzId))
+        }
         fetchJuz()
         fetchAllSurahs()
         // fetchAllPages()
-   }, [id]) 
+   }, [id, juzId]) 
   return (
     <div className='flex h-full w-full'>
         {/* side navigation */}
@@ -100,6 +131,17 @@ const Surah = () => {
                 surahList={surahList}
                 closeSideMenu={closeSideMenu}
             />
+        )}
+      </div>
+      {/* extra side MEnu */}
+      <div className={`hidden md:block bg-white border-t fixed top-16 right-0 rounded-tr transition-all duration-700 ${isSidePanel ? ' w-72 h-full border-l ' : ''}`} >
+        <div className={`hidden md:flex  ${isSidePanel ? 'justify-start' : 'justify-start'}`}>
+            <button onClick={openSidePanel} title='open-navigation' className=' bg-gray-300 px-3 py-2 rounded-tr border hover:transition hover:duration-700 hover:border-[#646cff] cursor-pointer'>
+                {isSidePanel ? <FaXmark /> : <BsThreeDots />}
+            </button>
+        </div>
+        {isSidePanel && (
+            <SidePanel/>
         )}
       </div>
       {/* main content */}
