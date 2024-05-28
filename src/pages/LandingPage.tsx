@@ -99,7 +99,7 @@ const LandingPage = () => {
                     <h3 className='text-xl'>Seerah</h3>
                 </div>
                 <div className='border flex flex-col items-center justify-center rounded-xl h-36 md:h-auto md:w-72'>
-                    <img src={DuaImage} alt='dua image' className='object-cover w-24 h-24 md:h-44 '/>
+                    <img src={DuaImage} alt='dua image' className='object-cover w-24 h-24 md:w-auto md:h-44 '/>
                     <h3 className='text-xl'>Duas & Supplications</h3>
                 </div>
                 <div className='border flex flex-col items-center justify-center rounded-xl h-36 md:h-auto md:w-72'>

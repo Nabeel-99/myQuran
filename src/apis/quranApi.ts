@@ -43,7 +43,6 @@ const getSurahJuz = async(juzNum:number) => {
     try {
         const response = await axios.get(`${BASE_URL}/quran/verses/uthmani?juz_number=${juzNum}`)
         const dataRes = response.data.verses[0]
-        console.log(dataRes)
         return dataRes
     } catch (error) {
         console.log(`error fetching juz`, error)
@@ -52,14 +51,12 @@ const getSurahJuz = async(juzNum:number) => {
 }
 export const fetchAllJuz = async() => {
     const allJuzData = []
-    const surahName = await getSurahLists()
     for (let i = 1; i <=30; i++){
         const juzData = await getSurahJuz(i)
         if(juzData){
             allJuzData.push({
                 juzNum: i,
                 text: juzData,
-                sura: surahName.map((surah => surah.english_name))
             })
         }
     }

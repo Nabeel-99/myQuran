@@ -5,6 +5,8 @@ import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage'
 import Footer from './components/Footer'
 import Surah from './pages/Surah'
+import SignUp from './pages/SignUp'
+import SignIn from './pages/SignIn'
 
 function App() {
 
@@ -17,7 +19,9 @@ function App() {
      <Routes>
         <Route path='/' element={<LandingPage/>}></Route>
         <Route path='/surah/:id' element={<Surah/>}></Route>
-        <Route path='/juz/:id' element={<Surah/>}></Route>
+        <Route path='/juz/:juzId' element={<Surah/>}></Route>
+        <Route path='/signup' element={<SignUp/>}></Route>
+        <Route path='/login' element={<SignIn/>}></Route>
       </Routes>
         <Footer/>
      </div>
