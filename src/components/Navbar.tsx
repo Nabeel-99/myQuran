@@ -73,7 +73,7 @@ const Navbar = () => {
             <div className='border border-black opacity-35'></div>
             <ul className='flex gap-2 items-center text-lg'>
                 <li><button title='darkmode' className='flex'><IoMoonOutline/></button></li>
-                <li><Link to={"/"}><IoPersonOutline/></Link></li>
+                <li><Link to={"/login"}><IoPersonOutline/></Link></li>
             </ul>
         </div>
         {/* mobile */}
