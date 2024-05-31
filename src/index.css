@@ -5,10 +5,12 @@
 @font-face {
   font-family: 'SuraNames';
   src: url('./assets/fonts/sura_names.ttf') format('truetype');
+  font-display: swap;
 }
 @font-face {
   font-family: 'arabicCaligraphy';
   src: url('./assets/fonts/ArabQuranIslamic140-K7n4W.ttf') format('truetype');
+  font-display: swap;
 }
 @font-face {
   font-family: 'quran-common';

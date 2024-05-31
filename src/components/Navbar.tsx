@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from 'react'
-import { FaBars, FaBook, FaBookOpen, FaGlobe, FaHandHoldingWater, FaHome, FaMoon, FaSearch, FaUser } from 'react-icons/fa'
+import { FaArrowRight, FaBars, FaBook, FaBookOpen, FaClipboard, FaGlobe, FaHandHoldingWater, FaHome, FaMoon, FaSearch, FaUser } from 'react-icons/fa'
 import { FaGear, FaHand, FaM, FaPerson, FaRadio, FaXmark } from 'react-icons/fa6'
-import { IoHomeOutline, IoMoon, IoMoonOutline, IoPersonOutline } from 'react-icons/io5'
-import { Link } from 'react-router-dom'
+import { IoHomeOutline, IoLogOut, IoLogOutOutline, IoMoon, IoMoonOutline, IoPersonOutline } from 'react-icons/io5'
+import { Link, useNavigate } from 'react-router-dom'
 import { getSurahLists } from '../apis/quranApi'
 import ChapterCards from './ChapterCards'
+import axios from 'axios'
+import UserMenu from './UserMenu'
+import BurgerMenu from './BurgerMenu'
 
-const Navbar = () => {
+interface NavbarProps{
+    user: string | null
+    isLoggedIn: boolean
+    logout:() => void
+    toggleDarkMode:() => void
+}
+const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, toggleDarkMode}) => {
     const [isBurgerMenu, setIsBurgerMenu] = useState<boolean>(false)
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(false)
     const [isSearchBtn, setIsSearchBtn] = useState<boolean>(false)
     const [filteredSurahList, setFilteredSurahList] = useState<any[]>([])
     const [surahList, setSurahList] = useState<any[]>([])
     const [searchValue, setSearchValue] = useState<string>('')
     const [isSearching, setIsSearching] = useState<boolean>(false)
-
+    const [showUserMenu, setShowUserMenu] = useState<boolean>(false)
+    const navigate = useNavigate()
     const searchSurah = (searchValue: string) => {
         const filteredList = surahList.filter((surah: any) => 
             surah.name_simple.toLowerCase().replace(/[^a-z0-9]/g, '').includes(searchValue.replace(/[^a-z0-9]/g, '').toLowerCase())
@@ -46,6 +55,12 @@ const Navbar = () => {
             return `00${surahNumber}`
         }
     }
+    const showMenu = () => {
+        setShowUserMenu(!showUserMenu)
+    }
+    const closeUserMenu = () => {
+        setShowUserMenu(false)
+    }
     useEffect(() => {
         const fetchSurahList = async() => {
             try {
@@ -60,7 +75,7 @@ const Navbar = () => {
     }, [])
   return (
     <>
-    <div className='flex z-10 bg-white fixed w-full justify-between md:px-16 py-3 md:py-3 items-center border-b '>
+    <div className='flex z-10 bg-white fixed w-full justify-between dark:bg-black md:px-16 py-3 md:py-3 items-center border-b '>
         <div className='hidden md:flex gap-2 items-center justify-center'>
             {/* <button title='menu' className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200'><FaBars/></button> */}
             <Link to={"/"} className='text-4xl text-slate-950 arabicText'>121</Link>
@@ -71,10 +86,20 @@ const Navbar = () => {
                 <li><Link to={"/"}>Settings</Link></li>
             </ul>
             <div className='border border-black opacity-35'></div>
-            <ul className='flex gap-2 items-center text-lg'>
-                <li><button title='darkmode' className='flex'><IoMoonOutline/></button></li>
-                <li><Link to={"/login"}><IoPersonOutline/></Link></li>
-            </ul>
+            <div className='relative flex gap-2 items-center text-lg'>
+                <div><button onClick={toggleDarkMode} title='darkmode'  className='flex'><IoMoonOutline/></button></div>
+                {isLoggedIn ? (
+                    <button onClick={showMenu} className='border w-10 h-10 rounded-full flex items-center justify-center cursor-pointer bg-slate-800 text-white font-bold'>{user?.slice(0,1)}</button>
+                ) : (
+                   <div><Link to={"/login"}><IoPersonOutline/></Link></div> 
+                )}
+                {showUserMenu && (
+                   <UserMenu
+                        closeUserMenu={closeUserMenu}
+                        logout={logout}
+                   />
+                )}
+            </div>
         </div>
         {/* mobile */}
         <div className='flex md:hidden gap-2 px-8 items-center'>
@@ -87,35 +112,13 @@ const Navbar = () => {
             <button onClick={toggleBurgerMenu} title='menu' className='px-3 mr-4 py-2 rounded-lg border '><FaBars className='text-xl'/></button>
         </div>
         {isBurgerMenu && (
-            <div className='top-0 left-0  h-screen z-40 w-screen fixed bg-white right-0'>
-                <div className='flex flex-col mt-2 w-screen'>
-                    <div className='flex justify-between items-center mt-1'>
-                        <p className='arabicText text-4xl ml-8'>121</p>
-                        <button onClick={toggleBurgerMenu} title='menu' className='mr-5'><FaXmark className='text-4xl'/></button>
-                    </div>
-                    <div className='mt-10  flex flex-col gap-4 px-8'>
-                        <div className='flex flex-col gap-2 border p-4 rounded-lg bg-gray-100'>
-                            <button className='py-2 bg-white border-black border rounded-md w-44 font-bold'>Start Your Journey</button>
-                            <p>Experience a world of benefits by creating an account:</p>
-                            <ul className='list-disc ml-6'>
-                                <li>Bookmarking Verses</li>
-                                <li>Personal Notes</li>
-                                <li>Developing Quizzes</li>
-                                <li>Verse Sharing</li>
-                            </ul>
-                        </div>
-                        <p className='text-sm font-bold'>MENU</p>
-                        <ul>
-                            <li className='border-b-2  py-3 border-t-2'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaHome/>Home</Link></li>
-                            <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaRadio/>Reciters</Link></li>
-                            <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBook/>Seerah</Link></li>
-                            <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBookOpen/>Duas and Supplications</Link></li>
-                            <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaGear/>Settings</Link></li>
-                        </ul>
-             
-                    </div>
-                </div>
-            </div>
+            <BurgerMenu
+                toggleBurgerMenu={toggleBurgerMenu}
+                isLoggedIn={isLoggedIn}
+                user={user}
+                closeMenu={closeMenu}
+                logout={logout}
+            />
         )}
         {isSearchBtn && (
            <>

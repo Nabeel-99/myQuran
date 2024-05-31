@@ -5,7 +5,7 @@ import { FaRegBookmark, FaRegEye } from 'react-icons/fa'
 import { IoGameController, IoGameControllerOutline } from 'react-icons/io5'
 import { MdQuiz } from 'react-icons/md'
 import { TfiWrite } from 'react-icons/tfi'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 interface UserData{
   email: string,
@@ -22,6 +22,7 @@ const SignUp = () => {
     password: ''
   })
   const [error, setError]  = useState<string>('')
+  const navigate = useNavigate()
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
     setUserData(prevState => ({...prevState, [name]: value}))
@@ -44,6 +45,9 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             password: userData.password
           })
           console.log(response.data)
+          if(response.status === 201){
+            navigate('/login')
+          }
       } catch (error: any) {
         if(error.response && error.response >= 400 && error.response < 500){
           setError(error.response.data.message)
@@ -53,7 +57,8 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   return (
     
     <div className='flex  h-screen w-full justify-around items-start mt-32 px-20'>
-        <div className='w-1/3'>
+        <div className='w-1/3 flex flex-col gap-4'>
+        <p className='text-2xl font-serif font-bold italic'>Start your journey</p>
             <form className='border border-black p-6 rounded-lg' onSubmit={handleSignUpSubmit}>
               <div className='text-red-500'>{error}</div>
               <div className='mb-8'>
@@ -105,12 +110,12 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                   required/>
               </div>
               <div className='flex flex-col gap-3 items-start'>
-                  <button className='bg-green-500 hover:bg-green-600 text-white px-3 rounded-md py-1'>Create Account</button>
+                  <button className='bg-green-500 hover:bg-green-600 text-white px-3 rounded-md py-1' type='submit'>Create Account</button>
                   <p>Already have an account? <Link to={'/login'} className='text-blue-700 font-bold'>Login</Link></p>
               </div>
             </form>
         </div>
-        <div className='text-xl flex flex-col gap-4'>
+        <div className='text-xl flex flex-col gap-4 mt-10'>
             <p className='text-3xl font-bold'>Create Account</p>
             <p className='text-2xl'>Experience a world of benefits by creating an account:</p>
             <ul className='flex flex-col gap-4'>
