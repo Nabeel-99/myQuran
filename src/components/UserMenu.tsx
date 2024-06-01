@@ -9,7 +9,7 @@ interface UserMenuProps{
 }
 const UserMenu: React.FC<UserMenuProps> = ({closeUserMenu, logout}) => {
   return (
-    <div className='absolute  border  rounded-md top-10 right-0  w-60 bg-white shadow-md'>
+    <div className='absolute  border  rounded-md top-10 right-0  w-60 bg-white dark:bg-[#303233] shadow-md'>
     <div className='p-4'>
     <ul className='flex flex-col gap-4 text-md'>
         <Link to={"/"} onClick={closeUserMenu}><li className='flex items-center cursor-pointer  gap-2 hover:text-blue-600'><FaArrowRight/>Profile</li></Link>

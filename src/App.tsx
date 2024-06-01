@@ -15,7 +15,7 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const storedTheme = localStorage.getItem('theme')
-    return storedTheme === "dark" || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    return storedTheme === "light" || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
   })
 
   const autheticateUser = async() => {
@@ -44,25 +44,56 @@ const App = () => {
       console.log(error)
   }
   }
-  const toggleDarkMode = () => {
-    const newTheme = isDarkMode ? 'light' :  'dark'
-    setIsDarkMode(!isDarkMode)
-    localStorage.setItem('theme', newTheme)
-
+  
+  const lightMode = () => {
+    setIsDarkMode(false)
+    localStorage.setItem('theme', 'light')
   }
+  const darkMode = () => {
+    setIsDarkMode(true)
+    localStorage.setItem('theme', 'dark')
+  }
+
+  const systemMode = () => {
+    setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    localStorage.removeItem('theme')
+  }
+
   useEffect(() => {
-    if(!isDarkMode){
+    if(isDarkMode){
       document.documentElement.classList.add('dark')
     }else{
       document.documentElement.classList.remove('dark')
     }
     autheticateUser()
   }, [isDarkMode])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handlechange = (e: MediaQueryListEvent) => {
+      if(!localStorage.getItem('theme')){
+        setIsDarkMode(e.matches)
+      }
+    }
+    mediaQuery.addEventListener('change', handlechange)
+
+    return (() => {
+      mediaQuery.removeEventListener('change', handlechange)
+    })
+  }, [])
   return (
     <>
     <Router>
-      <div className='flex flex-col w-screen  h-full font-sans '>
-        <Navbar user={user} isLoggedIn={isLoggedIn} logout={logout} toggleDarkMode={toggleDarkMode}/>
+      <div className='flex flex-col w-screen  h-full font-sans dark:bg-[#232528] dark:text-white '>
+        <Navbar
+          isDarkMode={isDarkMode}
+          lightMode={lightMode}
+          darkMode={darkMode}
+          systemMode={systemMode}
+          user={user} 
+          isLoggedIn={isLoggedIn} 
+          logout={logout} />
      <Routes>
         <Route path='/' element={<LandingPage/>}></Route>
         <Route path='/surah/:id' element={<Surah/>}></Route>

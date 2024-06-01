@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { FaArrowRight, FaBars, FaBook, FaBookOpen, FaClipboard, FaGlobe, FaHandHoldingWater, FaHome, FaMoon, FaSearch, FaUser } from 'react-icons/fa'
 import { FaGear, FaHand, FaM, FaPerson, FaRadio, FaXmark } from 'react-icons/fa6'
-import { IoHomeOutline, IoLogOut, IoLogOutOutline, IoMoon, IoMoonOutline, IoPersonOutline } from 'react-icons/io5'
+import { IoHomeOutline, IoLogOut, IoLogOutOutline, IoMoon, IoMoonOutline, IoPersonOutline, IoSunnyOutline } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom'
 import { getSurahLists } from '../apis/quranApi'
 import ChapterCards from './ChapterCards'
 import axios from 'axios'
 import UserMenu from './UserMenu'
 import BurgerMenu from './BurgerMenu'
+import { GoDeviceDesktop } from 'react-icons/go'
 
 interface NavbarProps{
     user: string | null
     isLoggedIn: boolean
     logout:() => void
-    toggleDarkMode:() => void
+    lightMode:() => void
+    darkMode:() => void
+    systemMode:() => void
+    isDarkMode:boolean
 }
-const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, toggleDarkMode}) => {
+const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, darkMode, systemMode, isDarkMode}) => {
     const [isBurgerMenu, setIsBurgerMenu] = useState<boolean>(false)
     const [isSearchBtn, setIsSearchBtn] = useState<boolean>(false)
     const [filteredSurahList, setFilteredSurahList] = useState<any[]>([])
@@ -23,6 +27,7 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, toggleDarkMode
     const [searchValue, setSearchValue] = useState<string>('')
     const [isSearching, setIsSearching] = useState<boolean>(false)
     const [showUserMenu, setShowUserMenu] = useState<boolean>(false)
+    const [isShowModes, setIsShowModes] = useState<boolean>(false)
     const navigate = useNavigate()
     const searchSurah = (searchValue: string) => {
         const filteredList = surahList.filter((surah: any) => 
@@ -31,7 +36,12 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, toggleDarkMode
         setIsSearching(true)
         setFilteredSurahList(filteredList)
     }
-
+    const showModes = () => {
+        setIsShowModes(!isShowModes)
+    }
+    const closeModesModal = () => {
+        setIsShowModes(false)
+    }
     const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value
         setSearchValue(value)
@@ -75,10 +85,10 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, toggleDarkMode
     }, [])
   return (
     <>
-    <div className='flex z-10 bg-white fixed w-full justify-between dark:bg-black md:px-16 py-3 md:py-3 items-center border-b '>
+    <div className='flex z-10 bg-white fixed w-full justify-between dark:bg-[#232528] dark:border-[#414346]  md:px-16 py-3 md:py-3 items-center border-b  '>
         <div className='hidden md:flex gap-2 items-center justify-center'>
             {/* <button title='menu' className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200'><FaBars/></button> */}
-            <Link to={"/"} className='text-4xl text-slate-950 arabicText'>121</Link>
+            <Link to={"/"} className='text-4xl text-slate-950 arabicText dark:text-white '>121</Link>
         </div>
         <div className='hidden md:flex gap-5 '>
             <ul className='flex gap-2 items-center'>
@@ -87,9 +97,11 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, toggleDarkMode
             </ul>
             <div className='border border-black opacity-35'></div>
             <div className='relative flex gap-2 items-center text-lg'>
-                <div><button onClick={toggleDarkMode} title='darkmode'  className='flex'><IoMoonOutline/></button></div>
+                <div><button onClick={showModes} title='darkmode'  className='flex'>{isDarkMode ? <IoMoonOutline/> : <IoSunnyOutline/> }</button></div>
                 {isLoggedIn ? (
-                    <button onClick={showMenu} className='border w-10 h-10 rounded-full flex items-center justify-center cursor-pointer bg-slate-800 text-white font-bold'>{user?.slice(0,1)}</button>
+                    <button onClick={showMenu} className='border w-10 h-10 rounded-full flex items-center justify-center cursor-pointer bg-slate-800 dark:bg-white dark:text-black dark:border-black text-white font-bold'>
+                        {user?.slice(0,1)}
+                    </button>
                 ) : (
                    <div><Link to={"/login"}><IoPersonOutline/></Link></div> 
                 )}
@@ -98,6 +110,15 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, toggleDarkMode
                         closeUserMenu={closeUserMenu}
                         logout={logout}
                    />
+                )}
+                {isShowModes && (
+                    <div className='absolute top-10 right-0 dark:bg-[#303233]  bg-white border shadow-md w-32 rounded-lg '>
+                        <div className='flex flex-col gap-4 px-4 text-[1rem] p-4'>
+                            <button onClick={() => {lightMode(); closeModesModal()}} title='sun' className='flex items-center gap-2 hover:text-blue-700 dark:hover:text-blue-300'><IoSunnyOutline/> Light</button>
+                            <button onClick={() => {darkMode(); closeModesModal()}} title='moon' className='flex items-center gap-2  hover:text-blue-700 dark:hover:text-blue-300'><IoMoonOutline/> Dark</button>
+                            <button onClick={() => {systemMode(); closeModesModal()}} title='system' className='flex items-center gap-2  hover:text-blue-700 dark:hover:text-blue-300'><GoDeviceDesktop/> System</button>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

@@ -49,26 +49,26 @@ const SignIn: React.FC<SignInProps> = ({authenticateUser}) => {
     <div className='flex  h-full w-full justify-around items-start mt-32 mb-52 px-20'> 
     <div className='w-1/3 flex flex-col gap-4  '>
     <p className='text-2xl font-serif font-bold italic'>Start your journey</p>
-        <form className='border border-black p-6 rounded-lg' onSubmit={handleLoginSubmit}>
+        <form className='border border-black p-6 rounded-lg dark:bg-[#303233] dark:text-white' onSubmit={handleLoginSubmit}>
           <p className='text-3xl font-bold'>Login</p>
           <div className='text-red-500'>{error}</div>
           <div className='mb-8 mt-11'>
-            <label className='block text-sm font-medium text-gray-700 mb-2' htmlFor='email'>Email</label>
+            <label className='block text-sm font-medium  mb-2' htmlFor='email'>Email</label>
             <input 
               value={userData.email}
               onChange={handleChange}
               name='email'
-              className='border border-black rounded-md px-3 py-1 w-full' 
+              className='border border-black rounded-md dark:bg-[#232529] px-3 py-1 w-full' 
               id='email' 
               placeholder='Enter your email'/>
           </div>
         
           <div className='mb-8'>
-            <label className='block text-sm font-medium text-gray-700 mb-2' htmlFor='password'>Password</label>
+            <label className='block text-sm font-medium  mb-2' htmlFor='password'>Password</label>
             <input 
               value={userData.password}
               onChange={handleChange}
-              className='border border-black rounded-md px-3 w-full py-1' 
+              className='border border-black dark:bg-[#232529] rounded-md px-3 w-full py-1' 
               id='password'
               name='password' 
               placeholder='Password'/>

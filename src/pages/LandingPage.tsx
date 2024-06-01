@@ -109,13 +109,13 @@ const LandingPage = () => {
             </div>
         </div>
         {/* SEARCH BAR */}
-        <div className='flex border border-black mx-auto items-center justify-center pl-4  rounded-full w-full md:w-3/6'>
-            <label htmlFor='search' title='search' className='border-r border-r-black h-full  flex items-center pr-3'><FaSearch/></label>
+        <div className='flex border  mx-auto items-center justify-center pl-4  dark:bg-[#303233] rounded-full w-full md:w-3/6'>
+            <label htmlFor='search' title='search' className='border-r  h-full   flex items-center pr-3'><FaSearch/></label>
             <input 
                 type='text' 
                 id='search' 
                 placeholder='Search Surah e.g Surah Al-fatihah' 
-                className='w-full py-3 px-2 rounded-r-full'
+                className='w-full py-3 px-2 rounded-r-full dark:bg-[#303233]'
                 value={searchValue}
                 onChange={handleSearchChange}
                 />
@@ -124,15 +124,15 @@ const LandingPage = () => {
        <div className='flex flex-col gap-2'>
             <h2 className='md:text-xl'>Recently Read</h2>
             <div className='grid grid-flow-col xl:grid-cols-5 '>
-                <div className='border border-green-700 rounded-lg flex justify-between items-center'>
+                <div className='border  rounded-lg flex justify-between items-center'>
                     <div className='flex gap-4 p-2'>
-                        <div><h2 className='border p-1 rounded-lg border-green-300'>1:1</h2></div>
+                        <div><h2 className='border p-1 rounded-lg '>1:1</h2></div>
                         <div className='flex flex-col text-sm md:text-base'>
                             <p>Al-Fatihah</p>
                             <p>PG. 1</p>
                         </div>
                     </div>
-                    <div className='border-l  border-l-green-800 h-full p-2 rounded-r-lg items-center flex bg-green-800' >
+                    <div className='border-l  border-l-green-800 h-full p-2 rounded-r-lg items-center flex bg-blue-500' >
                         <button className='text-green-200 text-xl pl-3 ' title='view'><FaArrowRight/></button>
                     </div>
                 </div>
@@ -142,11 +142,11 @@ const LandingPage = () => {
       <div className='flex flex-col gap-4'>
         <h2 className='md:text-xl'>Chapter Lists</h2>
         <div className='grid grid-cols-2 gap-3 md:gap-12 '>
-            <button onClick={showSurah} className='border border-green-800  rounded-full md:text-xl px-2 py-1 md:px-6 md:py-3 flex justify-between items-center'>
+            <button onClick={showSurah} className='border rounded-full md:text-xl px-2 py-1 md:px-6 md:py-3 flex justify-between items-center'>
                 Chapter(114)
                 <p className="uthmani-script text-2xl md:text-4xl">سُورَة</p>
             </button>
-            <button onClick={showJuz} className='border border-green-800  rounded-full md:text-xl px-2 py-1 md:px-6 md:py-3 flex justify-between items-center'>
+            <button onClick={showJuz} className='border rounded-full md:text-xl px-2 py-1 md:px-6 md:py-3 flex justify-between items-center'>
                 Juz(30)
                 <p className="uthmani-script text-2xl md:text-4xl">جُزْء</p>
             </button>

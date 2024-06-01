@@ -114,10 +114,10 @@ const formattedVerse = (verse: any) => {
         ))}
         <div className='flex items-center justify-center gap-4'>
           {currentSurah === 1 ? '' : (
-             <button onClick={prevSurah} className='bg-gray-200 border px-3 py-1 rounded-md'>Previous Surah</button>
+             <button onClick={prevSurah} className='bg-gray-200 dark:bg-gray-800 border px-3 py-1 rounded-md'>Previous Surah</button>
           )}
            {currentSurah === 114 ? '' : (
-              <button onClick={nextSurah} className='bg-gray-200 border px-3 py-1 rounded-md'>Next Surah</button>
+              <button onClick={nextSurah} className='bg-gray-200 dark:bg-gray-800 border px-3 py-1 rounded-md'>Next Surah</button>
            )}
         </div>
         </>
