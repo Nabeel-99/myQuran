@@ -8,10 +8,15 @@ import Surah from './pages/Surah'
 import SignUp from './pages/SignUp'
 import SignIn from './pages/SignIn'
 import axios from 'axios'
+import Bookmarks from './pages/Bookmarks'
+import Profile from './pages/Profile'
+import Notes from './pages/Notes'
+import Quiz from './pages/Quiz'
 
 const App = () => {
   const API_ROUTE = 'http://localhost:3000'
   const [user, setUser] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const storedTheme = localStorage.getItem('theme')
@@ -23,7 +28,9 @@ const App = () => {
        const response = await axios.get(`${API_ROUTE}/api/users/auth`, {
         withCredentials: true
        })
+       console.log(response.data)
        setUser(response.data.fullName)
+       setEmail(response.data.email)
        setIsLoggedIn(true)
     } catch (error) {
       console.log('authErr:', error)
@@ -100,6 +107,10 @@ const App = () => {
         <Route path='/juz/:juzId' element={<Surah/>}></Route>
         <Route path='/signup' element={<SignUp/>}></Route>
         <Route path='/login' element={<SignIn authenticateUser={autheticateUser}/>}></Route>
+        <Route path='/bookmarks' element={<Bookmarks/>}></Route>
+        <Route path='/profile' element={<Profile user={user} email={email}/>}></Route>
+        <Route path='/notes' element={<Notes/>}></Route>
+        <Route path='/quiz' element={<Quiz/>}></Route>
       </Routes>
         <Footer/>
      </div>

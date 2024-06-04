@@ -14,7 +14,7 @@ const SidePanel = () => {
             <p className='text-sm'>Dr. Mustafa Khattab, the Clear Quran</p> 
         </div>
         <ul>
-            <li className='border-b-2 py-3'><Link to={"/"}  className='flex items-center gap-3'><FaRadio/>Reciters</Link></li>
+            <li className='border-b-2 py-3'><Link to={"/"}  className='flex items-center gap-3'><FaRadio/>Change Reciter</Link></li>
             <li className='border-b-2 py-3'><Link to={"/"}  className='flex items-center gap-3'><FaBook/>Seerah</Link></li>
              <li className='border-b-2 py-3'><Link to={"/"}  className='flex items-center gap-3'><FaBookOpen/>Duas and Supplications</Link></li>
              <li className='border-b-2 py-3'><Link to={"/"}  className='flex items-center gap-3'><FaBookOpen/>Quiz</Link></li>

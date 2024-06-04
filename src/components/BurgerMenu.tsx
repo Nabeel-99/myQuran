@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaArrowRight, FaBook, FaBookOpen, FaClipboard, FaHome } from 'react-icons/fa'
+import { FaArrowRight, FaBook, FaBookOpen, FaClipboard, FaHome, FaRegBookmark } from 'react-icons/fa'
 import { FaGear, FaRadio, FaXmark } from 'react-icons/fa6'
 import { IoLogOut } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
@@ -29,15 +29,16 @@ const BurgerMenu:React.FC<BurgerMenuProps> = ({isLoggedIn, user, toggleBurgerMen
                                 </div>
                                 <div>
                                     <ul>
-                                    <li className='border-b-2  py-3 border-t-2'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaArrowRight/>Profile</Link></li>
-                                    <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaClipboard/>Personal Notes</Link></li>
+                                    <li className='border-b-2  py-3 border-t-2'><Link to={"/profile"} onClick={closeMenu} className='flex items-center gap-3'><FaArrowRight/>Profile</Link></li>
+                                    <li className='border-b-2 py-3'><Link to={"/bookmarks"} onClick={closeMenu} className='flex items-center gap-3'><FaRegBookmark/>Bookmarks</Link></li>
+                                    <li className='border-b-2 py-3'><Link to={"/notes"} onClick={closeMenu} className='flex items-center gap-3'><FaClipboard/>Personal Notes</Link></li>
                                     </ul>
                                 </div>
                             </div>
                        ): (
                      
                          <div className='flex flex-col gap-2 border p-4 rounded-lg bg-gray-100'>
-                            <button className='py-2 bg-white border-black border rounded-md w-44 font-bold'>Start Your Journey</button>
+                            <Link to={"/login"} onClick={closeMenu} className='py-2 px-2 bg-white border-black border rounded-md w-44 font-bold'>Start Your Journey</Link>
                             <p>Experience a world of benefits by creating an account:</p>
                             <ul className='list-disc ml-6'>
                                 <li>Bookmarking Verses</li>

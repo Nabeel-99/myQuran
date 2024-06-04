@@ -11,7 +11,8 @@ router.get("/auth", verifyUser, async(req, res) => {
     res.json({
         message: "Authenticated", 
         userId: req.userId, 
-        fullName: `${req.firstName} ${req.lastName}`
+        fullName: `${req.firstName} ${req.lastName}`,
+        email: req.email
     })
 })
 

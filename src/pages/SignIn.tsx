@@ -46,10 +46,10 @@ const SignIn: React.FC<SignInProps> = ({authenticateUser}) => {
     }
   }
   return (
-    <div className='flex  h-full w-full justify-around items-start mt-32 mb-52 px-20'> 
-    <div className='w-1/3 flex flex-col gap-4  '>
-    <p className='text-2xl font-serif font-bold italic'>Start your journey</p>
-        <form className='border border-black p-6 rounded-lg dark:bg-[#303233] dark:text-white' onSubmit={handleLoginSubmit}>
+    <div className='flex flex-col lg:flex-row   h-full w-full justify-center items-start mt-14 lg:mt-32 mb-52 px-4 lg:px-20'> 
+    <div className='lg:w-2/3  flex flex-col items-center justify-center order-1 gap-4 w-full  '>
+    <p className='text-2xl font-serif font-bold italic mt-8 lg:mt-0'>Start your journey</p>
+        <form className='border w-full  border-black p-6 rounded-lg dark:bg-[#303233] dark:text-white' onSubmit={handleLoginSubmit}>
           <p className='text-3xl font-bold'>Login</p>
           <div className='text-red-500'>{error}</div>
           <div className='mb-8 mt-11'>
@@ -79,18 +79,6 @@ const SignIn: React.FC<SignInProps> = ({authenticateUser}) => {
           </div>
         </form>
     </div>
-    <div className='text-xl flex flex-col gap-4 w-2/6 mt-10 '>
-
-
-   <p>Experience a world of benefits by creating an account:</p>
-   <ul className='flex flex-col gap-4'>
-     <li className='flex items-center  gap-2'><FaRegBookmark/>Bookmarking Verses</li>
-     <li className='flex items-center  gap-2'><TfiWrite/>Personal Notes</li>
-     <li className='flex items-center  gap-2'><IoGameControllerOutline/>Developing Quizzes</li>
-     <li className='flex items-center  gap-2'><CiShare2/>Share Verses</li>
-     <li className='flex items-center  gap-2'><FaRegEye/>Track Recent Activities</li>
-   </ul> 
-</div>
 </div>
   )
 }

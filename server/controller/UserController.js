@@ -38,7 +38,7 @@ export const loginUser = async(req, res) => {
         }
 
         //create token for user
-        const token = jwt.sign({userId: user._id, firstName: user.firstName, lastName: user.lastName}, process.env.JWT_SECRET, {expiresIn: '2d'} )
+        const token = jwt.sign({userId: user._id, email: user.email, firstName: user.firstName, lastName: user.lastName}, process.env.JWT_SECRET, {expiresIn: '2d'} )
 
         res.cookie('token', token, {
             httpOnly: true
@@ -59,6 +59,7 @@ export const verifyUser = async(req, res, next) => {
         req.userId = verifiedUser.userId
         req.firstName = verifiedUser.firstName
         req.lastName = verifiedUser.lastName
+        req.email = verifiedUser.email
         next()
     }
     catch (error) {

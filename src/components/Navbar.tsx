@@ -85,7 +85,7 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
     }, [])
   return (
     <>
-    <div className='flex z-10 bg-white fixed w-full justify-between dark:bg-[#232528] dark:border-[#414346]  md:px-16 py-3 md:py-3 items-center border-b  '>
+    <div className='flex z-20 bg-white fixed w-full justify-between dark:bg-[#232528] dark:border-[#414346]  md:px-16 py-3 md:py-3 items-center border-b  '>
         <div className='hidden md:flex gap-2 items-center justify-center'>
             {/* <button title='menu' className='border px-3 rounded-md text-lg py-2 hover:bg-gray-200'><FaBars/></button> */}
             <Link to={"/"} className='text-4xl text-slate-950 arabicText dark:text-white '>121</Link>

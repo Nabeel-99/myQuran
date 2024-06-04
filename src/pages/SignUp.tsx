@@ -56,10 +56,10 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   }
   return (
     
-    <div className='flex  h-screen w-full justify-around items-start mt-32 px-20'>
-        <div className='w-1/3 flex flex-col gap-4'>
-        <p className='text-2xl font-serif font-bold italic'>Start your journey</p>
-            <form className='border border-black p-6 rounded-lg dark:bg-[#303233] dark:text-white' onSubmit={handleSignUpSubmit}>
+    <div className='flex flex-col lg:flex-row   h-full w-full justify-around lg:gap-10 items-start mt-14 lg:mt-32 mb-52  px-4 lg:px-20'>
+        <div className='xl:w-1/3 flex flex-col order-1 lg:order-none  gap-4 lg:w-2/4 w-full'>
+        <p className='text-2xl font-serif font-bold italic mt-8 lg:mt-0'>Start your journey</p>
+            <form className='border w-full border-black p-6 rounded-lg dark:bg-[#303233] dark:text-white' onSubmit={handleSignUpSubmit}>
               <div className='text-red-500'>{error}</div>
               <div className='mb-8'>
                 <label className='block text-sm font-medium  mb-2' htmlFor='email'>Email</label>
@@ -115,9 +115,9 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               </div>
             </form>
         </div>
-        <div className='text-xl flex flex-col gap-4 mt-10'>
+        <div className='lg:text-xl flex flex-col gap-4 mt-10'>
             <p className='text-3xl font-bold'>Create Account</p>
-            <p className='text-2xl'>Experience a world of benefits by creating an account:</p>
+            <p className='lg:text-2xl'>Experience a world of benefits by creating an account:</p>
             <ul className='flex flex-col gap-4'>
               <li className='flex items-center  gap-2'><FaRegBookmark/>Bookmarking Verses</li>
               <li className='flex items-center  gap-2'><TfiWrite/>Personal Notes</li>
