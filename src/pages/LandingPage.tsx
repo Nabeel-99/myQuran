@@ -92,22 +92,6 @@ const LandingPage = () => {
         <div className='flex items-center w-full justify-center'>
             <h3 className='arabicText text-[5rem] lg:text-[10rem] ' >126</h3>
         </div>
-        <div className='flex flex-col justify-center border w-full px-20  p-3 rounded-lg xl:h-96'>
-            <div className='flex flex-col md:grid md:grid-cols-3  gap-10'>
-                <div className='border flex flex-col items-center justify-center rounded-xl h-36 md:h-auto md:w-72'>
-                    <img src={SeerahImage} alt='seerah image' className='object-cover   h-54 rounded-xl'/>
-                    <h3 className='text-xl'>Seerah</h3>
-                </div>
-                <div className='border flex flex-col items-center justify-center rounded-xl h-36 md:h-auto md:w-72'>
-                    <img src={DuaImage} alt='dua image' className='object-cover w-24 h-24 md:w-auto md:h-44 '/>
-                    <h3 className='text-xl'>Duas & Supplications</h3>
-                </div>
-                <div className='border flex flex-col items-center justify-center rounded-xl h-36 md:h-auto md:w-72'>
-                    <img src={QuizImage} alt='quiz image' className='object-cover w-full h-24 xl:h-44'/>
-                    <h3 className='text-xl'>Quiz</h3>
-                </div>
-            </div>
-        </div>
         {/* SEARCH BAR */}
         <div className='flex border  mx-auto items-center justify-center pl-4  dark:bg-[#303233] rounded-full w-full md:w-3/6'>
             <label htmlFor='search' title='search' className='border-r  h-full   flex items-center pr-3'><FaSearch/></label>
