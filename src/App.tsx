@@ -67,6 +67,7 @@ const App = () => {
   }
 
   useEffect(() => {
+    
     if(isDarkMode){
       document.documentElement.classList.add('dark')
     }else{
@@ -89,6 +90,7 @@ const App = () => {
       mediaQuery.removeEventListener('change', handlechange)
     })
   }, [])
+  
   return (
     <>
     <Router>
