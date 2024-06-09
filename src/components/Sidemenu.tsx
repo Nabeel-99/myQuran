@@ -54,7 +54,7 @@ const Sidemenu: React.FC<SideMenuProps> = ({juzList, surahList, closeSideMenu}) 
    
 
   return (
-    <div className='flex flex-col gap-4 w-full h-full  pb-20 px-4 dark:bg-[#232528]'>
+    <div className='flex flex-col gap-4 w-full h-full  pb-20 px-4   dark:bg-[#232528]'>
                 <div className='text-sm flex flex-col gap-2 font-sans'>
                     <p className=''>Navigate with Text</p>
                     <input 

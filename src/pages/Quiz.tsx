@@ -32,8 +32,21 @@ const Quiz = () => {
     threshold: 0.2,
   });
 
+
+  const { ref: pointsRef1, inView: inPointsRef1 } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+
+  const { ref: pointsRef2, inView: inPointsRef2 } = useInView({
+    triggerOnce: true,
+    threshold: 0.2,
+  });
+  
+  
+
   useEffect(() => {
-    window.scrollTo({top: 0})
+    // window.scrollTo({top: 0})
     const imageToggle = setInterval(() => {
       setIsImage1((prev) => !prev);
     }, 5000);
@@ -130,39 +143,54 @@ const Quiz = () => {
         </div>
       </section>
 
-      <section className={`flex flex-col bg-black text-white w-full reveal-animation px-4 py-4 lg:px-20 lg:py-10 transform transition-transform duration-1000 ease-in-out ${inView4 ?  'active opacity-100' : 'opacity-0'}`} ref={sectionRef4}>
-        <div className='flex justify-around w-full'>
-          <div className='flex flex-col gap-3'>
-            <p className='text-[4rem] leading-tight font-serif'>
-              Create and Share <span className='block'>Your Own</span> Quiz
-            </p>
-            <p className='text-lg px-2'>Think you can create a challenging quiz? Share your knowledge with others by creating your own quiz.</p>
+      <section 
+  className={`flex flex-col bg-black text-white w-full reveal-animation px-4 py-4 lg:px-20 lg:py-10 transform transition-transform duration-1000 ease-in-out ${inView4 ? 'active' : ''}`} 
+  ref={sectionRef4}
+>
+  <div className='flex  gap-10 w-full'>
+    {/* Left column */}
+    <div className=''>
+      <div className='text-[4rem] flex flex-col gap-3 pt-10 leading-tight font-serif lg:sticky lg:top-10'>
+        Create and Share <span className='block'>Your Own</span> Quiz
+        <span className='text-lg px-2 block'>
+        Think you can create a challenging quiz? Share your knowledge with others by creating your own quiz.
+      </span>
+      </div>
+    </div>
+    
+    {/* Right column */}
+    <div className='flex  flex-col  pt-[40rem]' >
+      <div className={`pb-60 bg-black fade-in reveal-animation  ${inPointsRef1 ? 'active': ''}`} ref={pointsRef1}>
+        <div className='flex items-center gap-4'>
+          <div className='w-10'>
+            <Lottie animationData={arrowAnimation} style={{ filter: 'invert(100%)' }} />
           </div>
-          <div className='flex flex-col gap-3 pt-[20rem]'>
-            <div className='pb-20'>
-              <div className='flex items-center gap-4'>
-                <div className='w-10'>
-                  <Lottie animationData={arrowAnimation} style={{ filter: 'invert(100%)' }} />
-                </div>
-                <p className='text-[2rem] font-bold'>Develop a Quiz</p>
-              </div>
-              <p className='text-lg text-center'>Design engaging questions, choose from a variety of formats, and tailor your quiz to suit your audience.</p>
-            </div>
-            <div className='pb-20'>
-              <div className='flex items-center gap-4'>
-                <div className='w-10'>
-                  <Lottie animationData={arrowAnimation} style={{ filter: 'invert(100%)' }} />
-                </div>
-                <p className='text-[2rem] font-bold'>Post for Others</p>
-              </div>
-              <p className='text-lg text-center'>Share your quiz to engage others and foster learning. Spark discussions and collaboration within the community.</p>
-            </div>
-            <div className=''>
-              <button className='rounded-lg bg-white text-black shadow-md py-2 px-6 font-bold'>Create Quiz</button>
-            </div>
-          </div>
+          <p className='text-[2rem] font-bold'>Develop a Quiz</p>
         </div>
-      </section>
+        <p className='text-lg text-center'>
+          Design engaging questions, choose from a variety of formats, and tailor your quiz to suit your audience.
+        </p>
+      </div>
+      <div className={`pb-60 bg-black fade-in reveal-animation  ${inPointsRef2 ? 'active': ''}`} ref={pointsRef2}>
+        <div className='flex items-center gap-4'>
+          <div className='w-10'>
+            <Lottie animationData={arrowAnimation} style={{ filter: 'invert(100%)' }} />
+          </div>
+          <p className='text-[2rem] font-bold'>Post for Others</p>
+        </div>
+        <p className='text-lg text-center'>
+          Share your quiz to engage others and foster learning. Spark discussions and collaboration within the community.
+        </p>
+      </div>
+      <div className={`lg:sticky lg:bottom-0 -z-10 pb-20 reveal-animation ${inView4 ? 'active' : ''}`}>
+        <button className='rounded-lg bg-white text-black shadow-md py-2 px-6 font-bold'>
+          Create Quiz
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       <section className={`flex flex-col gap-2 items-center justify-center reveal-animation w-full pb-32 transform transition-transform duration-1000 ease-in-out ${inView4 ? 'active translate-y-0' : 'translate-y-32'}`}>
         <div className=''>

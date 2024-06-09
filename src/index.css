@@ -182,3 +182,74 @@ a:focus-visible {
 .active{
   opacity: 1;
 }
+
+.point{
+  transform: translateY(-40%);
+  transition: all 1s ease-in;
+  opacity: 0;
+}
+.fade-in {
+  transform: translateY(0);
+  opacity: 1;
+}
+.container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+
+.left-column {
+  width: 30%;
+  background-color: black;
+  color: white;
+  padding: 20px;
+  position: relative;
+}
+
+.right-column {
+  width: 70%;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f0f0f0;
+  padding: 20px;
+  transition: opacity 1s ease-in;
+  opacity: 0;
+}
+
+.right-column.fade-in {
+  opacity: 1;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+}
+
+
+/* 
+
+*/
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in.active {
+  opacity: 1;
+
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+}
+
+/* .fade-in {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease-out;
+} */
