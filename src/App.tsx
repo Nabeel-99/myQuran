@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route, useNavigate} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation} from 'react-router-dom'
 import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage'
 import Footer from './components/Footer'
@@ -12,17 +12,23 @@ import Bookmarks from './pages/Bookmarks'
 import Profile from './pages/Profile'
 import Notes from './pages/Notes'
 import Quiz from './pages/Quiz'
+import StartQuiz from './pages/StartQuiz'
+import MaybeShowNavbar from './components/MaybeShowComponent'
+import MaybeShowComponent from './components/MaybeShowComponent'
+import CreateQuiz from './pages/CreateQuiz'
 
 const App = () => {
   const API_ROUTE = 'http://localhost:3000'
+  // const location = useLocation()
   const [user, setUser] = useState<string>('')
   const [email, setEmail] = useState<string>('')
+  const [showNavbar, setShowNavbar] = useState<boolean>(false)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const storedTheme = localStorage.getItem('theme')
     return storedTheme === "light" || (!storedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
   })
-
+ 
   const autheticateUser = async() => {
     try {
        const response = await axios.get(`${API_ROUTE}/api/users/auth`, {
@@ -94,7 +100,8 @@ const App = () => {
   return (
     <>
     <Router>
-      <div className='flex flex-col w-screen  h-full font-sans dark:bg-[#232528] dark:text-white '>
+      <div className='flex flex-col w-screen  h-full font-sans dark:bg-[#0a0a0a] dark:text-white '>
+      <MaybeShowNavbar>
         <Navbar
           isDarkMode={isDarkMode}
           lightMode={lightMode}
@@ -103,6 +110,8 @@ const App = () => {
           user={user} 
           isLoggedIn={isLoggedIn} 
           logout={logout} />
+      </MaybeShowNavbar>
+        
      <Routes>
         <Route path='/' element={<LandingPage/>}></Route>
         <Route path='/surah/:id' element={<Surah/>}></Route>
@@ -113,8 +122,14 @@ const App = () => {
         <Route path='/profile' element={<Profile user={user} email={email}/>}></Route>
         <Route path='/notes' element={<Notes/>}></Route>
         <Route path='/quiz' element={<Quiz/>}></Route>
+        <Route path='/get-started' element={<StartQuiz/>}></Route>
+        <Route path='/create-quiz' element={<CreateQuiz user={user}/>}></Route>
       </Routes>
+      
+      <MaybeShowComponent>
         <Footer/>
+      </MaybeShowComponent>
+        
      </div>
     </Router>
     </>

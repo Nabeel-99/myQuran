@@ -9,12 +9,26 @@ interface OptionsProps{
     showNotes: (verseIndex: any) => void
     isNote: boolean
     closeNotes: (verseIndex: any) => void
+    toggleBookmark:() => void
+    isBookmarked: boolean
+    closeOptions:() => void
 }
-const Options: React.FC<OptionsProps> = ({verseIndex, showNotes, isNote, closeNotes}) => {
+const Options: React.FC<OptionsProps> = ({
+      verseIndex, 
+      showNotes, 
+      isNote, 
+      closeNotes, 
+      isBookmarked, 
+      toggleBookmark,
+      closeOptions
+    }) => {
   return (
     <span className='z-10 absolute options bg-white dark:bg-[#232528] border shadow-md p-3 rounded-md   text-sm'>
     <div className='flex flex-col gap-3 bg-white dark:bg-[#232528]'>
-      <button className='flex items-center gap-2 hover:text-blue-700'><FaRegBookmark/>Bookmark Verse</button>
+      <button onClick={() => {
+        toggleBookmark()
+        closeOptions()
+        }} className='flex items-center gap-2 hover:text-blue-700'><FaRegBookmark/>{ isBookmarked ? 'remove from bookmarks' : 'Bookmark Verse' }</button>
       <button onClick={() => showNotes(verseIndex)} className='flex items-center gap-2 hover:text-blue-700'><TfiWrite/>Write Note</button>
       <button className='flex items-center gap-2 hover:text-blue-700'><CiShare2/>Share Verse</button>
     </div>

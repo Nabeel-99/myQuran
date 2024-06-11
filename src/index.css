@@ -182,11 +182,54 @@ a:focus-visible {
 .active{
   opacity: 1;
 }
-
+#participate{
+  opacity: 0;
+  transform: translateY(10%);
+}
+#participate.active{
+  opacity: 1;
+  transform: translateY(0);
+}
+#how-it-works{
+  opacity: 0;
+  transform: translateY(10%);
+}
+#how-it-works.active{
+  opacity: 1;
+  transform: translateY(0);
+}
+#quiz-section{
+  opacity: 0;
+  transform: translateY(10%);
+}
+#quiz-section.active{
+  opacity: 1;
+  transform: translateY(0);
+}
+#question-card{
+  opacity: 0;
+  transform: translateY(60%);
+  transition-delay: 2s;
+  transition: all 1s ease-out;
+}
+#question-card.active{
+  opacity: 1;
+  transform: translateY(0);
+}
 .point{
   transform: translateY(-40%);
   transition: all 1s ease-in;
   opacity: 0;
+}
+#smooth-transition-cards{
+  transform: translateY(50%);
+  opacity: 0;
+  transition-delay: 2s;
+  transition: all 1s ease-out;
+}
+#smooth-transition-cards.active{
+  opacity: 1;
+  transform: translateY(0);
 }
 .fade-in {
   transform: translateY(0);
@@ -231,7 +274,7 @@ a:focus-visible {
 */
 
 .fade-in {
-  opacity: 0;
+  opacity: 1;
   transition: opacity 0.5s ease-in-out;
 }
 

@@ -5,6 +5,7 @@ import { FaRegBookmark, FaRegEye } from 'react-icons/fa'
 import { IoGameControllerOutline } from 'react-icons/io5'
 import { TfiWrite } from 'react-icons/tfi'
 import { Link, useNavigate } from 'react-router-dom'
+import { API_ROUTE } from '../apis/quranApi'
 
 interface LoginCredentials{
   email: string,
@@ -14,7 +15,6 @@ interface SignInProps{
   authenticateUser:() => void
 }
 const SignIn: React.FC<SignInProps> = ({authenticateUser}) => {
-  const API_ROUTE = 'http://localhost:3000'
   const [userData, setUserData] = useState<LoginCredentials>({
     email: '',
     password: ''

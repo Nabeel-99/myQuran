@@ -14,7 +14,7 @@ interface BurgerMenuProps{
 }
 const BurgerMenu:React.FC<BurgerMenuProps> = ({isLoggedIn, user, toggleBurgerMenu,closeMenu, logout}) => {
   return (
-    <div className='top-0 left-0  h-screen z-40 w-screen fixed bg-white right-0'>
+    <div className='top-0 left-0  h-screen z-40 w-screen fixed bg-white right-0 dark:bg-[#0a0a0a]'>
                 <div className='flex flex-col mt-2 w-screen'>
                     <div className='flex justify-between items-center mt-1'>
                         <p className='arabicText text-4xl ml-8'>121</p>
@@ -54,6 +54,7 @@ const BurgerMenu:React.FC<BurgerMenuProps> = ({isLoggedIn, user, toggleBurgerMen
                     <ul>
                         <li className='border-b-2  py-3 border-t-2'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaHome/>Home</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaRadio/>Reciters</Link></li>
+                        <li className='border-b-2 py-3'><Link to={"/quiz"} onClick={closeMenu} className='flex items-center gap-3'><FaBook/>Quiz</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBook/>Seerah</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBookOpen/>Duas and Supplications</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaGear/>Settings</Link></li>

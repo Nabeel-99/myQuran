@@ -6,6 +6,7 @@ import { IoGameController, IoGameControllerOutline } from 'react-icons/io5'
 import { MdQuiz } from 'react-icons/md'
 import { TfiWrite } from 'react-icons/tfi'
 import { Link, useNavigate } from 'react-router-dom'
+import { API_ROUTE } from '../apis/quranApi'
 
 interface UserData{
   email: string,
@@ -14,7 +15,7 @@ interface UserData{
   password: string
 }
 const SignUp = () => {
-  const API_ROUTE = 'http://localhost:3000'
+
   const [userData, setUserData] = useState<UserData>({
     email: '',
     firstName: '',

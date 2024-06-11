@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = 'https://api.quran.com/api/v4';
+export const API_ROUTE = 'http://localhost:3000'
 interface Chapter{
     revelation_place: string;
     name_simple: string

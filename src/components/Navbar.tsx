@@ -128,7 +128,7 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
         {/* mobile */}
         <div className='flex md:hidden gap-2 px-8 items-center'>
             {/* <button title='menu' className='border px-3 rounded-md text-sm py-2 hover:bg-gray-200'><FaBars/></button> */}
-            <Link to={"/"} className='text-4xl text-slate-950 arabicText'>121</Link>
+            <Link to={"/"} className='text-4xl text-slate-950 arabicText dark:text-white'>121</Link>
         </div>
         <div className='md:hidden flex items-center justify-center'>
         <button title='menu' className='px-3 m py-2 rounded-lg '><FaMoon className='text-xl'/></button>

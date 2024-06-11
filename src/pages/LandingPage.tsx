@@ -82,6 +82,7 @@ const LandingPage = () => {
         }
     }
     useEffect(() => {
+        window.scrollTo({top: 0})
         fetchSurahJuz()
         fetchSurahList()
     }, [])
