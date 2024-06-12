@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import QuestionCard from '../components/QuestionCard'
+import QuestionCard from '../../components/cards/QuestionCard'
 import { useInView } from 'react-intersection-observer';
 
 interface Question {
@@ -29,11 +29,11 @@ const CreateQuiz:React.FC<CreateQuizProps> = ({user}) => {
     }
   return (
     <div className='flex flex-col lg:justify-center lg:items-center gap-10 h-full w-full px-4 pb-20 mt-32'>
-        <div className='flex flex-col justify-start items-start w-full lg:px-52 gap leading-tight'>
+        <div className='flex flex-col justify-start items-start w-full lg:px-52  gap leading-tight'>
             <h2 className='text-[2.5rem] lg:text-[3rem] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-blue-800 to-orange-500'>Salaam, {user.split(' ')[0]}</h2>
             <h3 className='text-[2rem] lg:text-[3rem] font-semibold tracking-tight text-gray-400'>Ready to create some quran quiz challenges?</h3>
         </div>  
-        <div id='question-card' className={`flex flex-col items-center justify-center gap-10 shadow-lg border lg:w-2/3 rounded-lg ${inViewRef ? 'active' : ''}`} ref={questionRef}>
+        <div id='question-card' className={`flex flex-col items-center justify-center gap-10 shadow-lg border lg:w-3/4  rounded-lg ${inViewRef ? 'active' : ''}`} ref={questionRef}>
            {questions.map(question => (
                 <QuestionCard key={question.id} questionId={question.id}/>
            ))}

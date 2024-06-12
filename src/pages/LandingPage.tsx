@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { FaArrowDown, FaArrowRight, FaSearch } from 'react-icons/fa'
 import { fetchAllJuz, getSurahLists } from '../apis/quranApi'
-import ChapterCards from '../components/ChapterCards'
-import JuzCards from '../components/JuzCards'
+import ChapterCards from '../components/cards/ChapterCards'
+import JuzCards from '../components/cards/JuzCards'
 import { FaBarsStaggered, FaSort } from 'react-icons/fa6'
 import SeerahImage from "../assets/images/seerah.png"
 import DuaImage from "../assets/images/dua.png"

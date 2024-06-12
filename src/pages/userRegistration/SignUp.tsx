@@ -6,7 +6,7 @@ import { IoGameController, IoGameControllerOutline } from 'react-icons/io5'
 import { MdQuiz } from 'react-icons/md'
 import { TfiWrite } from 'react-icons/tfi'
 import { Link, useNavigate } from 'react-router-dom'
-import { API_ROUTE } from '../apis/quranApi'
+import { API_ROUTE } from '../../apis/quranApi'
 
 interface UserData{
   email: string,

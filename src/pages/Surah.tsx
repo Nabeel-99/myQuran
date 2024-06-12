@@ -4,13 +4,13 @@ import { PiCaretLeftLight, PiCaretRightLight } from "react-icons/pi";
 import { CgReadme } from "react-icons/cg";
 import { RxReader } from "react-icons/rx";
 import {  getSurahLists, fetchAllJuz,fetchAyat, fetchSurahTranslation } from '../apis/quranApi';
-import Sidemenu from '../components/Sidemenu';
+import Sidemenu from '../components/surah/Sidemenu';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Page from '../components/Page';
+import Page from '../components/surah/Page';
 import { BsThreeDots } from 'react-icons/bs';
 import { FaXmark } from 'react-icons/fa6';
-import SidePanel from '../components/SidePanel';
+import SidePanel from '../components/surah/SidePanel';
 
 const Surah = () => {
 

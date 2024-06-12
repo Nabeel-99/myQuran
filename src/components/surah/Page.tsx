@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { fetchSurahTranslation, renderPages } from '../apis/quranApi'
+import { fetchSurahTranslation, renderPages } from '../../apis/quranApi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { FaSpinner } from 'react-icons/fa'
 import TranslationView from './TranslationView'
@@ -107,6 +107,7 @@ const formattedVerse = (verse: any) => {
                       page={page}
                       formattedVerse={formattedVerse}
                       formattedStyleName={formattedStyleName}
+                      formattedTranslation={formattedTranslation}
                     />
                 )}
               </div>

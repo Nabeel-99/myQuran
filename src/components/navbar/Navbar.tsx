@@ -3,11 +3,11 @@ import { FaArrowRight, FaBars, FaBook, FaBookOpen, FaClipboard, FaGlobe, FaHandH
 import { FaGear, FaHand, FaM, FaPerson, FaRadio, FaXmark } from 'react-icons/fa6'
 import { IoHomeOutline, IoLogOut, IoLogOutOutline, IoMoon, IoMoonOutline, IoPersonOutline, IoSunnyOutline } from 'react-icons/io5'
 import { Link, useNavigate } from 'react-router-dom'
-import { getSurahLists } from '../apis/quranApi'
-import ChapterCards from './ChapterCards'
+import { getSurahLists } from '../../apis/quranApi'
+import ChapterCards from '../cards/ChapterCards'
 import axios from 'axios'
-import UserMenu from './UserMenu'
-import BurgerMenu from './BurgerMenu'
+import UserMenu from '../profile/UserMenu'
+import BurgerMenu from '../profile/BurgerMenu'
 import { GoDeviceDesktop } from 'react-icons/go'
 
 interface NavbarProps{

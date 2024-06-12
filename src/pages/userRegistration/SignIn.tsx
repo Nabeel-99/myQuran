@@ -5,7 +5,8 @@ import { FaRegBookmark, FaRegEye } from 'react-icons/fa'
 import { IoGameControllerOutline } from 'react-icons/io5'
 import { TfiWrite } from 'react-icons/tfi'
 import { Link, useNavigate } from 'react-router-dom'
-import { API_ROUTE } from '../apis/quranApi'
+import { API_ROUTE } from '../../apis/quranApi'
+
 
 interface LoginCredentials{
   email: string,

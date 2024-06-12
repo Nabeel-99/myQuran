@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
-import QuranImage from "../assets/images/handquiz.png";
-import ChallengeImage from "../assets/images/challenge.png";
-import InteractiveImage1 from "../assets/images/interactive1.png";
-import InteractiveImage2 from "../assets/images/interactive2.png";
-import arrowAnimation from "../assets/icons/arrow.json";
+import QuranImage from "../../assets/images/handquiz.png";
+import ChallengeImage from "../../assets/images/challenge.png";
+import InteractiveImage1 from "../../assets/images/interactive1.png";
+import InteractiveImage2 from "../../assets/images/interactive2.png";
+import arrowAnimation from "../../assets/icons/arrow.json";
 import Lottie from 'lottie-react';
 import { BsFillPatchQuestionFill } from 'react-icons/bs';
 import { FaCheckCircle, FaEye } from 'react-icons/fa';

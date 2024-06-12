@@ -140,6 +140,7 @@ export const renderPages = async (surahNumber: any) => {
                     pageData: pageDataWithTranslations,
                     pageNumber,
                     suraNumber: surahNumber,
+                    englihsName: selectedSurah.english_name
                 });
             }
         }
