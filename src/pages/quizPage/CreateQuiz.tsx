@@ -33,16 +33,16 @@ const CreateQuiz:React.FC<CreateQuizProps> = ({user}) => {
             <h2 className='text-[2.5rem] lg:text-[3rem] font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-blue-800 to-orange-500'>Salaam, {user.split(' ')[0]}</h2>
             <h3 className='text-[2rem] lg:text-[3rem] font-semibold tracking-tight text-gray-400'>Ready to create some quran quiz challenges?</h3>
         </div>  
-        <div id='question-card' className={`flex flex-col items-center justify-center gap-10 shadow-lg border lg:w-3/4  rounded-lg ${inViewRef ? 'active' : ''}`} ref={questionRef}>
+        <div id='question-card' className={`flex flex-col items-center justify-center  shadow-lg border lg:w-3/4  rounded-lg ${inViewRef ? 'active' : ''}`} ref={questionRef}>
            {questions.map(question => (
                 <QuestionCard key={question.id} questionId={question.id}/>
            ))}
-            <div className='flex gap-2 items-center justify-end w-full px-4 lg:px-16 pb-8'>
+            <div className='flex gap-2 items-center rounded-b-md pt-8 justify-end w-full px-4 lg:px-16 pb-8 dark:bg-[#17171c]'>
                 {questions.length > 1 && (
-                    <button onClick={removeQuestion} className='border bg-black w-full text-white rounded-lg px-4 py-1 font-bold hover:bg-gray-700'>Remove Question</button>
+                    <button onClick={removeQuestion} className='border bg-black w-full text-white rounded-lg px-4 py-2 font-bold hover:bg-gray-700'>Remove Question</button>
                 )}
-                <button onClick={addAnotherQuestion} className='border bg-black w-full text-white rounded-lg px-4 py-1 font-bold hover:bg-gray-700'>Add Question</button>
-                <button className='border bg-black text-white rounded-lg px-4 py-1 w-full font-bold hover:bg-gray-700'>
+                <button onClick={addAnotherQuestion} className='border bg-black w-full text-white rounded-lg px-4 py-2 font-bold hover:bg-gray-700'>Add Question</button>
+                <button className='border bg-black text-white rounded-lg px-4 py-2 w-full font-bold hover:bg-gray-700'>
                     {questions.length > 1 ? 'Submit All' : 'Submit'}
                 </button>
             </div>

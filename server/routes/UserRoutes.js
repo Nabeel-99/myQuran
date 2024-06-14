@@ -2,6 +2,7 @@ import express from "express"
 import { createUser, loginUser, logoutUser, verifyUser } from "../controller/UserController.js"
 import { addToBookmark, getUserBookmarks, removefromBookmark } from "../controller/BookmarkController.js"
 import { deleteNote, getUserNotes, postNote, updateNote } from "../controller/NotesController.js"
+import { getUserQuestions } from "../controller/QuestiosController.js"
 
 
 const router  = express.Router()
@@ -28,4 +29,10 @@ router.get("/notes", verifyUser, getUserNotes)
 router.post('/add-notes', verifyUser, postNote)
 router.delete('/delete-notes/:id', verifyUser, deleteNote)
 router.put('/update-notes/:id', verifyUser, updateNote)
+
+// questions
+router.get("/questions", verifyUser, getUserQuestions)
+router.post("/post-questions", verifyUser, postQuestion)
+router.put("/update-questions", verifyUser, updateQuestion)
+router.delete("/delete-question/:id", verifyUser, deleteQuestion)
 export default router

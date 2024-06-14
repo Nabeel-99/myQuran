@@ -1,0 +1,33 @@
+[
+    {
+      "question": "Which Surah is known as the heart of the Qur'an?",
+      "options": {
+        "A": "Surah Al-Fatiha",
+        "B": "Surah Yasin",
+        "C": "Surah Al-Baqarah",
+        "D": "Surah Al-Ikhlas"
+      },
+      "correct_answer": "B"
+    },
+    {
+      "question": "In which Surah is Ayat-ul-Kursi found?",
+      "options": {
+        "A": "Surah An-Nisa",
+        "B": "Surah Al-Baqarah",
+        "C": "Surah Al-Imran",
+        "D": "Surah Al-Maidah"
+      },
+      "correct_answer": "B"
+    },
+    {
+      "question": "Which Surah was revealed in its entirety during a single night?",
+      "options": {
+        "A": "Surah Al-Ikhlas",
+        "B": "Surah Al-Kawthar",
+        "C": "Surah Al-Fatiha",
+        "D": "Surah Al-Mulk"
+      },
+      "correct_answer": "C"
+    }
+  ]
+  

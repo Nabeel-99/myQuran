@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import UserRoutes from "./routes/UserRoutes.js"
+import Question from "./model/QuestionsModel.js"
 
 dotenv.config()
 
@@ -18,6 +19,16 @@ app.use(cookieParser())
 
 //routes
 app.use("/api/users", UserRoutes)
+// get questions
+app.get("/api/questions", async(req, res) => {
+    try {
+        const questions = await Question.find()
+        res.json(questions)
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({message: "Internal server error"})
+    }
+})
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
     console.log("database connected")

@@ -39,7 +39,7 @@ export const deleteNote = async(req, res) => {
         const {id} = req.params
         // const userId = req.userId
         await Note.findOneAndDelete({ _id: id })
-        return res.status(200).json({message: "removed from favorites"})
+        return res.status(200).json({message: "delete was successful"})
     } catch (error) {
         console.log(error)
         return res.status(500).json({messsage: "Internal server error"})
