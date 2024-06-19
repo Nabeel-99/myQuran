@@ -103,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
                 <div><button onClick={showModes} title='darkmode'  className='flex'>{isDarkMode ? <IoMoonOutline/> : <IoSunnyOutline/> }</button></div>
                 {isLoggedIn ? (
                     <button onClick={showMenu} className='border w-10 h-10 rounded-full flex items-center justify-center cursor-pointer bg-slate-800 dark:bg-white dark:text-black dark:border-black text-white font-bold'>
-                        {user?.slice(0,1)}
+                        {user?.slice(0,1).toUpperCase()}
                     </button>
                 ) : (
                    <div><Link to={"/login"}><IoPersonOutline/></Link></div> 

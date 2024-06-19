@@ -44,6 +44,7 @@ const Profile: React.FC<ProfileProps> = ({user, email}) => {
         <ul>
          <li className='border-b-2 border-t-2 py-3 hover:bg-blue-50'><Link to={"/bookmarks"} className='flex items-center gap-3 hover:text-blue-700'><FaRegBookmark/>Bookmarks</Link></li>
          <li className='border-b-2 py-3 hover:bg-blue-50'><Link to={"/notes"} className='flex items-center gap-3 hover:text-blue-700'><TfiWrite/>Personal Notes</Link></li>
+         <li className='border-b-2 py-3 hover:bg-blue-50'><Link to={"/my-questions"} className='flex items-center gap-3 hover:text-blue-700'><TfiWrite/>View Questions</Link></li>
         </ul>
     </div>
     <div className='pt-10 flex items-center justify-center w-full'>

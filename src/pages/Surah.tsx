@@ -105,7 +105,6 @@ const Surah = () => {
         }
     }
    useEffect(() => {
-        window.scrollTo({top: 0})
         if(id){
             renderSurahAyat(parseInt(id))
         }

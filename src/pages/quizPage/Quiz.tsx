@@ -47,7 +47,6 @@ const Quiz = () => {
   
 
   useEffect(() => {
-    // window.scrollTo({top: 0})
     const imageToggle = setInterval(() => {
       setIsImage1((prev) => !prev);
     }, 5000);
@@ -71,7 +70,7 @@ const Quiz = () => {
             <span className='block'>an immersive way to strengthen your hifz.</span>
           </p>
           <div className='flex flex-col   xl:items-center xl:flex-row gap-2'>
-            <Link to={"/get-started"} className='border  rounded-md py-3 shadow-md px-6 bg-black text-white text-center dark:bg-white dark:text-black dark:border-none hover:dark:bg-black hover:dark:text-white'>Start Quiz</Link>
+            <Link to={"/quiz-cards"} className='border  rounded-md py-3 shadow-md px-6 bg-black text-white text-center dark:bg-white dark:text-black dark:border-none hover:dark:bg-black hover:dark:text-white'>Start Quiz</Link>
             <Link to={"/create-quiz"} className='border  rounded-md py-3 shadow-md px-6 bg-black text-white text-center dark:bg-white dark:text-black dark:border-none hover:dark:bg-black hover:dark:text-white'>Create Quiz</Link>
           </div>
         </div>
@@ -158,7 +157,7 @@ const Quiz = () => {
     
     {/* Right column */}
     <div className='flex  flex-col   lg:pt-[40rem]' >
-      <div className={`pb-8 lg:pb-60 bg-black  `} >
+      <div className={`pb-8 lg:pb-60 z-10 bg-black  `} >
         <div className='flex items-center gap-4'>
           <div className='w-10'>
             <Lottie animationData={arrowAnimation} style={{ filter: 'invert(100%)' }} />
@@ -169,7 +168,7 @@ const Quiz = () => {
           Design engaging questions, choose from a variety of formats, and tailor your quiz to suit your audience.
         </p>
       </div>
-      <div className={`pb-8 lg:pb-40 bg-black   `} >
+      <div className={`pb-8 lg:pb-40 z-10 bg-black   `} >
         <div className='flex items-center gap-4'>
           <div className='w-10'>
             <Lottie animationData={arrowAnimation} style={{ filter: 'invert(100%)' }} />
@@ -180,8 +179,8 @@ const Quiz = () => {
           Share your quiz to engage others and foster learning. Spark discussions and collaboration within the community.
         </p>
       </div>
-      <div className={`lg:sticky lg:bottom-0 -z-10 pb-20 items-center flex justify-center lg:justify-normal `}>
-        <button className='rounded-lg bg-white text-black shadow-md py-2 px-6 w-full md:w-2/4 lg:w-auto font-bold'>
+      <div className={`lg:sticky lg:bottom-0  pb-20 items-center flex justify-center lg:justify-normal `}>
+        <button className=' cursor-pointer rounded-lg bg-white hover:shadow-md hover:shadow-[#d5d5d5] text-black shadow-md py-2 px-6 w-full md:w-2/4 lg:w-auto font-bold'>
           Create Quiz
         </button>
       </div>

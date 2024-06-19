@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Lottie from 'lottie-react';
 import timerAnimation from "../../assets/icons/timer.json";
 import dotAnimation from "../../assets/icons/dot.json";
@@ -28,6 +28,7 @@ const StartQuiz = () => {
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
   const [showCongrats, setShowCongrats] = useState<boolean>(false);
   const [reviewMode, setReviewMode] = useState<boolean>(false);
+  const { id} = useParams<{id: string | undefined}>()
   const [timer, setTimer] = useState<number>(3);
   const [text, setText] = useState<string>('');
   const [ready, setReady] = useState<boolean>(false); // Track if user is ready to start quiz
@@ -39,35 +40,43 @@ const StartQuiz = () => {
   // Fetch questions from API
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get(`${API_ROUTE}/api/questions`);
+      const response = await axios.get(`${API_ROUTE}/api/users/questions/${id}`);
       setQuestions(response.data);
+      console.log(response.data)
     } catch (error) {
       console.log(error);
     }
   };
 
   // Check user's answer
-  const checkAnswer = (selectedOption: string, correctAnswer: string) => {
-    if (!showFeedback) {
-      setSelectedOption(selectedOption);
-      setShowFeedback(true);
-      selectedOption === correctAnswer ? setText('Correct!') : setText('Incorrect!');
-      if (currentQuestionIndex < questions.length - 1) {
-        setTimeout(() => {
-          setShowFeedback(false);
-          setSelectedOption(null);
-          setText('');
-          setCurrentQuestionIndex(currentQuestionIndex + 1);
-        }, 5000);
-      } else {
-        setTimeout(() => {
-          setShowFeedback(false);
-          setShowCongrats(true);
-          setText('');
-        }, 3000);
-      }
+ // Check user's answer
+const checkAnswer = (selectedOption: string, correctAnswer: string) => {
+  if (!showFeedback) {
+    // Normalize both answers to lowercase for case-insensitive comparison
+    const normalizedSelectedOption = selectedOption.toLowerCase();
+    const normalizedCorrectAnswer = correctAnswer.toLowerCase();
+
+    setSelectedOption(selectedOption);
+    setShowFeedback(true);
+    normalizedSelectedOption === normalizedCorrectAnswer ? setText('Correct!') : setText('Incorrect!');
+
+    if (currentQuestionIndex < questions.length - 1) {
+      setTimeout(() => {
+        setShowFeedback(false);
+        setSelectedOption(null);
+        setText('');
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+      }, 5000);
+    } else {
+      setTimeout(() => {
+        setShowFeedback(false);
+        setShowCongrats(true);
+        setText('');
+      }, 3000);
     }
-  };
+  }
+};
+
 
   // Timer effect for countdown
   useEffect(() => {
@@ -96,19 +105,12 @@ const StartQuiz = () => {
     if (ready) {
       fetchQuestions();
     }
-  }, [ready]);
+  }, [ready, id]); 
 
-  // Restart quiz
-  const restartQuiz = () => {
-    setCurrentQuestionIndex(0);
-    setShowQuestions(false);
-    setShowCongrats(false);
-    setReviewMode(false);
-    setSelectedOption(null);
-    setShowFeedback(false);
-    setTimer(3);
-    fetchQuestions(); // Refetch questions
-  };
+  useEffect(() => {
+      fetchQuestions()
+  }, [id])
+
 
   // Review answers
   const reviewAnswers = () => {
@@ -120,7 +122,7 @@ const StartQuiz = () => {
     <div className='flex flex-col dark:text-black gap-10 h-full w-full pb-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700'>
       <div className='flex flex-col gap-5 mt-20 items-center justify-center w-full pb-10'>
         <div className='pb flex justify-start items-start w-full px-20'>
-          <Link to="/quiz" className='border rounded-lg shadow-md bg-white text-black px-4 py-1'>Go Back to Quiz Page</Link>
+          <Link to="/quiz-cards" className='border rounded-lg shadow-md bg-white text-black px-4 py-1'>Go Back to Quiz Page</Link>
         </div>
         {!ready && (
           <div className='pb-20 flex flex-col items-center justify-center gap-6'>
@@ -132,12 +134,12 @@ const StartQuiz = () => {
               >
                 Yes
               </button>
-              <button
+              <Link
                 className='px-6 py-2 bg-red-500 hover:bg-red-600 shadow-md text-white font-bold border rounded-lg'
-                onClick={() => alert('See you next time!')}
+                to={"/quiz-cards"}
               >
                 No
-              </button>
+              </Link>
             </div>
           </div>
         )}
@@ -193,7 +195,7 @@ const StartQuiz = () => {
             <h2 className='text-3xl mb-4'>Congrats! You have completed the quiz!</h2>
             <div>
               <button className='bg-blue-500 text-white px-4 py-2 rounded-md mr-2' onClick={reviewAnswers}>Review Answers</button>
-              <button className='bg-green-500 text-white px-4 py-2 rounded-md' onClick={restartQuiz}>Start New Quiz</button>
+              <Link to={"/quiz-cards"}  className='bg-green-500 text-white px-4 py-2 rounded-md'>Explore Quiz</Link>
             </div>
           </div>
         )}

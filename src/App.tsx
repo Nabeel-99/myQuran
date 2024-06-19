@@ -16,13 +16,15 @@ import MaybeShowNavbar from './components/navbar/MaybeShowComponent'
 import MaybeShowComponent from './components/navbar/MaybeShowComponent'
 import CreateQuiz from './pages/quizPage/CreateQuiz'
 import SignIn from './pages/userRegistration/SignIn'
+import ScrollToTop from './components/ScrollToTop'
+import MyQuestions from './pages/profilePage/MyQuestions'
+import Questions from './pages/quizPage/Questions'
 
 const App = () => {
   const API_ROUTE = 'http://localhost:3000'
   // const location = useLocation()
   const [user, setUser] = useState<string>('')
   const [email, setEmail] = useState<string>('')
-  const [showNavbar, setShowNavbar] = useState<boolean>(false)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const storedTheme = localStorage.getItem('theme')
@@ -100,6 +102,7 @@ const App = () => {
   return (
     <>
     <Router>
+      <ScrollToTop/>
       <div className='flex flex-col w-screen  h-full font-sans dark:bg-[#0a0a0a] dark:text-white '>
       <MaybeShowNavbar>
         <Navbar
@@ -122,7 +125,9 @@ const App = () => {
         <Route path='/profile' element={<Profile user={user} email={email}/>}></Route>
         <Route path='/notes' element={<Notes/>}></Route>
         <Route path='/quiz' element={<Quiz/>}></Route>
-        <Route path='/get-started' element={<StartQuiz/>}></Route>
+        <Route path='/quiz-cards' element={<Questions/>}></Route>
+        <Route path='/get-started/:id' element={<StartQuiz/>}></Route>
+        <Route path='/my-questions' element={<MyQuestions/>}></Route>
         <Route path='/create-quiz' element={<CreateQuiz user={user}/>}></Route>
       </Routes>
       

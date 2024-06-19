@@ -219,6 +219,16 @@ a:focus-visible {
   opacity: 1;
   transform: translateY(0);
 }
+#questions{
+  opacity: 0;
+  transform: translateY(20%);
+  transition-delay: 2s;
+  transition: all 1s ease-out;
+}
+#questions.active{
+  opacity: 1;
+  transform: translateY(0);
+}
 .point{
   transform: translateY(-40%);
   transition: all 1s ease-in;
