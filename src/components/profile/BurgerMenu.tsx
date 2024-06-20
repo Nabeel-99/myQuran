@@ -2,6 +2,7 @@ import React from 'react'
 import { FaArrowRight, FaBook, FaBookOpen, FaClipboard, FaHome, FaRegBookmark } from 'react-icons/fa'
 import { FaGear, FaRadio, FaXmark } from 'react-icons/fa6'
 import { IoLogOut } from 'react-icons/io5'
+import { MdQuiz } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 
@@ -37,8 +38,8 @@ const BurgerMenu:React.FC<BurgerMenuProps> = ({isLoggedIn, user, toggleBurgerMen
                             </div>
                        ): (
                      
-                         <div className='flex flex-col gap-2 border p-4 rounded-lg bg-gray-100'>
-                            <Link to={"/login"} onClick={closeMenu} className='py-2 px-2 bg-white border-black border rounded-md w-44 font-bold'>Start Your Journey</Link>
+                         <div className='flex flex-col gap-2 border p-4 rounded-lg bg-gray-100 dark:bg-[#0a0a0a]'>
+                            <Link to={"/login"} onClick={closeMenu} className='py-2 px-2 bg-white border-black border rounded-md w-44 font-bold dark:bg-[#0a0a0a] dark:border-gray-500 '>Start Your Journey</Link>
                             <p>Experience a world of benefits by creating an account:</p>
                             <ul className='list-disc ml-6'>
                                 <li>Bookmarking Verses</li>
@@ -54,7 +55,7 @@ const BurgerMenu:React.FC<BurgerMenuProps> = ({isLoggedIn, user, toggleBurgerMen
                     <ul>
                         <li className='border-b-2  py-3 border-t-2'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaHome/>Home</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaRadio/>Reciters</Link></li>
-                        <li className='border-b-2 py-3'><Link to={"/quiz"} onClick={closeMenu} className='flex items-center gap-3'><FaBook/>Quiz</Link></li>
+                        <li className='border-b-2 py-3'><Link to={"/quiz"} onClick={closeMenu} className='flex items-center gap-3'><MdQuiz/>Quiz</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBook/>Seerah</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBookOpen/>Duas and Supplications</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaGear/>Settings</Link></li>

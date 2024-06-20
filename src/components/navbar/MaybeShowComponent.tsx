@@ -10,7 +10,8 @@ const MaybeShowComponent: React.FC<MaybeShowComponentProps> = ({ children }) => 
     const location = useLocation();
     
     useEffect(() => {
-        setShowComponent(location.pathname !== "/get-started");
+        const hidePaths = ["/get-started", "/get-started/:id"]
+        setShowComponent(!hidePaths.some(path => location.pathname.startsWith(path)));
     }, [location]);
     
     return showComponent ? <div>{children}</div> : null;

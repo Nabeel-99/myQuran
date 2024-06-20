@@ -9,6 +9,7 @@ import axios from 'axios'
 import UserMenu from '../profile/UserMenu'
 import BurgerMenu from '../profile/BurgerMenu'
 import { GoDeviceDesktop } from 'react-icons/go'
+import ToggleModes from './ToggleModes'
 
 interface NavbarProps{
     user: string | null
@@ -17,7 +18,7 @@ interface NavbarProps{
     lightMode:() => void
     darkMode:() => void
     systemMode:() => void
-    isDarkMode:boolean
+    isDarkMode:boolean 
 }
 const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, darkMode, systemMode, isDarkMode}) => {
     const [isBurgerMenu, setIsBurgerMenu] = useState<boolean>(false)
@@ -95,7 +96,7 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
                 <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/"}>Home</Link></li>
                 <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/settings"}>Settings</Link></li>
                 <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/quiz"}>Quiz</Link></li>
-                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/seerah"}>Seerah</Link></li>
+                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/hadith"}>Hadith</Link></li>
                 <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/supplications"}>Supplications</Link></li>
             </ul>
             <div className='border border-black opacity-35'></div>
@@ -115,13 +116,12 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
                    />
                 )}
                 {isShowModes && (
-                    <div className='absolute top-10 right-0 dark:bg-[#303233]  bg-white border shadow-md w-32 rounded-lg '>
-                        <div className='flex flex-col gap-4 px-4 text-[1rem] p-4'>
-                            <button onClick={() => {lightMode(); closeModesModal()}} title='sun' className='flex items-center gap-2 hover:text-blue-700 dark:hover:text-blue-300'><IoSunnyOutline/> Light</button>
-                            <button onClick={() => {darkMode(); closeModesModal()}} title='moon' className='flex items-center gap-2  hover:text-blue-700 dark:hover:text-blue-300'><IoMoonOutline/> Dark</button>
-                            <button onClick={() => {systemMode(); closeModesModal()}} title='system' className='flex items-center gap-2  hover:text-blue-700 dark:hover:text-blue-300'><GoDeviceDesktop/> System</button>
-                        </div>
-                    </div>
+                    <ToggleModes
+                        lightMode={lightMode}
+                        darkMode={darkMode}
+                        systemMode={systemMode}
+                        closeModesModal={closeModesModal}
+                    />
                 )}
             </div>
         </div>
@@ -131,7 +131,15 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
             <Link to={"/"} className='text-4xl text-slate-950 arabicText dark:text-white'>121</Link>
         </div>
         <div className='md:hidden flex items-center justify-center'>
-        <button title='menu' className='px-3 m py-2 rounded-lg '><FaMoon className='text-xl'/></button>
+            <button onClick={showModes} title='menu' className='px-3 m py-2 rounded-lg '><FaMoon className='text-xl'/></button>
+            {isShowModes && (
+                     <ToggleModes
+                     lightMode={lightMode}
+                     darkMode={darkMode}
+                     systemMode={systemMode}
+                     closeModesModal={closeModesModal}
+                 />
+                )}
             <button onClick={toggleSearch} title='menu' className='px-3 mr-2 py-2 rounded-lg '><FaSearch className='text-xl'/></button>
             <button onClick={toggleBurgerMenu} title='menu' className='px-3 mr-4 py-2 rounded-lg border '><FaBars className='text-xl'/></button>
         </div>

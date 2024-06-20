@@ -42,6 +42,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ user }) => {
                 if (field.startsWith('options.')) {
                     const optionKey = field.split('.')[1];
                     q.options[optionKey] = value;
+                } else if (field === 'correct_answer') {
+                    q.correct_answer = value.toUpperCase();  // Ensure correct answer is uppercase
                 } else if (field in q) {
                     (q as any)[field] = value;
                 }
@@ -50,6 +52,7 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ user }) => {
         });
         setQuestions(updatedQuestions);
     };
+    
 
     const handleSubmit = async () => {
         try {

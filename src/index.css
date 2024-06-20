@@ -190,8 +190,16 @@ a:focus-visible {
   opacity: 1;
   transform: translateY(0);
 }
-
-
+#ready-text{
+  opacity: 0;
+  transform: translateY(-60%);
+  transform: scaleX(0);
+}
+#ready-text.active{
+  opacity: 1;
+  transform: translateY(0);
+  transform: scaleX(1);
+}
 
 #how-it-works{
   opacity: 0;

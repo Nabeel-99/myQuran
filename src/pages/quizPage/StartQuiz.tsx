@@ -22,6 +22,7 @@ interface Question {
 
 const StartQuiz = () => {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [questionsLength, setQuestionsLength] = useState()
   const [showQuestions, setShowQuestions] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -31,9 +32,13 @@ const StartQuiz = () => {
   const { id} = useParams<{id: string | undefined}>()
   const [timer, setTimer] = useState<number>(3);
   const [text, setText] = useState<string>('');
-  const [ready, setReady] = useState<boolean>(false); // Track if user is ready to start quiz
+  const [ready, setReady] = useState<boolean>(false); 
   const { ref: questionRef, inView: inQuestionRef } = useInView({
     threshold: 0.2,
+    triggerOnce: true
+  });
+  const { ref: readyRef, inView: inReadyRef } = useInView({
+    threshold: 0.4,
     triggerOnce: true
   });
 
@@ -42,6 +47,7 @@ const StartQuiz = () => {
     try {
       const response = await axios.get(`${API_ROUTE}/api/users/questions/${id}`);
       setQuestions(response.data);
+      setQuestionsLength(response.data.length)
       console.log(response.data)
     } catch (error) {
       console.log(error);
@@ -119,14 +125,16 @@ const checkAnswer = (selectedOption: string, correctAnswer: string) => {
   };
 
   return (
-    <div className='flex flex-col dark:text-black gap-10 h-full w-full pb-20 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700'>
+    <div className='flex flex-col dark:text-black gap-10 h-full w-full pb-20 bg-gradient-to-br from-gray-500 via-gray-500 to-gray-400'>
       <div className='flex flex-col gap-5 mt-20 items-center justify-center w-full pb-10'>
-        <div className='pb flex justify-start items-start w-full px-20'>
-          <Link to="/quiz-cards" className='border rounded-lg shadow-md bg-white text-black px-4 py-1'>Go Back to Quiz Page</Link>
+        <div className='pb-7 grid grid-cols-3 items-center w-full px-20'>
+          <Link to="/quiz-cards" className='border rounded-lg shadow-md bg-white w-52 text-black px-4 py-1'>Go Back to Quiz Page</Link>
+          <p className='text-center text-white text-4xl font-bold'>{questionsLength} {questionsLength === 1 ? 'Question' : 'Questions'}</p>
         </div>
         {!ready && (
           <div className='pb-20 flex flex-col items-center justify-center gap-6'>
-            <p className='block text-4xl text-white leading-tight'>Are you ready for the quiz challenge?😃</p>
+            <p id='ready-text' className={`block text-4xl text-white leading-tight reveal-animation  ${inReadyRef ? 'active' : ''}`} ref={readyRef}>Are you ready for the quiz challenge?😃</p>
+          
             <div className='flex gap-3'>
               <button
                 className='px-6 py-2 bg-green-500 hover:bg-green-600 text-white shadow-md font-bold border rounded-lg'
@@ -152,29 +160,37 @@ const checkAnswer = (selectedOption: string, correctAnswer: string) => {
             />
           </div>
         )}
-        {showQuestions && questions.length > 0 && !showCongrats && !reviewMode && (
-          <div id='question-card' className={`w-3/5 border bg-white p-8 rounded-2xl reveal-animation ${inQuestionRef ? 'active' : ''}`} ref={questionRef}>
-            <div className='flex items-center justify-between w-full pb-8'>
-              <h2 className='text-xl'>{questions[currentQuestionIndex].question}</h2>
-              {text === 'Correct!' ? (
-                <Lottie animationData={correctAnimation} className='w-32'/>
-              ) : text === "Incorrect!" && (
-                <p className='text-red-700 font-bold'>Incorrect!</p>
-              )}
+         {showQuestions && questions.length > 0 && !showCongrats && !reviewMode && (
+          <>
+            <div className='text-white text-lg'>
+              Question {currentQuestionIndex + 1} / {questions.length}
             </div>
-            <div className='grid grid-cols-2 gap-3'>
-              {Object.entries(questions[currentQuestionIndex].options).map(([key, value]) => (
-                <div className={`flex gap-2 items-center py-1 border rounded-full cursor-pointer ${showFeedback &&
-                  ((key === selectedOption && key === questions[currentQuestionIndex].correct_answer) ? 'bg-green-500 text-white' :
-                    (key === selectedOption && key !== questions[currentQuestionIndex].correct_answer) ? 'bg-red-500 text-white' :
-                      (key === questions[currentQuestionIndex].correct_answer) ? 'bg-green-500 text-white' : '')}`} key={key}
-                  onClick={() => checkAnswer(key, questions[currentQuestionIndex].correct_answer)}>
-                  <p className='ml-2 border rounded-full h-8 w-8 flex items-center justify-center'>{key}</p>
-                  <p>{value}</p>
-                </div>
-              ))}
+            <div id='question-card' className={`w-3/5 border bg-white p-8 rounded-2xl reveal-animation ${inQuestionRef ? 'active' : ''}`} ref={questionRef}>
+              <div className='flex items-center justify-between w-full pb-8'>
+                <h2 className='text-xl'>{questions[currentQuestionIndex].question}</h2>
+                {text === 'Correct!' ? (
+                  <div className='flex items-center'>
+                    <p className='text-green-500'>Correct!</p>
+                    <Lottie animationData={correctAnimation} className='w-32' />
+                  </div>
+                ) : text === "Incorrect!" && (
+                  <p className='text-red-700 font-bold'>Incorrect!</p>
+                )}
+              </div>
+              <div className='grid grid-cols-2 gap-3'>
+                {Object.entries(questions[currentQuestionIndex].options).map(([key, value]) => (
+                  <div className={`flex gap-2 items-center py-1 border rounded-full cursor-pointer ${showFeedback &&
+                    ((key === selectedOption && key === questions[currentQuestionIndex].correct_answer) ? 'bg-green-500 text-white' :
+                      (key === selectedOption && key !== questions[currentQuestionIndex].correct_answer) ? 'bg-red-500 text-white' :
+                        (key === questions[currentQuestionIndex].correct_answer) ? 'bg-green-500 text-white' : '')}`} key={key}
+                    onClick={() => checkAnswer(key, questions[currentQuestionIndex].correct_answer)}>
+                    <p className='ml-2 border rounded-full h-8 w-8 flex items-center justify-center'>{key}</p>
+                    <p>{value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          </>
         )}
         {showFeedback && (
           <div className='mt-4 flex items-center '>
@@ -192,7 +208,7 @@ const checkAnswer = (selectedOption: string, correctAnswer: string) => {
         )}
         {showCongrats && (
           <div className='mt-4 text-center text-white'>
-            <h2 className='text-3xl mb-4'>Congrats! You have completed the quiz!</h2>
+            <h2 className='text-3xl mb-4'>Congratulations! You have completed the quiz!</h2>
             <div>
               <button className='bg-blue-500 text-white px-4 py-2 rounded-md mr-2' onClick={reviewAnswers}>Review Answers</button>
               <Link to={"/quiz-cards"}  className='bg-green-500 text-white px-4 py-2 rounded-md'>Explore Quiz</Link>
@@ -220,4 +236,4 @@ const checkAnswer = (selectedOption: string, correctAnswer: string) => {
 };
 
 export default StartQuiz;
-``
+
