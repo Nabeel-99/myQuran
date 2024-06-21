@@ -4,17 +4,9 @@ import { FaEdit, FaTrash } from 'react-icons/fa'
 import { FaXmark } from 'react-icons/fa6'
 import { API_ROUTE } from '../../apis/quranApi'
 import chapters from "../../apis/chapters.json"
+import { Note } from '../../types/types'
 
-interface Note {
-    _id: string;
-    note: string;
-    suraNumber: number;
-    createdAt: string;
-    verseId: string
-    verseText: string
-    verseTranslation: string
-   
-}
+
 const Notes = () => {
 const [selectedNote, setSelectedNote] = useState<Note | null>(null);
 const [isEditing, setIsEditing] = useState<boolean>(false)

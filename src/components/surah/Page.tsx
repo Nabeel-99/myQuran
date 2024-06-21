@@ -7,9 +7,10 @@ import ReadingView from './ReadingView'
 
 interface PageProps{
   isReadingView: boolean,
-  isTranslationView: boolean
+  isTranslationView: boolean,
+  clearAudioUrl:() => void
 }
-const Page:React.FC<PageProps> = ({isReadingView, isTranslationView}) => {
+const Page:React.FC<PageProps> = ({isReadingView, isTranslationView, clearAudioUrl}) => {
   const [pages, setPages] = useState<any[]>([])
 
   const [currentSurah, setCurrentSurah] = useState<number>(0)
@@ -62,6 +63,7 @@ const formattedVerse = (verse: any) => {
       setCurrentSurah(nextSurahNumber)
       navigate(`/surah/${nextSurahNumber}`)
       renderByPage(nextSurahNumber)
+      clearAudioUrl()
   }
 
   const prevSurah = async() => {
@@ -69,6 +71,7 @@ const formattedVerse = (verse: any) => {
     setCurrentSurah(prevSurahNumber)
     navigate(`/surah/${prevSurahNumber}`)
     renderByPage(prevSurahNumber)
+    clearAudioUrl()
   }
 
   useEffect(() => {

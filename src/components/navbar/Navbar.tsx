@@ -94,10 +94,8 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
         <div className='hidden md:flex gap-5 '>
             <ul className='flex gap-5 items-center'>
                 <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/"}>Home</Link></li>
-                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/settings"}>Settings</Link></li>
-                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/quiz"}>Quiz</Link></li>
                 <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/hadith"}>Hadith</Link></li>
-                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/supplications"}>Supplications</Link></li>
+                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/quiz"}>Quiz</Link></li>
             </ul>
             <div className='border border-black opacity-35'></div>
             <div className='relative flex gap-2 items-center text-lg'>

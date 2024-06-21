@@ -105,7 +105,7 @@ const LandingPage = () => {
                 onChange={handleSearchChange}
                 />
         </div>
-        {/* RECENTLY READ */}
+        {/* RECENTLY READ
        <div className='flex flex-col gap-2'>
             <h2 className='md:text-xl'>Recently Read</h2>
             <div className='grid grid-flow-col xl:grid-cols-5 '>
@@ -122,7 +122,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-       </div>
+       </div> */}
        {/* CHAPTER AND JUZ LISTS */}
       <div className='flex flex-col gap-4'>
         <h2 className='md:text-xl'>Chapter Lists</h2>

@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FaCaretRight, FaReadme } from 'react-icons/fa'
+import { FaCaretRight, FaPlay, FaReadme } from 'react-icons/fa'
 import { PiCaretLeftLight, PiCaretRightLight } from "react-icons/pi";
 import { CgReadme } from "react-icons/cg";
 import { RxReader } from "react-icons/rx";
-import {  getSurahLists, fetchAllJuz,fetchAyat, fetchSurahTranslation } from '../apis/quranApi';
+import {  getSurahLists, fetchAllJuz,fetchAyat, fetchSurahTranslation, playChapter } from '../apis/quranApi';
 import Sidemenu from '../components/surah/Sidemenu';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -23,7 +23,25 @@ const Surah = () => {
     const [isTranslationView, setIsTranslationView] = useState<boolean>(false)
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [isSidePanel, setIsSidePanel] = useState<boolean>(false)
+    const [audioUrl, setAudioUrl] = useState<string>('')
+    const [reciterId, setReciterId] = useState<number>(2)
+    const [isPlaying, setIsPlaying] = useState<boolean>(false)
+    
+    const handlePlayAudio = async () => {
+        try{
+            const surahId = selectedSurah[0].verseNumber.split(":")[0]
+            const audioFile = await playChapter(reciterId, surahId)
+            setAudioUrl(audioFile)
+            setIsPlaying(true)
+        }catch(error){
+            console.log(error)
+        }
+    }
 
+    const clearAudioUrl = () => {
+        setAudioUrl('');
+        setIsPlaying(false);
+    };
     const toggleTranslationView = () => {
         setIsTranslationView(true)
         setIsReadingView(false)
@@ -115,6 +133,8 @@ const Surah = () => {
         fetchAllSurahs()
         // fetchAllPages()
    }, [id, juzId]) 
+
+ 
   return (
     <div className='flex h-full w-full'>
         {/* side navigation */}
@@ -157,6 +177,17 @@ const Surah = () => {
         <div className='text-right flex flex-col w-full pb-28 px-8 xl:px-44 '> 
         {selectedSurah.length > 0 && (
           <div className="flex flex-col items-center gap-4">
+            <button onClick={handlePlayAudio} className='flex gap-2 items-center px-2 rounded-sm py-1 text-blue-600 hover:bg-blue-300'>
+                <FaPlay/>
+                <p>Play Audio</p>
+            </button>
+            {audioUrl && (
+                <div className='fixed w-full z-10 bottom-0 '>
+                     <audio autoPlay controls className='w-full'>
+                        <source src={audioUrl} type='audio/mp3'/>
+                    </audio>
+                </div>
+            )}
             <h1 className="arabicText text-center">
                {selectedSurah[0].verseNumber.split(":")[0]}
               <p className='bismillah py-6'>{
@@ -166,7 +197,9 @@ const Surah = () => {
                     }
              </p>
             </h1>
+        
             <Page
+                clearAudioUrl={clearAudioUrl}
                 isReadingView={isReadingView}
                 isTranslationView={isTranslationView}
             />
@@ -180,10 +213,3 @@ const Surah = () => {
 
 export default Surah
 
- {/* <div className='verseText text-xl ] text-center'>
-            {selectedSurah.map((aya, index) => (
-                <p className="textNaskh text-center  " key={index}>
-                   {aya.text} <span className='quran-common text-2xl'>{formattedStyleName(aya.verseNumber.split(":")[1])}</span>
-                </p>
-            ))}
-            </div> */}

@@ -7,18 +7,9 @@ import correctAnimation from "../../assets/icons/correct.json";
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { API_ROUTE } from '../../apis/quranApi';
+import { Question } from '../../types/types';
 
-interface Question {
-  _id: string;
-  question: string;
-  options: {
-    A: string;
-    B: string;
-    C: string;
-    D: string;
-  };
-  correct_answer: string;
-}
+
 
 const StartQuiz = () => {
   const [questions, setQuestions] = useState<Question[]>([]);

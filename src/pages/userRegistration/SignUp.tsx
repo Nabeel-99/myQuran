@@ -7,13 +7,9 @@ import { MdQuiz } from 'react-icons/md'
 import { TfiWrite } from 'react-icons/tfi'
 import { Link, useNavigate } from 'react-router-dom'
 import { API_ROUTE } from '../../apis/quranApi'
+import { UserData } from '../../types/types'
 
-interface UserData{
-  email: string,
-  firstName: string,
-  lastName: string,
-  password: string
-}
+
 const SignUp = () => {
 
   const [userData, setUserData] = useState<UserData>({

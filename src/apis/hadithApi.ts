@@ -1,29 +1,11 @@
 import axios from "axios"
-// import dotenv from "dotenv"
-// dotenv.config()
-const BASE_URL = 'https://hadithapi.com/api/sahih-bukhari/chapters?apiKey=$2y$10$VKs70oeESlxNl6SqW2q0nOlf543Qum224lrCXdi2VvAxEOUJagEO'
-const HADITH_URL = 'https://hadithapi.com/api/hadiths/?apiKey=$2y$10$VKs70oeESlxNl6SqW2q0nOlf543Qum224lrCXdi2VvAxEOUJagEO'
+import { API_ROUTE } from "./quranApi"
+import { HadithChapter, Hadiths } from "../types/types"
 
-export interface HadithChapter{
-    id: number,
-    chapterNumber: number,
-    chapterEnglish: string,
-    chapterArabic: string
-}
-export interface Hadiths{
-    id: number,
-    hadithNumber: number,
-    hadithArabic: string,
-    hadithEnglish: string,
-    headingArabic: string,
-    headingEnglish: string,
-    chapterNumber: number,
-    chapterArabic: string,
-    chapterEnglish: string
-}
+
 export const getHadithLists = async() => {
     try {
-        const response = await axios.get<{chapters: HadithChapter[]}>(`${BASE_URL}`)
+        const response = await axios.get<{chapters: HadithChapter[]}>(`${API_ROUTE}/api/hadith`)
         const dataResponse = response.data.chapters.map((hadith: any) => ({
             id: hadith.id,
             chapterNumber: hadith.chapterNumber,
@@ -37,10 +19,11 @@ export const getHadithLists = async() => {
     }
 }
 
-export const getHadithChapters = async(chapterNum: number) => {
+
+export const getHadithChapters = async (chapterNum: number) => {
     try {
-       const response = await axios.get<{hadiths: {data: Hadiths[]}}>(`${HADITH_URL}&book=sahih-bukhari&chapter=${chapterNum}`)
-       const dataResponse = response.data.hadiths.data.map((hadith: any) => ({
+        const response = await axios.get<{ hadiths: { data: Hadiths[] } }>(`${API_ROUTE}/api/hadith/${chapterNum}`);
+        const dataResponse = response.data.hadiths.data.map((hadith: any) => ({
             id: hadith.id,
             hadithNumber: hadith.hadithNumber,
             hadithArabic: hadith.hadithArabic,
@@ -49,11 +32,14 @@ export const getHadithChapters = async(chapterNum: number) => {
             headingEnglish: hadith.headingEnglish,
             chapterNumber: hadith.chapter.chapterNumber,
             chapterArabic: hadith.chapter.chapterArabic,
-            chapterEnglish: hadith.chapter.chapterEnglish
-       }))
-       return dataResponse
+            chapterEnglish: hadith.chapter.chapterEnglish,
+            book: hadith.book.bookName,
+            englishNarrator: hadith.englishNarrator
+        }));
+        console.log(dataResponse);
+        return dataResponse;
     } catch (error) {
-        console.log(error)
-        throw error
+        console.log(error);
+        throw error;
     }
-}
+};

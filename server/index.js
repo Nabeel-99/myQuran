@@ -7,7 +7,8 @@ import UserRoutes from "./routes/UserRoutes.js"
 import Question from "./model/QuestionsModel.js"
 
 dotenv.config()
-
+const HADITH_URL = 'https://hadithapi.com/api/hadiths/?apiKey='
+const CHAPTERS_URL = 'https://hadithapi.com/api/sahih-bukhari/chapters?apiKey='
 const app = express()
 
 app.use(cors({
@@ -19,7 +20,7 @@ app.use(cookieParser())
 
 //routes
 app.use("/api/users", UserRoutes)
-// get questions
+// get already made questions
 app.get("/api/questions", async(req, res) => {
     try {
         const questions = await Question.find()
@@ -27,6 +28,30 @@ app.get("/api/questions", async(req, res) => {
     } catch (error) {
         console.log(error)
         return res.status(500).json({message: "Internal server error"})
+    }
+})
+import axios from 'axios';
+// get hadith Chapters
+app.get("/api/hadith", async(req, res) => {
+    try {
+        const chapters = await axios.get(`${CHAPTERS_URL}${process.env.API_KEY}`)
+        res.json(chapters.data)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({message: "Internal Server Error"})
+    }
+})
+// get hadith Sahih Bukhari
+app.get("/api/hadith/:chapterNum", async(req, res) => {
+    try {
+        const { chapterNum } = req.params
+        const hadiths = `${HADITH_URL}${process.env.API_KEY}&book=sahih-bukhari&chapter=${chapterNum}`
+
+        const response = await axios.get(hadiths)
+        res.json(response.data)
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({message: "Internal server error"})
     }
 })
 

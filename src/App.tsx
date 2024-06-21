@@ -120,7 +120,7 @@ const App = () => {
     <>
       <Router>
         <ScrollToTop />
-        <div className='flex flex-col w-screen h-full font-sans dark:bg-[#0a0a0a] dark:text-white'>
+        <div className='flex flex-col w-screen h-full font-sans dark:bg-[#1f2125] dark:text-white'>
           <MaybeShowNavbar>
             <Navbar
               isDarkMode={isDarkMode}

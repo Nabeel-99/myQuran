@@ -8,8 +8,8 @@ const Footer = () => {
         setIsLang(!isLang)
     }
   return (
-    <footer className='flex flex-col dark:text-white  gap-16 w-full px-8 md:px-24 pb-24'>
-        <div className='flex flex-col gap-10 lg:flex-row lg:justify-between lg:w-full'>
+    <footer className='flex flex-col  dark:text-white  gap-16 w-full px-8 md:px-24 pb-24'>
+        <div className='flex pt-8 flex-col border-t border-gray-200 gap-10 lg:flex-row lg:justify-between lg:w-full'>
             <div className='flex flex-col gap-3 xl:w-96'>
                 <p className='font-bold'>My Quran</p>
                 <p>This website is provided as a Sadaqah Jariyah, an ongoing charity, in hopes of making it easy for everyone to read and understand.</p>

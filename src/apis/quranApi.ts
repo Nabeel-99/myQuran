@@ -1,27 +1,9 @@
 import axios from "axios";
+import { Chapter, Reciters, Translation, Verse } from "../types/types";
 
 const BASE_URL = 'https://api.quran.com/api/v4';
 export const API_ROUTE = 'http://localhost:3000'
-interface Chapter{
-    revelation_place: string;
-    name_simple: string
-    sura_number: number
-    verses_count: number
-    english_name: {name: string}
-    pages: any[]
-}
 
-interface Verse {
-    verseId: any;
-    verseNumber: any;
-    verseImlaei: any;
-    text: any;
-}
-
-
-interface Translation{
-    text: string
-}
 export const getSurahLists = async() => {
     try {
         const response = await axios.get<{chapters: Chapter[]}>(`${BASE_URL}/chapters`)
@@ -152,5 +134,30 @@ export const renderPages = async (surahNumber: any) => {
     }
 };
 
+// fetch reciters
+export const getAllReciters = async () => {
+    try {
+        const response = await axios.get<{recitations: Reciters[]}>(`${BASE_URL}/resources/recitations`)
+        const dataResponse = response.data.recitations.map((reciter: any) => ({
+            id: reciter.id,
+            reciter_name: reciter.reciter_name
+        }))
+        console.log(dataResponse)
+        return dataResponse
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+export const playChapter = async(reciterId: number, chapterNum: number,) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/chapter_recitations/${reciterId}/${chapterNum}`)
+        const audioFile = response.data.audio_file.audio_url
+        return audioFile
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 
+}
 
