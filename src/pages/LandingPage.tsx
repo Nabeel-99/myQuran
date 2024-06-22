@@ -30,7 +30,7 @@ const LandingPage = () => {
         )
         setFilteredSurahList(filteredList)
     }
-
+  
     const searchJuz = (searchValue: any) => {
         const filteredList = surahJuz.filter((juz: any) => 
             juz.juzNum.toString().includes(searchValue.toString())
@@ -82,7 +82,6 @@ const LandingPage = () => {
         }
     }
     useEffect(() => {
-        
         fetchSurahJuz()
         fetchSurahList()
     }, [])
@@ -94,8 +93,8 @@ const LandingPage = () => {
             <h3 className='arabicText text-[5rem] lg:text-[10rem] ' >126</h3>
         </div>
         {/* SEARCH BAR */}
-        <div className='flex border  mx-auto items-center justify-center pl-4  dark:bg-[#303233] rounded-full w-full md:w-3/6'>
-            <label htmlFor='search' title='search' className='border-r  h-full   flex items-center pr-3'><FaSearch/></label>
+        <div className='flex border  mx-auto items-center justify-center pl-4 border-black dark:border-white  dark:bg-[#303233] rounded-full w-full md:w-3/6'>
+            <label htmlFor='search' title='search' className='border-r  border-r-black dark:border-r-white h-full   flex items-center pr-3'><FaSearch/></label>
             <input 
                 type='text' 
                 id='search' 
@@ -125,8 +124,7 @@ const LandingPage = () => {
        </div> */}
        {/* CHAPTER AND JUZ LISTS */}
       <div className='flex flex-col gap-4'>
-        <h2 className='md:text-xl'>Chapter Lists</h2>
-        <div className='grid grid-cols-2 gap-3 md:gap-12 '>
+        {/* <div className='grid grid-cols-2 gap-3 md:gap-12 '>
             <button onClick={showSurah} className='border rounded-full md:text-xl px-2 py-1 md:px-6 md:py-3 flex justify-between items-center'>
                 Chapter(114)
                 <p className="uthmani-script text-2xl md:text-4xl">سُورَة</p>
@@ -135,15 +133,15 @@ const LandingPage = () => {
                 Juz(30)
                 <p className="uthmani-script text-2xl md:text-4xl">جُزْء</p>
             </button>
-            {/* <button className='border border-green-800  rounded-full text-xl px-6 py-3 flex justify-between'>
+            <button className='border border-green-800  rounded-full text-xl px-6 py-3 flex justify-between'>
                 Hizb(60)
                 <p className="uthmani-script">حِزْب</p>
-            </button> */}
-        </div>
-        <div className='flex gap-4 items-end justify-end'>
+            </button>
+        </div> */}
+        {/* <div className='flex gap-4 items-end justify-end'>
             <p className='text-sm md:text-base'>SORT BY:</p> 
             <button className='flex items-center gap-2 text-sm md:text-base'>ASCENDING <FaSort/></button>
-        </div>
+        </div> */}
       </div>
       {/* SURAH LIST */}
      {isSurah ? 

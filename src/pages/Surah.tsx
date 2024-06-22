@@ -24,9 +24,17 @@ const Surah = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [isSidePanel, setIsSidePanel] = useState<boolean>(false)
     const [audioUrl, setAudioUrl] = useState<string>('')
-    const [reciterId, setReciterId] = useState<number>(2)
+    const [reciterId, setReciterId] = useState<number>(() => parseInt(localStorage.getItem('reciterId') || '2'))
     const [isPlaying, setIsPlaying] = useState<boolean>(false)
+    const [currentReciter, setCurrentReciter] = useState<string>(localStorage.getItem('currentReciter') || 'AbdulBaset AbdulSamad')
     
+    const handleRecitationChange = (reciterId: number, reciterName: string) => {
+        setReciterId(reciterId)
+        setCurrentReciter(reciterName)
+        clearAudioUrl()
+        localStorage.setItem('reciterId', reciterId.toString())
+        localStorage.setItem('currentReciter', reciterName)
+    }
     const handlePlayAudio = async () => {
         try{
             const surahId = selectedSurah[0].verseNumber.split(":")[0]
@@ -160,7 +168,10 @@ const Surah = () => {
             </button>
         </div>
         {isSidePanel && (
-            <SidePanel/>
+            <SidePanel
+                currentReciter={currentReciter}
+                changeReciter={handleRecitationChange}
+            />
         )}
       </div>
       {/* main content */}

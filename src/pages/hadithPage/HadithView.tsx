@@ -70,7 +70,7 @@ const HadithView = () => {
             )}
             <div className='flex flex-col gap-8 lg:px-20'>
                 {hadiths.map((hadith: Hadiths) => (
-            <div className='border-container dark:bg-[#272525] bg-[#f2f2f2] shadow-md  border-green-900 rounded-md p-7 flex flex-col gap-8' key={hadith.id}>
+            <div className='border-container dark:bg-[#141414] bg-[#f2f2f2] shadow-md  border-green-900 rounded-md p-7 flex flex-col gap-8' key={hadith.id}>
                 <div className='text-center flex flex-col gap-2'>
                     <p className='underline font-bold'>{hadith.headingEnglish}</p>
                     <p className='font-bold'>{hadith.headingArabic}</p>

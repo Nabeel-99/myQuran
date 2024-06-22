@@ -71,4 +71,5 @@ export interface Hadiths{
 export interface Reciters{
     id: number,
     reciter_name: string
+    style: string
 }

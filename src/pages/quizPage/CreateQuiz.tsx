@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import QuestionCard from '../../components/cards/QuestionCard';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
 import { API_ROUTE } from '../../apis/quranApi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface Question {
     id: number;
@@ -23,6 +23,8 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ user }) => {
         threshold: 0.2,
         triggerOnce: true
     });
+
+    const navigate = useNavigate()
 
     const addAnotherQuestion = () => {
         const newQuestion: Question = { id: questions.length + 1, question: '', options: { A: '', B: '', C: '', D: '' }, correct_answer: '' };
@@ -67,6 +69,11 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ user }) => {
             console.error(error);
         }
     };
+    useEffect(() => {
+        if(!user){
+            navigate("/quiz")
+        }
+    },[])
 
     return (
         <div className='flex flex-col lg:justify-center lg:items-center gap-10 h-full w-full px-4 pb-20 mt-32'>

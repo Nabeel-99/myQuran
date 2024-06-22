@@ -140,7 +140,8 @@ export const getAllReciters = async () => {
         const response = await axios.get<{recitations: Reciters[]}>(`${BASE_URL}/resources/recitations`)
         const dataResponse = response.data.recitations.map((reciter: any) => ({
             id: reciter.id,
-            reciter_name: reciter.reciter_name
+            reciter_name: reciter.reciter_name,
+            style: reciter.style
         }))
         console.log(dataResponse)
         return dataResponse

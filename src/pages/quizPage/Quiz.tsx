@@ -53,6 +53,7 @@ const Quiz = () => {
 
     // Clean up interval
     return () => clearInterval(imageToggle);
+
   }, []);
 
   return (
@@ -82,14 +83,14 @@ const Quiz = () => {
       <section id="participate" className={`flex  flex-col gap-10 items-center justify-center w-full px-4 reveal-animation lg:px-20 ${inView2 ?  'active opacity-100' : 'opacity-0'}`} ref={sectionRef2}>
         <p className='text-[2rem] md:text-[3rem] xl:text-[4.5rem] font-serif dark:text-white'>Participate in the Quiz</p>
         <div className='flex flex-col md:px-10 lg:px-20 xl:px-0 xl:flex-row xl:justify-around w-full gap-10 xl:gap-0 h-2/3'>
-          <div id='smooth-transition-cards' className={`border xl:w-2/4 flex flex-col items-center overflow-hidden dark:bg-[#232425] dark:border-none dark:shadow-2xl dark:drop-shadow-2xl dark:shadow-gray-800 rounded-2xl shadow-md gap-5 ${inView2 ? 'active' : ''} ` }>
+          <div id='smooth-transition-cards' className={`border xl:w-2/4 flex flex-col items-center overflow-hidden dark:bg-[#232425] dark:border-none dark:shadow-lg   rounded-2xl shadow-md gap-5 ${inView2 ? 'active' : ''} ` }>
             <div className='flex items-center justify-center flex-col gap-2 py-4'>
               <p className='font-bold text-2xl md:text-4xl'>Challenge your Knowledge</p>
               <p className='text-center px-1 md:px-0 text-xl'>Test your Quranic memorization skills with our carefully <span className='block'> selected questions.</span> </p>
             </div>
             <img src={ChallengeImage} alt='quizImage' className='w-2/4 mt-7' />
           </div>
-          <div id='smooth-transition-cards' className={`border xl:w-2/5 py-4 flex flex-col items-center overflow-hidden dark:bg-[#232425] dark:border-none dark:shadow-2xl dark:drop-shadow-2xl dark:shadow-gray-800 rounded-2xl shadow-md gap-5 ${inView2 ? 'active' : ''} ` }>
+          <div id='smooth-transition-cards' className={`border xl:w-2/5 py-4 flex flex-col items-center overflow-hidden dark:bg-[#232425] dark:border-none dark:shadow-lg  rounded-2xl shadow-md gap-5 ${inView2 ? 'active' : ''} ` }>
             <div className='flex items-center justify-center flex-col gap-2 px-4'>
               <p className='font-bold text-2xl md:text-4xl'>Interactive Learning</p>
               <p className='text-center text-xl'>Get instant feedback on your answers and learn from any mistakes.</p>
@@ -113,7 +114,7 @@ const Quiz = () => {
       <section id='how-it-works' className={`flex flex-col pb-20 items-center justify-center w-full reveal-animation gap-3 px-4 lg:px-20 transform transition-transform duration-1000 ease-in-out ${inView3 ? 'active opacity-100' : 'opacity-0'}`} ref={sectionRef3}>
         <p className='text-[2.5rem] md:text-[3rem] xl:text-[4rem] tracking-tight dark:text-white'>How it works</p>
         <div className='grid grid-flow-row lg:grid-cols-3  md:px-40 lg:px-0 gap-14'>
-          <div className='dark:bg-[#232425] dark:border-none dark:shadow-2xl dark:drop-shadow-2xl dark:shadow-gray-800 rounded-2xl shadow-md border    py-4 flex flex-col items-center gap-10'>
+          <div className='dark:bg-[#232425] dark:border-none dark:shadow-2xl dark:drop-shadow-lg rounded-2xl shadow-md border    py-4 flex flex-col items-center gap-10'>
             <div className='border-black w-full flex items-center justify-center'>
               <BsFillPatchQuestionFill className='text-[6rem]' />
             </div>
@@ -122,7 +123,7 @@ const Quiz = () => {
               <p className='px-6 text-center text-[18px]'>You will be presented with multiple-choice questions. Select the correct answer from the options.</p>
             </div>
           </div>
-          <div className='dark:bg-[#232425] dark:border-none dark:shadow-2xl dark:drop-shadow-2xl dark:shadow-gray-800 rounded-2xl shadow-md border    py-4 flex flex-col items-center gap-10'>
+          <div className='dark:bg-[#232425] dark:border-none dark:shadow-2xl dark:drop-shadow-lg rounded-2xl shadow-md border    py-4 flex flex-col items-center gap-10'>
             <div className='border-black w-full flex items-center justify-center'>
               <FaCheckCircle className='text-[6rem]' />
             </div>
@@ -131,7 +132,7 @@ const Quiz = () => {
               <p className='px-6 text-center text-[18px]'>After completing the quiz, you will see your score and the correct answers for each question.</p>
             </div>
           </div>
-          <div className='dark:bg-[#232425] dark:border-none dark:shadow-2xl dark:drop-shadow-2xl dark:shadow-gray-800 rounded-2xl shadow-md border    py-4 flex flex-col items-center gap-10'>
+          <div className='dark:bg-[#232425] dark:border-none dark:shadow-2xl dark:drop-shadow-lg rounded-2xl shadow-md border    py-4 flex flex-col items-center gap-10'>
             <div className='border-black w-full flex items-center justify-center'>
               <FaEye className='text-[6rem]' />
             </div>
@@ -180,9 +181,9 @@ const Quiz = () => {
         </p>
       </div>
       <div className={`lg:sticky lg:bottom-0  pb-20 items-center flex justify-center lg:justify-normal `}>
-        <button className=' cursor-pointer rounded-lg bg-white hover:shadow-md hover:shadow-[#d5d5d5] text-black shadow-md py-2 px-6 w-full md:w-2/4 lg:w-auto font-bold'>
+        <Link to={"/create-quiz"} className=' cursor-pointer rounded-lg bg-white hover:shadow-md hover:shadow-[#d5d5d5] text-black shadow-md py-2 px-6 w-full md:w-2/4 lg:w-auto font-bold'>
           Create Quiz
-        </button>
+        </Link >
       </div>
     </div>
   </div>
