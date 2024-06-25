@@ -143,7 +143,6 @@ export const getAllReciters = async () => {
             reciter_name: reciter.reciter_name,
             style: reciter.style
         }))
-        console.log(dataResponse)
         return dataResponse
     } catch (error) {
         console.log(error)

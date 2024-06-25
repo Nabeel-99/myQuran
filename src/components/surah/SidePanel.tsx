@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { FaBook, FaBookOpen, FaCheck } from 'react-icons/fa'
+import {  FaCheck } from 'react-icons/fa'
 import { FaRadio } from 'react-icons/fa6'
-import { Link } from 'react-router-dom'
 import { Reciters } from '../../types/types'
-import axios from 'axios'
 import { getAllReciters } from '../../apis/quranApi'
 
 interface SidePanelProps {
@@ -29,7 +27,7 @@ const SidePanel:React.FC<SidePanelProps> = ({currentReciter, changeReciter}) => 
     fetchAllReciters()
   }, [])
   return (
-    <div className='hidden md:flex flex-col gap-2 dark:bg-[#232528]  h-full p-5'>
+    <div className=' md:flex flex-col gap-2 dark:bg-[#232528]  h-full p-5'>
         <div className='flex flex-col '>
             <p className='text-blue-500'>Current Reciter:</p>
             <p>{currentReciter}</p>

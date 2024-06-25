@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { CiShare2 } from 'react-icons/ci'
 import { FaRegBookmark } from 'react-icons/fa'
 import { FaXmark } from 'react-icons/fa6'
@@ -29,17 +29,29 @@ const OptionsCard: React.FC<OptionsProps> = ({
   saveNote,
     }) => {
 
-    
+      const optionsRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (optionsRef.current && !optionsRef.current.contains(event.target as Node)) {
+        closeOptions()
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [closeOptions])
 
   return (
-    <span className='z-10 absolute options bg-white dark:bg-[#232528] border shadow-md p-3 rounded-md   text-sm'>
+    <span ref={optionsRef} className='z-10 absolute options bg-white dark:bg-[#232528] border shadow-md p-3 rounded-md   text-sm'>
     <div className='flex flex-col gap-3 bg-white dark:bg-[#232528]'>
       <button onClick={() => {
         toggleBookmark()
         closeOptions()
         }} className='flex items-center gap-2 hover:text-blue-700'><FaRegBookmark/>{ isBookmarked ? 'remove from bookmarks' : 'Bookmark Verse' }</button>
       <button onClick={() => showNotes(verseIndex)} className='flex items-center gap-2 hover:text-blue-700'><TfiWrite/>Write Note</button>
-      <button className='flex items-center gap-2 hover:text-blue-700'><CiShare2/>Share Verse</button>
     </div>
     {isNote && (
     <div className='z-10 fixed  inset-0 bg-transparent flex items-center justify-center top-0 right-0 left-0 bottom-0 px-2 lg:px-0'>

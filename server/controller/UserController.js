@@ -1,6 +1,9 @@
 import User from "../model/UserModel.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import QuestionPost from "../model/QuestionPostsModel.js"
+import Bookmark from "../model/BookmarkModel.js"
+import Note from "../model/NotesModel.js"
 
 export const createUser = async(req, res) => {
     try {
@@ -45,6 +48,7 @@ export const loginUser = async(req, res) => {
         })
         return res.status(200).json({message: "logged in successfully", token: token, firstName: user.firstName})
     } catch (error) {
+        console.error(error)
         return res.status(500).json({message: "Internal Server Error"})
     }
 }
@@ -73,6 +77,27 @@ export const logoutUser = async(req, res) => {
         res.clearCookie('token')
         return res.status(200).json({message: "logged out successfully"})
     } catch (error) {
+        return res.status(500).json({message: "Internal Server Error"})
+    }
+}
+
+export const deleteAccount = async(req, res) => {
+    try {
+        const userId = req.userId
+        const deleteUser = await User.findByIdAndDelete(userId)
+        if (deleteUser) {
+            res.clearCookie("token"); // Clear the JWT token cookie upon successful deletion
+            // Delete associated data
+            await QuestionPost.deleteMany({ user: userId });
+            await Bookmark.deleteMany({ user: userId });
+            await Note.deleteMany({ user: userId });
+            return res.status(200).json({ message: "User deleted successfully" });
+        } else {
+            return res.status(404).json({ message: "User not found" });
+        }
+    } catch (error) {
+        console.error(error)
+        console.log(error)
         return res.status(500).json({message: "Internal Server Error"})
     }
 }

@@ -37,7 +37,6 @@ const handleNoteTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
          note: noteText
        }, {withCredentials: true})
        if(response.status === 200){
-         console.log("updated")
          fetchUserNotes()
          setSelectedNote(null)
        }
@@ -109,7 +108,7 @@ const handleNoteTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         {selectedNote && (
             <div className='z-10 fixed  inset-0 bg-transparent flex items-center justify-center top-0 right-0 left-0 bottom-0 px-2 lg:px-0'>
                 <div className='absolute inset-0 h-full w-full bg-black opacity-15'></div>
-                <div className='z-10 border-black flex flex-col gap-7 border px-4 lg:px-10 pb-8   bg-white dark:bg-[#232528] dark:border-white rounded-md items-center justify-center lg:w-3/5 '>
+                <div className='z-10 border-black flex flex-col gap-7 border px-4 lg:px-10 pb-8   bg-white dark:bg-[#232528] dark:border-white rounded-md items-center justify-center w-full lg:w-3/5 '>
                     <button title='close' className=' hover:bg-gray-200 hover:rounded-full dark:hover:bg-gray-700 p-2' onClick={closeFullNote} ><FaXmark className='text-2xl'/></button>
                     <div className=' text-sm '>
                         <span className=' rounded-full p-2 bg-black text-white dark:bg-white dark:text-black'>{getSurahEnglishName(selectedNote.suraNumber)} {selectedNote.verseId}</span>

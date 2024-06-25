@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Navbar from './components/navbar/Navbar';
 import LandingPage from './pages/LandingPage';
 import Footer from './components/Footer';
@@ -34,7 +34,8 @@ const App = () => {
     }
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
-
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
   const autheticateUser = async () => {
     try {
       const response = await axios.get(`${API_ROUTE}/api/users/auth`, {
@@ -78,6 +79,29 @@ const App = () => {
       localStorage.setItem('theme', 'light');
     }
   };
+
+  const deleteAccount = async () => {
+    try {
+        const response = await axios.delete(`${API_ROUTE}/api/users/delete-account`, { withCredentials: true });
+        if (response.status === 200) {
+            setUser('')
+            setLoading(true)
+            setIsLoggedIn(false)
+            setTimeout(() => {
+                window.location.href = '/login';
+                setLoading(false)
+            }, 10000);
+        }
+    } catch (error: any) {
+        console.error(error);
+        if(error.response && error.response.status === 400){
+          setError(error.response.data.message)
+        }else{
+          setError("Something went wrong. Please try again later.")
+        }
+      
+    }
+};
 
   const lightMode = () => {
     setIsDarkMode(false);
@@ -135,13 +159,12 @@ const App = () => {
           <Routes>
             <Route path='/' element={<LandingPage />} />
             <Route path='/surah/:id' element={<Surah />} />
-            <Route path='/juz/:juzId' element={<Surah />} />
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<SignIn authenticateUser={autheticateUser} />} />
             <Route path='/bookmarks' element={<Bookmarks />} />
             <Route path='/hadith' element={<Hadith />} />
             <Route path='/hadith/sahih-bukhari/chapter/:id' element={<HadithView />} />
-            <Route path='/profile' element={<Profile user={user} email={email} />} />
+            <Route path='/profile' element={<Profile user={user} email={email} deleteAccount={deleteAccount} loading={loading} errorMsg={error} />} />
             <Route path='/notes' element={<Notes />} />
             <Route path='/quiz' element={<Quiz />} />
             <Route path='/quiz-cards' element={<Questions />} />

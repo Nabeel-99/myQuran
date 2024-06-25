@@ -3,10 +3,7 @@ import { FaGlobe, FaSort } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 const Footer = () => {
-    const [isLang, setIsLang] = useState<boolean>(false)
-    const showLang = () => {
-        setIsLang(!isLang)
-    }
+
   return (
     <footer className='flex flex-col  dark:text-white  gap-16 w-full px-8 md:px-24 pb-24'>
         <div className='flex pt-8 flex-col border-t border-gray-200 gap-10 lg:flex-row lg:justify-between lg:w-full'>
@@ -27,20 +24,8 @@ const Footer = () => {
                 </ul>
             </div>
         </div>  
-        <div className='relative flex justify-between items-center w-full'>
+        <div className='flex justify-center items-center w-full'>
            <p className='text-[0.7rem] md:text-base'>&copy; 2024 MyQuran. All Rights Reserved.</p> 
-            <div className='flex items-center'>
-                <button onClick={showLang} className='flex gap-2 items-center border rounded-md py-1 px-2'>
-                    <FaGlobe/>
-                     English
-                    <FaSort/>
-                </button>
-            </div>
-            {isLang && (
-                <div className='absolute right-0 -top-10 border rounded-md px-9 py-1'>
-                    <button>Arabic</button>
-                </div>
-            )}
         </div> 
        
     </footer>

@@ -1,6 +1,6 @@
 import React from 'react'
-import { FaArrowRight, FaBook, FaBookOpen, FaClipboard, FaHome, FaRegBookmark } from 'react-icons/fa'
-import { FaGear, FaRadio, FaXmark } from 'react-icons/fa6'
+import { FaArrowRight, FaBook, FaClipboard, FaHome, FaRegBookmark } from 'react-icons/fa'
+import { FaXmark } from 'react-icons/fa6'
 import { IoLogOut } from 'react-icons/io5'
 import { MdQuiz } from 'react-icons/md'
 import { Link } from 'react-router-dom'
@@ -54,11 +54,9 @@ const BurgerMenu:React.FC<BurgerMenuProps> = ({isLoggedIn, user, toggleBurgerMen
                        <p className='text-sm font-bold'>MENU</p>
                     <ul>
                         <li className='border-b-2  py-3 border-t-2'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaHome/>Home</Link></li>
-                        <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaRadio/>Reciters</Link></li>
+                        <li className='border-b-2 py-3'><Link to={"/hadith"} onClick={closeMenu} className='flex items-center gap-3'><FaBook/>Hadith</Link></li>
                         <li className='border-b-2 py-3'><Link to={"/quiz"} onClick={closeMenu} className='flex items-center gap-3'><MdQuiz/>Quiz</Link></li>
-                        <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBook/>Seerah</Link></li>
-                        <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaBookOpen/>Duas and Supplications</Link></li>
-                        <li className='border-b-2 py-3'><Link to={"/"} onClick={closeMenu} className='flex items-center gap-3'><FaGear/>Settings</Link></li>
+
                     </ul>
                     {isLoggedIn && (
                         <div className='mt-20'>

@@ -1,5 +1,5 @@
 import express from "express"
-import { createUser, loginUser, logoutUser, verifyUser } from "../controller/UserController.js"
+import { createUser, deleteAccount, loginUser, logoutUser, verifyUser } from "../controller/UserController.js"
 import { addToBookmark, getUserBookmarks, removefromBookmark } from "../controller/BookmarkController.js"
 import { deleteNote, getUserNotes, postNote, updateNote } from "../controller/NotesController.js"
 import { deleteQuestion, getAllQuestionsPostedByUser, getUserQuestions, getUsersWithQuestions, postQuestion, updateQuestion } from "../controller/QuestionsController.js"
@@ -18,11 +18,13 @@ router.get("/auth", verifyUser, async(req, res) => {
         email: req.email
     })
 })
+router.delete("/delete-account", verifyUser, deleteAccount)
 
 // bookmarks
 router.get("/bookmarks", verifyUser, getUserBookmarks)
 router.post("/add", verifyUser, addToBookmark)
 router.delete("/delete", verifyUser, removefromBookmark)
+
 
 // notes
 router.get("/notes", verifyUser, getUserNotes)

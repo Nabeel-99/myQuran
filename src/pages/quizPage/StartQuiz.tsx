@@ -39,7 +39,6 @@ const StartQuiz = () => {
       const response = await axios.get(`${API_ROUTE}/api/users/questions/${id}`);
       setQuestions(response.data);
       setQuestionsLength(response.data.length)
-      console.log(response.data)
     } catch (error) {
       console.log(error);
     }

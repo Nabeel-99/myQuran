@@ -10,9 +10,9 @@ import { BsFillPatchQuestionFill } from 'react-icons/bs';
 import { FaCheckCircle, FaEye } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+
 const Quiz = () => {
   const [isImage1, setIsImage1] = useState(true);
-
   const { ref: sectionRef1, inView: inView1 } = useInView({
     triggerOnce: true,
     threshold: 0.2,
@@ -44,7 +44,7 @@ const Quiz = () => {
   //   threshold: 0.2,
   // });
   
-  
+
 
   useEffect(() => {
     const imageToggle = setInterval(() => {
@@ -58,6 +58,7 @@ const Quiz = () => {
 
   return (
     <div className='flex flex-col  h-full w-full pb-20 mt-32'>
+     
       <section className={`flex flex-col xl:flex-row xl:justify-between w-full gap-10 xl:gap-0   px-4 lg:px-28 reveal-animation ${inView1 ? 'active opacity-100' : 'opacity-0'}`} ref={sectionRef1}>
         <div className='flex flex-col lg:px-20 xl:px-0 md:px-10 gap-5 xl:w-2/3'>
           <p className=' text-[3rem] md:text-[3.5rem] lg:text-[4.5rem]  font-serif dark:text-white  leading-tight tracking-tight'>
@@ -70,6 +71,7 @@ const Quiz = () => {
             <span className='block'> memorization strength. Whether you're a hafiz or novice, our quiz offers </span>
             <span className='block'>an immersive way to strengthen your hifz.</span>
           </p>
+          <p className='text-sm italic font-semibold tracking-tight text-gray-400'>Please log in or create an account to create a quiz.</p>
           <div className='flex flex-col   xl:items-center xl:flex-row gap-2'>
             <Link to={"/quiz-cards"} className='border  rounded-md py-3 shadow-md px-6 bg-black text-white text-center dark:bg-white dark:text-black dark:border-none hover:dark:bg-black hover:dark:text-white'>Start Quiz</Link>
             <Link to={"/create-quiz"} className='border  rounded-md py-3 shadow-md px-6 bg-black text-white text-center dark:bg-white dark:text-black dark:border-none hover:dark:bg-black hover:dark:text-white'>Create Quiz</Link>
@@ -180,7 +182,7 @@ const Quiz = () => {
           Share your quiz to engage others and foster learning. Spark discussions and collaboration within the community.
         </p>
       </div>
-      <div className={`lg:sticky lg:bottom-0  pb-20 items-center flex justify-center lg:justify-normal `}>
+      <div className={` pb-20 items-center flex justify-center lg:justify-normal `}>
         <Link to={"/create-quiz"} className=' cursor-pointer rounded-lg bg-white hover:shadow-md hover:shadow-[#d5d5d5] text-black shadow-md py-2 px-6 w-full md:w-2/4 lg:w-auto font-bold'>
           Create Quiz
         </Link >
@@ -197,8 +199,8 @@ const Quiz = () => {
           </h2>
         </div>
         <div className='flex items-center justify-center gap-2 w-full px-4 md:px-20'>
-          <button className='border rounded-md py-3 font-bold shadow-md px-6 w-full md:w-2/4 lg:w-2/5  bg-black text-white dark:bg-white dark:text-black dark:border-none hover:dark:bg-black hover:dark:text-white'>Start Quiz</button>
-        </div>
+          <Link to={"/quiz-cards"} className='border rounded-md py-3 text-center font-bold shadow-md px-6 w-full md:w-2/4 lg:w-44  bg-black text-white dark:bg-white dark:text-black dark:border-none hover:dark:bg-black hover:dark:text-white'>Start Quiz</Link>
+        </div> 
       </section>
     </div>
   );

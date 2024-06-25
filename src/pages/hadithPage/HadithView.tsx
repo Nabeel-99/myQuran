@@ -22,7 +22,6 @@ const HadithView = () => {
         try {
             setLoading(true)
             const response = await getHadithChapters(id)
-            console.log(response)
             if (response.length > 0){
                 const {chapterNumber, chapterArabic, chapterEnglish} = response[0]
                 setChapterHeader({chapterArabic, chapterEnglish, chapterNumber})

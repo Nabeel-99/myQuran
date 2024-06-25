@@ -13,7 +13,6 @@ const Hadith = () => {
     try {
       setLoading(true); 
       const response = await getHadithLists();
-      console.log(response);
       setChapters(response);
     } catch (error) {
       console.log(error);

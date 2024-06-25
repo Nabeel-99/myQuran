@@ -9,7 +9,6 @@ const Questions = () => {
     const fetchAllQuestions = async () => {
         try {
             const response = await axios.get(`${API_ROUTE}/api/users/all-questions`)
-            console.log(response.data)
             setAllQuestions(response.data)
         } catch (error) {
             console.log(error)

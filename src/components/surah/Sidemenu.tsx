@@ -2,17 +2,14 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 interface SideMenuProps{
-    juzList: any[]
     surahList: any[]
     closeSideMenu:() => void
 }
 
-const Sidemenu: React.FC<SideMenuProps> = ({juzList, surahList, closeSideMenu}) => {
-      const [isSurah, setIsSurah] = useState<boolean>(true)
-      const [isJuz, setIsJuz] = useState<boolean>(false)
+const Sidemenu: React.FC<SideMenuProps> = ({surahList, closeSideMenu}) => {
+
       const [searchValue, setSearchValue] = useState<string>('')
       const [filteredSurahList, setFilteredSurahList] = useState<any[]>(surahList)
-      const [filteredJuzList, setFilteredJuzList] = useState<any[]>(juzList)
     const formattedSurahName = (surahNumber: number) => {
         if(surahNumber > 99){
             return `${surahNumber}`
@@ -30,56 +27,26 @@ const Sidemenu: React.FC<SideMenuProps> = ({juzList, surahList, closeSideMenu}) 
         setFilteredSurahList(chapters)
     }
 
-    const searchJuz = (searchValue: any) => {
-        const juzs = juzList.filter((juz: any) => 
-            juz.juzNum.toString().includes(searchValue.toString())
-        )
-         setFilteredJuzList(juzs)
-     }
 
     const handleSearchInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value
         setSearchValue(value)
         searchSurah(value)
-        searchJuz(value)
     }
-    const showSurah = () => {
-        setIsSurah(true)
-        setIsJuz(false)
-    }
-    const showJuz = () => {
-        setIsJuz(true)
-        setIsSurah(false)
-    }
+ 
    
 
   return (
-    <div className='flex flex-col gap-4 w-full h-full  pb-20 px-4   dark:bg-[#232528]'>
+    <div className='flex flex-col gap-4 w-full h-full   pb-20 px-4  bg-white   dark:bg-[#232528]'>
                 <div className='text-sm flex flex-col gap-2 font-sans'>
                     <p className=''>Navigate with Text</p>
                     <input 
                         value={searchValue}
                         onChange={handleSearchInput}
                         className='border px-3 rounded-full py-1 dark:bg-[#303233]' 
-                        placeholder={`${isJuz ? 'type juz number e.g 1,2,3...' : 'Search surah e.g Al-fatihah...' }`}/>
+                        placeholder={`Search surah e.g Al-fatihah...`}/>
                 </div>
-                <p className='text-sm font-sans'>Chapter and Juz Lists</p>
-                <div className='flex gap-8 text-sm '>
-                    <button onClick={showSurah} className='border px-2 py-1 rounded-full w-full'>Chapter (114)</button>
-                    <button onClick={showJuz} className='border px-2 py-1 rounded-full w-full'>Juz (30)</button>
-                </div>
-             
-                {/* surah List */}
-                {isJuz ? (
-                    <div className='flex flex-col gap-4 h-screen overflow-scroll pb-20'>
-                    {filteredJuzList.map((juz, index) => (
-                        <button className=' hover:bg-gray-100 dark:hover:bg-gray-800 border rounded-lg border-transparent px-4 flex w-full  justify-between' key={index}>
-                            <p className=''>Juz {juz.juzNum}</p>
-                            <p className='text-md  arabicText'>{juz.text.verse_key.split(":")[0]}</p> 
-                        </button>
-               ))}
-               </div>
-                ) : 
+                <p className='text-sm font-sans text-gray-500'>Chapters</p>
                 <div className=' flex flex-col gap-4 h-screen overflow-scroll pb-20'>
                     {filteredSurahList.map((sura, index) => (
                     <Link to={`/surah/${sura.sura_number}`} onClick={closeSideMenu} className=' hover:bg-gray-100 dark:hover:bg-gray-800 border rounded-lg border-transparent px-4 flex w-full justify-between' key={index}>
@@ -93,7 +60,7 @@ const Sidemenu: React.FC<SideMenuProps> = ({juzList, surahList, closeSideMenu}) 
                     </Link>
                     ))}
                 </div>
-                }
+                
                 
             </div>
   )

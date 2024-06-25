@@ -60,7 +60,6 @@ const CreateQuiz: React.FC<CreateQuizProps> = ({ user }) => {
         try {
             const response = await axios.post(`${API_ROUTE}/api/users/post-questions`, { questions }, { withCredentials: true });
             if(response.status === 201){
-                console.log("created")
                 setQuestions([]);
                 setViewMyQuestions(true)
         

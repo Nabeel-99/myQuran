@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { FaArrowRight, FaBars, FaBook, FaBookOpen, FaClipboard, FaGlobe, FaHandHoldingWater, FaHome, FaMoon, FaSearch, FaUser } from 'react-icons/fa'
-import { FaGear, FaHand, FaM, FaPerson, FaRadio, FaXmark } from 'react-icons/fa6'
-import { IoHomeOutline, IoLogOut, IoLogOutOutline, IoMoon, IoMoonOutline, IoPersonOutline, IoSunnyOutline } from 'react-icons/io5'
-import { Link, useNavigate } from 'react-router-dom'
+import {  FaBars, FaMoon, FaSearch,  } from 'react-icons/fa'
+import { FaXmark } from 'react-icons/fa6'
+import { IoMoonOutline, IoPersonOutline, IoSunnyOutline } from 'react-icons/io5'
+import { Link } from 'react-router-dom'
 import { getSurahLists } from '../../apis/quranApi'
 import ChapterCards from '../cards/ChapterCards'
-import axios from 'axios'
+
 import UserMenu from '../profile/UserMenu'
 import BurgerMenu from '../profile/BurgerMenu'
-import { GoDeviceDesktop } from 'react-icons/go'
+
 import ToggleModes from './ToggleModes'
 
 interface NavbarProps{
@@ -29,7 +29,6 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
     const [isSearching, setIsSearching] = useState<boolean>(false)
     const [showUserMenu, setShowUserMenu] = useState<boolean>(false)
     const [isShowModes, setIsShowModes] = useState<boolean>(false)
-    const navigate = useNavigate()
     const searchSurah = (searchValue: string) => {
         const filteredList = surahList.filter((surah: any) => 
             surah.name_simple.toLowerCase().replace(/[^a-z0-9]/g, '').includes(searchValue.replace(/[^a-z0-9]/g, '').toLowerCase())
@@ -93,9 +92,9 @@ const Navbar: React.FC<NavbarProps> = ({user, isLoggedIn, logout, lightMode, dar
         </div>
         <div className='hidden md:flex gap-5 '>
             <ul className='flex gap-5 items-center'>
-                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/"}>Home</Link></li>
-                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/hadith"}>Hadith</Link></li>
-                <li className='hover:border-b-2 hover:border-blue-800 transition-all hover:text-blue-700'><Link to={"/quiz"}>Quiz</Link></li>
+                <li className='hover:border-b-2 hover:border-blue-400 transition-all hover:text-blue-400'><Link to={"/"}>Home</Link></li>
+                <li className='hover:border-b-2 hover:border-blue-400 transition-all hover:text-blue-400'><Link to={"/hadith"}>Hadith</Link></li>
+                <li className='hover:border-b-2 hover:border-blue-400 transition-all hover:text-blue-400'><Link to={"/quiz"}>Quiz</Link></li>
             </ul>
             <div className='border border-black opacity-35'></div>
             <div className='relative flex gap-2 items-center text-lg'>

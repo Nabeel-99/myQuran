@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { FormEvent, useState } from 'react'
 import { CiShare2 } from 'react-icons/ci'
-import { FaRegBookmark, FaRegEye } from 'react-icons/fa'
+import { FaRegBookmark, FaRegEye, FaSpinner } from 'react-icons/fa'
 import { IoGameController, IoGameControllerOutline } from 'react-icons/io5'
 import { MdQuiz } from 'react-icons/md'
 import { TfiWrite } from 'react-icons/tfi'
@@ -19,6 +19,7 @@ const SignUp = () => {
     password: ''
   })
   const [error, setError]  = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
   const navigate = useNavigate()
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target
@@ -43,18 +44,41 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           })
           console.log(response.data)
           if(response.status === 201){
-            navigate('/login')
+            setLoading(true)
+            setTimeout(() => {
+              navigate('/login')
+              setLoading(false)
+            }, 2000);
+        
           }
-      } catch (error: any) {
-        if(error.response && error.response >= 400 && error.response < 500){
-          setError(error.response.data.message)
+
+          if(response.status === 400){
+            setError("User with given email already exists!")
+            setTimeout(() => {
+                setError("")
+            }, 2000);
+           
+          }
+      }  catch (error: any) {
+        if (error.response && error.response.status === 400) {
+          setError(error.response.data.message);
+          setTimeout(() => {
+            setError('');
+          }, 2000);
+        } else {
+          setError('Something went wrong. Please try again later.');
         }
       }
   }
   return (
     
     <div className='flex flex-col lg:flex-row   h-full w-full justify-around lg:gap-10 items-start mt-14 lg:mt-32 mb-52  px-4 lg:px-20'>
-        <div className='xl:w-1/3 flex flex-col order-1 lg:order-none  gap-4 lg:w-2/4 w-full'>
+      {loading ? <div className='flex flex-col gap-10 items-center justify-center h-full'>
+          <p className='italic'>Creating Account...</p>
+          <FaSpinner className='spin text-xl'/>
+        </div> : (
+          <>
+             <div className='xl:w-1/3 flex flex-col order-1 lg:order-none  gap-4 lg:w-2/4 w-full'>
         <p className='text-2xl font-serif font-bold italic mt-8 lg:mt-0'>Start your journey</p>
             <form className='border w-full border-black p-6 rounded-lg dark:bg-[#303233] dark:text-white' onSubmit={handleSignUpSubmit}>
               <div className='text-red-500'>{error}</div>
@@ -123,6 +147,9 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
               <li className='flex items-center  gap-2'><FaRegEye/>Track Recent Activities</li>
             </ul> 
         </div>
+          </>
+        ) }
+       
     </div>
 
   )

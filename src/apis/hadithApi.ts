@@ -36,7 +36,6 @@ export const getHadithChapters = async (chapterNum: number) => {
             book: hadith.book.bookName,
             englishNarrator: hadith.englishNarrator
         }));
-        console.log(dataResponse);
         return dataResponse;
     } catch (error) {
         console.log(error);

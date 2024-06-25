@@ -73,7 +73,7 @@ const formattedVerse = (verse: any) => {
     renderByPage(prevSurahNumber)
     clearAudioUrl()
   }
-
+  
   useEffect(() => {
     const surahNumber = parseInt(id, 10)
     renderByPage(surahNumber)
@@ -88,9 +88,9 @@ const formattedVerse = (verse: any) => {
       ) : (
         <>
         {pages.map((page, pageIndex) => (
-          <div key={pageIndex} className={`border-gray-300 mb-8 flex flex-col w-full $ `}>
+          <div key={pageIndex} className={`border-gray-300 mb-8 flex flex-col w-full  `}>
               {page.pageData.map((verse: any, verseIndex: number) => (
-               <div key={verseIndex}>
+               <div key={verseIndex} className=''>
                   {isTranslationView && (
                      <TranslationView
                      verse={verse}
@@ -98,6 +98,7 @@ const formattedVerse = (verse: any) => {
                      formattedVerse={formattedVerse}
                      formattedStyleName={formattedStyleName}
                      formattedTranslation={formattedTranslation}
+                     page={page}
                    />
                   )}
                </div>
